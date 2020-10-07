@@ -1,5 +1,7 @@
 # Code of "HOI Analysis: Integrating and Decomposing Human-Object Interaction" (NeurIPS 2020)
 
+## IDN: Integrating-Decomposing Network
+
 ## Prerequisites
 
 Set up environment by ·pip install -r requirements.txt·
