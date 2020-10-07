@@ -1,0 +1,43 @@
+MODE: AE
+
+TRAIN:
+  DATA_DIR: data
+  DATASET:
+    NUM_NEG: 8
+    BATCH_SIZE: 45
+    NUM_WORKERS: 8
+    SAMPLER_NAME: "priority_object"
+    JITTERING: True
+    IPT: False
+  MAX_EPOCH: 4
+  OPTIMIZER:
+    TYPE: SGD
+    lr: 
+        0.1
+    momentum: 0.9
+    weight_decay: 1e-7
+    alpha: 0.99
+    eps: 1e-8
+  
+TEST:
+  BATCH_SIZE: 135
+  NUM_WORKERS: 8
+
+MODEL:
+  AE:
+    BIN: True
+    BIN_LOSS_MODE: 2
+    BIN_FAC: 0.2
+    CHECKPOINT: 
+    BN: True
+    DROPOUT:
+    SPATIAL:
+      LAYER_SIZE: [8, 256, 512]
+    ENCODER:
+      LAYER_SIZE: [4608, 4096, 1024]
+    LOSS:
+      RECONSTRUCTION_FAC: 0.4
+      CLASSIFICATION_FAC: 1.0
+    NUM_CLASSES: 117
+
+  
