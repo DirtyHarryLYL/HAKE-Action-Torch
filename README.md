@@ -4,52 +4,54 @@ Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), 
 
 #### **News**: (2020.10.xx) Our xxx is released!
 
-- Paper is [here](https://arxiv.org/abs/2004.00945). 
-- We are enriching the data and part states on more data and activities (e.g., upon AVA, more kinds of action categories, more rare actions, etc.). 
-- We will keep updating our HAKE-Action model zoo to include more SOTA models and their HAKE-enhanced versions.
+## Project
+```Branches
+HAKE-Action-Torch
+  ├──Master Branch        # Unified pipeline; CVPR'18/20, PaStanet: Toward Human Activity Knowledge Engine.
+  ├──IDN                  # NeurIPS'20, HOI Analysis: Integrating and Decomposing Human-Object Interaction.
+  ├──DJ-RN-Torch          # CVPR'20, Detailed 2D-3D Joint Representation for Human-Object Interaction.
+  └──TIN-Torch            # CVPR'19, Transferable Interactiveness Knowledge for Human-Object Interaction Detection.
+```
 
-## [Data Mode](https://github.com/DirtyHarryLYL/HAKE)
-- **HAKE-HICO** (**PaStaNet\* mode** in [paper](https://arxiv.org/abs/2004.00945)): image-level, add the aggression of all part states in an image (belong to one or multiple active persons), compared with original [HICO](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are image-level human body part states.
+## Papers
+- [HAKE](https://arxiv.org/pdf/2004.00945.pdf) (CVPR'20)
+- [IDN]() (NeurIPS'20)
+- [DJ-RN](https://arxiv.org/pdf/2004.08154.pdf) (CVPR'20)
+- [SymNet](https://arxiv.org/pdf/2004.00587.pdf) (CVPR'20)
+- [TIN](https://arxiv.org/pdf/1811.08264.pdf) (CVPR'19)
+- [Part States](http://ai.ucsd.edu/~haosu/papers/cvpr18_partstate.pdf) (CVPR'18)
 
-- **HAKE-HICO-DET** (**PaStaNet\*** in [paper](https://arxiv.org/abs/2004.00945)): instance-level, add part states for each annotated persons of all images in [HICO-DET](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are instance-level human body part states.
+## Model Zoo
+xxx
 
-- **HAKE-Large** (**PaStaNet** in [paper](https://arxiv.org/abs/2004.00945)): contains more than 120K images, action labels and the corresponding part state labels. The images come from the existing action datasets and crowdsourcing. We mannully annotated all the active persons with our novel part-level semantics.
-
-- **GT-HAKE** (**GT-PaStaNet\*** in [paper](https://arxiv.org/abs/2004.00945)): GT-HAKE-HICO and G-HAKE-HICO-DET. It means that we use the part state labels as the part state prediction. That is, we can **perfectly** estimate the body part states of a person. Then we use them to infer the instance activities. This mode can be seen as the **upper bound** of our HAKE-Action. From the results below we can find that, the upper bound is far beyond the SOTA performance. Thus, except for the current study on the conventional instance-level method, continue promoting **part-level** method based on HAKE would be a very promising direction.
-
-- **HAKE-AVA** (**X\*** in [paper]()): Comming soon.
-
-- **HAKE-Object** (**X\*** in [paper])): Comming soon.
-
-
-
-
-
-
-## Results on HICO-DET with different object detections.
+### Results on HICO-DET with different object detections.
 Faster RCNN, ResNet-101 (1. COCO: pre-trained on COCO, 2. Finetune: finetuned on HICO-DET train set, 3. GT: Ground Truth); enhanced with HAKE.
 
-## Results on V-COCO with different object detections.
+tab
+
+### Results on V-COCO with different object detections.
 Faster RCNN, ResNet-101 (1. COCO: pre-trained on COCO, 2. Finetune: finetuned on HICO-DET train set, 3. GT: Ground Truth); enhanced with HAKE.
 
-## Methods
+tab
 
-### [HAKE-Only]() (CVPR 2020)
+## Sub-Models
+
+### [HAKE-Only]() (CVPR'20)
 Coming soon.
 
-### [Activity2Vec]() (CVPR 2020)
+### [Activity2Vec]() (CVPR'20)
 Coming soon.
 
-### [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) (NeurIPS 2020)
+### [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) (NeurIPS'20)
 xxx
 
-### [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch) (CVPR 2020)
+### [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch) (CVPR'20)
 xxx
 
-### [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch) (CVPR 2019)
+### [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch) (CVPR'19)
 xxx
 
-### [SymNet]() (CVPR 2020)
+### [SymNet]() (CVPR'20)
 Coming soon.
 
 ## Citation
@@ -78,6 +80,12 @@ If you find our work useful, please consider citing:
   author={Li, Yong-Lu and Zhou, Siyuan and Huang, Xijie and Xu, Liang and Ma, Ze and Fang, Hao-Shu and Wang, Yanfeng and Lu, Cewu},
   booktitle={CVPR},
   year={2019}
+}
+@inproceedings{lu2018beyond,
+  title={Beyond holistic object recognition: Enriching image understanding with part states},
+  author={Lu, Cewu and Su, Hao and Li, Yonglu and Lu, Yongyi and Yi, Li and Tang, Chi-Keung and Guibas, Leonidas J},
+  booktitle={CVPR},
+  year={2018}
 }
 ```
 
