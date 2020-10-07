@@ -11,7 +11,8 @@ HAKE-Action-Torch
   ├──Master Branch        # Unified pipeline; CVPR'18/20, PaStanet: Toward Human Activity Knowledge Engine.
   ├──IDN                  # NeurIPS'20, HOI Analysis: Integrating and Decomposing Human-Object Interaction.
   ├──DJ-RN-Torch          # CVPR'20, Detailed 2D-3D Joint Representation for Human-Object Interaction.
-  └──TIN-Torch            # CVPR'19, Transferable Interactiveness Knowledge for Human-Object Interaction Detection.
+  ├──TIN-Torch            # CVPR'19, Transferable Interactiveness Knowledge for Human-Object Interaction Detection.
+  └──SymNet-Torch         # CVPR'20, Symmetry and Group in Attribute-Object Compositions.
 ```
 
 ## Papers
@@ -87,6 +88,12 @@ If you find our work useful, please consider citing:
   author={Lu, Cewu and Su, Hao and Li, Yonglu and Lu, Yongyi and Yi, Li and Tang, Chi-Keung and Guibas, Leonidas J},
   booktitle={CVPR},
   year={2018}
+}
+@inproceedings{li2020symmetry,
+	title={Symmetry and Group in Attribute-Object Compositions},
+	author={Li, Yong-Lu and Xu, Yue and Mao, Xiaohan and Lu, Cewu},
+	booktitle={CVPR},
+	year={2020}
 }
 ```
 
