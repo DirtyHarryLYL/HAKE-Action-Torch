@@ -1,4 +1,4 @@
-# Code for annoymous NeurIPS submission: HOI Analysis: Integrating and Decomposing Human-Object Interaction
+# Code of "HOI Analysis: Integrating and Decomposing Human-Object Interaction" (NeurIPS 2020)
 
 ## Prerequisites
 
