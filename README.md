@@ -1,6 +1,8 @@
-# Code of "HOI Analysis: Integrating and Decomposing Human-Object Interaction" (NeurIPS 2020)
+# IDN: Integrating-Decomposing Network
 
-## IDN: Integrating-Decomposing Network
+#### Code of "HOI Analysis: Integrating and Decomposing Human-Object Interaction" (NeurIPS 2020)
+#### Yong-Lu Li*, Xinpeng Liu*, Xiaoqian Wu, Yizhuo Li, Cewu Lu (*=equal contribution).
+#### [arXiv]()
 
 ## Prerequisites
 
