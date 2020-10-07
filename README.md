@@ -8,11 +8,11 @@ Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), 
 ## Project
 ```Branches
 HAKE-Action-Torch
-  ├──Master Branch        # Unified pipeline; CVPR'18/20, PaStanet: Toward Human Activity Knowledge Engine.
-  ├──IDN                  # NeurIPS'20, HOI Analysis: Integrating and Decomposing Human-Object Interaction.
-  ├──DJ-RN-Torch          # CVPR'20, Detailed 2D-3D Joint Representation for Human-Object Interaction.
-  ├──TIN-Torch            # CVPR'19, Transferable Interactiveness Knowledge for Human-Object Interaction Detection.
-  └──SymNet-Torch         # CVPR'20, Symmetry and Group in Attribute-Object Compositions.
+  ├──Master Branch                          # Unified pipeline; CVPR'18/20, PaStanet and Part States.
+  ├──IDN-(Integrating-Decomposing-Network)  # NeurIPS'20, HOI Analysis: Integrating and Decomposing Human-Object Interaction.
+  ├──DJ-RN-Torch                            # CVPR'20, Detailed 2D-3D Joint Representation for Human-Object Interaction.
+  ├──TIN-Torch                              # CVPR'19, Transferable Interactiveness Knowledge for Human-Object Interaction Detection.
+  └──SymNet-Torch                           # CVPR'20, Symmetry and Group in Attribute-Object Compositions.
 ```
 
 ## Papers
