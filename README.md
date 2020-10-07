@@ -35,6 +35,10 @@ Faster RCNN, ResNet-101 (1. COCO: pre-trained on COCO, 2. Finetune: finetuned on
 ## Methods
 
 ### [HAKE-Only]() (CVPR 2020)
+Coming soon.
+
+### [Activity2Vec]() (CVPR 2020)
+Coming soon.
 
 ### [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) (NeurIPS 2020)
 xxx
@@ -44,6 +48,9 @@ xxx
 
 ### [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch) (CVPR 2019)
 xxx
+
+### [SymNet]() (CVPR 2020)
+Coming soon.
 
 ## Citation
 If you find our work useful, please consider citing:
