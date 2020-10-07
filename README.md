@@ -90,10 +90,10 @@ If you find our work useful, please consider citing:
   year={2018}
 }
 @inproceedings{li2020symmetry,
-	title={Symmetry and Group in Attribute-Object Compositions},
-	author={Li, Yong-Lu and Xu, Yue and Mao, Xiaohan and Lu, Cewu},
-	booktitle={CVPR},
-	year={2020}
+  title={Symmetry and Group in Attribute-Object Compositions},
+  author={Li, Yong-Lu and Xu, Yue and Mao, Xiaohan and Lu, Cewu},
+  booktitle={CVPR},
+  year={2020}
 }
 ```
 
