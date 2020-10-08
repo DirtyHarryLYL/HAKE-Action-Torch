@@ -4,6 +4,10 @@
 #### Yong-Lu Li*, Xinpeng Liu*, Xiaoqian Wu, Yizhuo Li, Cewu Lu (*=equal contribution).
 #### [arXiv]()
 
+<p align='center'>
+    <img src="misc/demo.png", height="400">
+</p>
+
 ## Prerequisites
 
 Set up environment by ·pip install -r requirements.txt·
