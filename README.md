@@ -38,22 +38,22 @@ tab
 
 ## Sub-Models
 
-### [HAKE-Only]() (CVPR'20)
+### HAKE-Only (CVPR'20)
 Coming soon.
 
-### [Activity2Vec]() (CVPR'20)
+### Activity2Vec (CVPR'20)
 Coming soon.
 
-### [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) (NeurIPS'20)
-xxx
+### IDN (NeurIPS'20)
+[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))
 
-### [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch) (CVPR'20)
-xxx
+### DJ-RN (CVPR'20)
+[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
-### [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch) (CVPR'19)
-xxx
+### TIN (CVPR'19)
+[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
-### [SymNet]() (CVPR'20)
+### SymNet (CVPR'20)
 Coming soon.
 
 ## Citation
