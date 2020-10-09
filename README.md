@@ -45,7 +45,7 @@ Coming soon.
 Coming soon.
 
 ### IDN (NeurIPS'20)
-[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))
+We also provide a **independent** Torch model in [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) branch, you could use either it or the submodule in our HAKE-Action-Torch.
 
 ### DJ-RN (CVPR'20)
 [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
