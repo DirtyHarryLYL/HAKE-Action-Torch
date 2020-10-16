@@ -57,7 +57,7 @@ We also provide a **independent** Torch model in [IDN](https://github.com/DirtyH
 Coming soon.
 
 ## Citation
-If you find our work useful, please consider citing:
+If you find our works useful, please consider citing:
 ```
 @inproceedings{li2020pastanet,
   title={HOI Analysis: Integrating and Decomposing Human-Object Interaction},
