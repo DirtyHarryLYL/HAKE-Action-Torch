@@ -1,6 +1,6 @@
 # HAKE-Action-Torch
 
-Work in progress
+Under construction.
 
 HAKE-Action (**PyTorch**) is a project to open the SOTA action understanding studies based on our [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes reproduced SOTA models and their HAKE-enhanced versions based on our six papers in CVPR'18/19/20 and NeurIPS'20.
 
