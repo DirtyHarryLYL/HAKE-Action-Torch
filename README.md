@@ -45,16 +45,16 @@ tab
 Coming soon.
 
 ### Activity2Vec (CVPR'20)
-Coming soon.
+The independent Torch version is in this branch: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
 
 ### IDN (NeurIPS'20)
-We also provide a **independent** Torch model in [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) branch, you could use either it or the submodule in our HAKE-Action-Torch.
+The independent Torch version is in this branch: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) branch, you could use either it or the submodule in our HAKE-Action-Torch.
 
 ### DJ-RN (CVPR'20)
-[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
+The independent Torch version is in this branch: [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
 ### TIN (CVPR'19)
-[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
+The independent Torch version is in this branch: [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
 ### SymNet (CVPR'20)
 Coming soon.
