@@ -1,0 +1,11 @@
+{   
+    "hico-train": "/Disk2/hongwei/hake-large/hico-train", 
+    "hico-test": "/Disk2/hongwei/hake-large/hico-test",
+    "hcvrd": "/Disk2/hongwei/hake-large/hcvrd", 
+    "openimage": "/Disk2/hongwei/hake-large/openimage",
+    "vcoco": "/Disk2/hongwei/hake-large/vcoco", 
+    "pic": "/Disk2/hongwei/hake-large/pic", 
+    "long_tail_1": "/Disk2/hongwei/hake-large/long_tail_1", 
+    "long_tail_2": "/Disk2/hongwei/hake-large/long_tail_2",
+    "collect": "/Disk2/hongwei/hake-large/hake_images_20200614/images"
+}

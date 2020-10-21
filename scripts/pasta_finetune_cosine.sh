@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=$1 python -u tools/train_pasta_net.py --model $2 --train_continue 1 --weight $3 --base_lr $4 --pasta_trained $5 --lr_schedule cosine
