@@ -62,7 +62,7 @@ Coming soon.
 ## Citation
 If you find our works useful, please consider citing:
 ```
-@inproceedings{li2020pastanet,
+@inproceedings{li2020hoi,
   title={HOI Analysis: Integrating and Decomposing Human-Object Interaction},
   author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Li, Yizhuo and Lu, Cewu},
   booktitle={NeurIPS},
