@@ -16,7 +16,7 @@ from prefetch_generator import BackgroundGenerator
 from dataset import HICO_train_set, HICO_test_set
 from model import AE, IDN
 from utils import Timer, HO_weight, AverageMeter
-from HICO_DET_utils import obj_range, get_map
+from HICO_DET_utils import obj_range
 
 class DataLoaderX(DataLoader):
     def __iter__(self):
@@ -163,5 +163,6 @@ for i in range(config.TRAIN.MAX_EPOCH):
     net, train_meters = train(net, train_loader, optimizer, train_timer, i)
     for (key, value) in train_meters.items():
         train_str += ", %s=%.4f" % (key, value.avg)
+    state = {'state':net.state_dict(), 'epoch': i}
     logger.info(train_str)
     torch.save(state, os.path.join(cur_path, 'epoch_%d.pth' % i))
