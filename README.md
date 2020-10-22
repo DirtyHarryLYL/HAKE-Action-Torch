@@ -63,8 +63,6 @@ For V-COCO: Coming soon!
 
 ## Results
 
-## Results
-
 Our model achieves the following performance on :
 
 ### [HICO-DET](https://paperswithcode.com/sota/human-object-interaction-detection-on-hico)
