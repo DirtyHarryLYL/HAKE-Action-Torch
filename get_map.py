@@ -1,18 +1,23 @@
 import pickle
 import numpy as np
 import os
-import sys
 import argparse
-import torch
 import h5py
 from HICO_DET_utils import rare, obj_range, calc_ap_ko
 
-#################################
-### to evaluate your model, just change string "model" to the folder name 
-model  = 'aug_eval'
-#################################
+def parse_arg():
+    parser = argparse.ArgumentParser(description='Generate detection file')
+    parser.add_argument('--exp', dest='exp',
+            help='Define exp name',
+            default='_'.join(time.asctime(time.localtime(time.time())).split()), type=str)
+    args = parser.parse_args()
+    return args
+
+args = parse_arg()
+model  = args.exp
+
 result_file = 'exp' + model + '/result.pkl'
-res        = pickle.load(open(result_file, 'rb'))
+res         = pickle.load(open(result_file, 'rb'))
 keys   = res['keys']
 bboxes = res['bboxes']
 scores = res['scores']
@@ -60,7 +65,3 @@ with open('exp/'+model+'/eval_result.txt', 'w') as f:
     f.write('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3)), float(np.mean(mrec_ko_3))))
     f.write('rare     ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3[rare > 1])), float(np.mean(mrec_ko_3[rare > 1]))))
     f.write('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3[rare < 1])), float(np.mean(mrec_ko_3[rare < 1]))))
-
-    
-    
-
