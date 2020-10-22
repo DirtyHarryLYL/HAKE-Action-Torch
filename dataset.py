@@ -97,7 +97,7 @@ class HICO_test_set(Dataset):
     
         self.data_dir     = data_dir
         self.split = split
-        self.db    = pickle.load(open(osp.join(data_dir, 'db_' + self.split + '_feat.pkl'), 'rb'))
+        self.db    = pickle.load(open(osp.join(data_dir, 'db_' + self.split + '_with_pool.pkl'), 'rb'))
         self.cand  = pickle.load(open(osp.join(data_dir, 'candidates_' + self.split + '.pkl'), 'rb'))
         self.verb_trans   = verb_trans
         
@@ -278,10 +278,10 @@ class HICO_train_set(Dataset):
                     sub_vec.append(f['FH'][info['H_mapping'][sub_id], :])
                     obj_vec.append(f['FO'][obj_id, :])
             else:
-                sub_ipt = info['pool'][j][np.random.randint(0, info['pool'][sub_id].shape[0])]
+                sub_ipt = info['pool'][sub_id][np.random.randint(0, info['pool'][sub_id].shape[0])]
                 with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(int(self.db[sub_ipt[0]]['filename'][-10:-4])) + '.h5'), 'r') as f:
                     sub_vec.append(f['FH'][info['H_mapping'][sub_ipt[1]], :])
-                obj_ipt = info['pool'][j][np.random.randint(0, info['pool'][obj_id].shape[0])]
+                obj_ipt = info['pool'][sub_id][np.random.randint(0, info['pool'][obj_id].shape[0])]
                 with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(int(self.db[obj_ipt[0]]['filename'][-10:-4])) + '.h5'), 'r') as f:
                     obj_vec.append(f['FH'][info['H_mapping'][obj_ipt[1]], :])
             with h5py.File(osp.join(self.data_dir, 'Union_feature', self.split, str(im_id) + '.h5'), 'r') as f:
