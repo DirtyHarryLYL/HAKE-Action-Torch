@@ -44,13 +44,13 @@ export CUDA_VISIBLE_DEVICES=0;python train.py --exp IDN --config_path configs/ID
 export CUDA_VISIBLE_DEVICES=0;python train.py --exp IPT --config_path configs/IPT.yml
 ```
 
-
 ### 4. Evaluation
 
 To get our reported result on HICO-DET with COCO evaluator, run 
 
 ```
-python get_map.py
+python eval.py --config_path configs/eval_hico_coco.yml --exp eval_hico_coco
+python get_map.py --exp eval_hico_coco
 ```
 
 Other detection settings and V-COCO are coming soon!
@@ -62,6 +62,27 @@ For HICO-DET:
 For V-COCO: Coming soon!
 
 ## Results
+
+## Results
+
+Our model achieves the following performance on :
+
+### [HICO-DET](https://paperswithcode.com/sota/human-object-interaction-detection-on-hico)
+
+|Method|Full(def) | Rare(def) | None-Rare(def)| Full(ko) | Rare(ko) | None-Rare(ko) |
+| ------------------    |---------------- | -------------- |-|-|-|-|
+| IDN (COCO Detector)   | 23.36 | 22.47 | 23.63 | 26.43 | 25.01 | 26.85 |
+| IDN (HICO-DET Detector from VCL)   |24.58 | 20.33|25.86|27.89 | 23.64| 29.16|
+| IDN (HICO-DET Detector from DRG)   |26.29 | 22.61|27.39|28.24 | 24.47| 29.37|
+| IDN (GT Detection)    |43.98 | 40.27 | 45.09 | - | - | - |
+
+
+### [V-COCO](https://paperswithcode.com/sota/human-object-interaction-detection-on-v-coco)
+
+
+|Method|AP role, Scenario 1| AP role, Scenario 2 | 
+| ------------------    |---------------- | -------------- |
+| IDN    |53.3|60.3|
 
 ## Contributing
 
