@@ -1,32 +1,66 @@
 import pickle
 import numpy as np
+import os
+import sys
+import argparse
+import torch
+import h5py
 from HICO_DET_utils import rare, obj_range, calc_ap_ko
-import pickle 
 
-score, bboxes, keys, sel = pickle.load(open('supp_res.pkl', 'rb'))
+#################################
+### to evaluate your model, just change string "model" to the folder name 
+model  = 'aug_eval'
+#################################
+result_file = 'exp' + model + '/result.pkl'
+res        = pickle.load(open(result_file, 'rb'))
+keys   = res['keys']
+bboxes = res['bboxes']
+scores = res['scores']
+hdet   = res['hdet']
+odet   = res['odet']
+sel    = res['sel']
+map, map_ko = np.zeros(600), np.zeros(600)
+mrec, mrec_ko = np.zeros(600), np.zeros(600)
 
-summary_1 = {
-    'ap': np.zeros(600),
-    'rec': np.zeros(600),
-    'ap_ko': np.zeros(600),
-    'rec_ko': np.zeros(600),
-}
-
-for obj_index in range(80):
-    x, y = obj_range[obj_index]
-    x -= 1
+for i in range(80):
+    if len(keys[i]) == 0:
+        continue
+    begin = obj_range[i][0] - 1
+    end   = obj_range[i][1]
     ko_mask = []
-    for hoi_id in range(x, y):
-        gt_bbox = pickle.load(open('gt_hoi_py2/hoi_%d.pkl' % hoi_id, 'rb'), encoding='latin1')
+    for hoi_id in range(begin, end):
+        gt_bbox = pickle.load(open('gt_hoi_py2/hoi_%d.pkl' % hoi_id, 'rb'))
         ko_mask += list(gt_bbox.keys())
     ko_mask = set(ko_mask)
-    for hoi_id in range(x, y):
-        output_1 = calc_ap_ko(score[obj_index][sel[hoi_id]], bboxes[obj_index][sel[hoi_id]], keys[obj_index][sel[hoi_id]], hoi_id, x, ko_mask)
-        for key in summary_1.keys():
-            summary_1[key][hoi_id] = output_1[key]
-print(
-    "def full %.4f, def rare %.4f, def non-rare %.4f, ko full %.4f, ko rare %.4f, ko non-rare %.4f" % (
-        np.mean(summary_1['ap']),    np.mean(summary_1['ap'][rare > 1]),    np.mean(summary_1['ap'][rare < 1]), 
-        np.mean(summary_1['ap_ko']), np.mean(summary_1['ap_ko'][rare > 1]), np.mean(summary_1['ap_ko'][rare < 1])
-    )
-)
+    
+    for hoi_id in range(begin, end):
+        select = sel[hoi_id]
+        bbox   = bboxes[i][select, :]
+        key    = keys[i][select]
+        score  = scores[i][select, :]
+        map[hoi_id], mrec[hoi_id], map_ko[hoi_id], mrec_ko[hoi_id] = calc_ap_ko(score, bbox, key, hoi_id, begin, ko_mask)
+
+print('eval mode: default\n')
+print('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map)),float(np.mean(mrec))))
+print('rare     ap: %.4f rec: %.4f \n' % (float(np.mean(map[rare > 1])), float(np.mean(mrec[rare > 1]))))
+print('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map[rare < 1])), float(np.mean(mrec[rare < 1]))))
+print
+print('eval mode: known object\n')
+print('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko)), float(np.mean(mrec_ko))))
+print('rare     ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko[rare > 1])), float(np.mean(mrec_ko[rare > 1]))))
+print('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko[rare < 1])), float(np.mean(mrec_ko[rare < 1]))))
+
+with open('exp/'+model+'/eval_result.txt', 'w') as f:
+    f.write('eval mode: default\n')
+    f.write('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map)),float(np.mean(mrec))))
+    f.write('rare     ap: %.4f rec: %.4f \n' % (float(np.mean(map[rare > 1])), float(np.mean(mrec[rare > 1]))))
+    f.write('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map[rare < 1])), float(np.mean(mrec[rare < 1]))))
+
+    f.write('eval mode: known object\n')
+    f.write('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3)), float(np.mean(mrec_ko_3))))
+    f.write('rare     ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3[rare > 1])), float(np.mean(mrec_ko_3[rare > 1]))))
+    f.write('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3[rare < 1])), float(np.mean(mrec_ko_3[rare < 1]))))
+
+    
+    
+
