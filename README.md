@@ -12,7 +12,9 @@ As a part of [HAKE-Action-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-To
 
 ## Prerequisites
 
-Set up environment by ·pip install -r requirements.txt·
+Set up environment by 
+
+`pip install -r requirements.txt`
 
 ## Getting started
 
