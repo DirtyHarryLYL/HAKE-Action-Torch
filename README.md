@@ -10,11 +10,19 @@ As a part of [HAKE-Action-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-To
     <img src="misc/demo.png", height="400">
 </p>
 
-## Prerequisites
+## Requirements
 
-Set up environment by 
+### Setting up environment
 
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
+
+### Download data
+
+```
+bash script/Download_.py
+```
 
 ## Getting started
 
@@ -39,11 +47,22 @@ export CUDA_VISIBLE_DEVICES=0;python train.py --exp IPT --config_path configs/IP
 
 ### 4. Evaluation
 
-The evaluation is performed during training. 
-Due to the maximum file size limitation of the supplementary material, we only provide toy data to enable the code to run successfully. 
-This means the above commands would not produce our reported results. 
 To get our reported result on HICO-DET, run 
 
 ```
 python get_map.py
 ```
+
+## Pre-trained models
+
+For HICO-DET: 
+
+For V-COCO: Comming soon!
+
+## Results
+
+## Contributing
+
+## Acknowledgement
+
+Some of our code are built upon HAKE-Action, analogy and VSGNet.
