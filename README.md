@@ -47,17 +47,19 @@ export CUDA_VISIBLE_DEVICES=0;python train.py --exp IPT --config_path configs/IP
 
 ### 4. Evaluation
 
-To get our reported result on HICO-DET, run 
+To get our reported result on HICO-DET with COCO evaluator, run 
 
 ```
 python get_map.py
 ```
 
+Other detection settings and V-COCO are coming soon!
+
 ## Pre-trained models
 
 For HICO-DET: 
 
-For V-COCO: Comming soon!
+For V-COCO: Coming soon!
 
 ## Results
 
