@@ -7,6 +7,7 @@ HO_weight = torch.from_numpy(args['HO_weight'])
 fac_i     = args['fac_i']
 fac_a     = args['fac_a']
 fac_d     = args['fac_d']
+nis_thresh= args['nis_thresh']
 
 class Timer(object):
     def __init__(self):
