@@ -186,7 +186,7 @@ python Feature_extraction.py --input_list script/vertex_path_Test.txt --model_pa
 
 ### Experiments with our model
 
-new process in torch
+Coming soon.
 
 ## Citation
 If you find our work useful, please consider citing:
