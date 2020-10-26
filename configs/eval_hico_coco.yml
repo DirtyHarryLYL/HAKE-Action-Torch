@@ -5,7 +5,7 @@ TRAIN:
   DATASET:
     NUM_NEG: 8
     BATCH_SIZE: 15
-    NUM_WORKERS: 8
+    NUM_WORKERS: 3
     SAMPLER_NAME: "priority_object"
     JITTERING: True
     IPT: True
@@ -22,7 +22,7 @@ TRAIN:
 TEST:
   NIS: True
   BATCH_SIZE: 135
-  NUM_WORKERS: 8
+  NUM_WORKERS: 3
 
 MODEL:
   AE:
@@ -42,7 +42,7 @@ MODEL:
     NUM_CLASSES: 117
   IDN:
     CHECKPOINT: 
-        'exp/IDN_hico/epoch_30.pth'
+        'exp/IDN_IPT_hico/epoch_30.pth'
     NAME: 'Transformer'
     PROJ: False
     REVERSE: True
