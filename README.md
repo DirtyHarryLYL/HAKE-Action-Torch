@@ -86,4 +86,4 @@ Our model achieves the following performance on :
 
 ## Acknowledgement
 
-Some of our code are built upon HAKE-Action, analogy and VSGNet.
+Some of our code are built upon [HAKE-Action](https://github.com/DirtyHarryLYL/HAKE-Action), [Analogy](https://github.com/jpeyre/analogy) and [VSGNet](https://github.com/ASMIftekhar/VSGNet).
