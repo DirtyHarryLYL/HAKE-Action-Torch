@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ### Download data
 
 ```
-bash script/Download_.py
+bash script/Download_dataset.sh
 ```
 
 ## Getting started
@@ -57,7 +57,7 @@ Other detection settings and V-COCO are coming soon!
 
 ## Pre-trained models
 
-For HICO-DET: 
+For HICO-DET: https://drive.google.com/file/d/19cRqSeRu3Svuc7TA7Zso_uj9F3DwW-zI/view?usp=sharing
 
 For V-COCO: Coming soon!
 
