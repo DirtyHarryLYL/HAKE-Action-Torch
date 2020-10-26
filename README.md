@@ -3,10 +3,10 @@
 Under construction.
 
 <p align='center'>
-    <img src="misc/hake_demo.PNG", height="200">
+    <img src="misc/hake_demo.jpg", height="300">
 </p>
 
-HAKE-Action (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our six papers (CVPR'18/19/20, NeurIPS'20).
+HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our six papers (CVPR'18/19/20, NeurIPS'20).
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu and Zhanke Zhou, Hongwei Fan.
 
@@ -54,10 +54,10 @@ The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/Dir
 The independent Torch version is in: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)).
 
 ### DJ-RN (CVPR'20)
-The independent Torch version is in: [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
+The independent Torch version is in: [DJ-RN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
 ### TIN (CVPR'19)
-The independent Torch version is in: [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
+The independent Torch version is in: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
 ### SymNet (CVPR'20)
 Coming soon.
