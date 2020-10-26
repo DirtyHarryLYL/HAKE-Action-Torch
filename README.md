@@ -10,7 +10,7 @@ HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understandi
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu and Zhanke Zhou, Hongwei Fan.
 
-#### **News**: (2020.10.27) The code of [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) in NeurIPS'20 is released!
+### **News**: (2020.10.27) The code of [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) in NeurIPS'20 is released!
 
 ## Project
 ```Branches
