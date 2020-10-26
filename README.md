@@ -2,11 +2,11 @@
 
 Under construction.
 
-HAKE-Action (**PyTorch**) is a project to open the SOTA action understanding studies based on our [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes reproduced SOTA models and their HAKE-enhanced versions based on our six papers in CVPR'18/19/20 and NeurIPS'20.
+HAKE-Action (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our six papers (CVPR'18/19/20, NeurIPS'20).
 
-Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu and Zhanke Zhou.
+Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu and Zhanke Zhou, Hongwei Fan.
 
-#### **News**: (2020.10.xx) Our xxx is released!
+#### **News**: (2020.10.27) The code of [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) in NeurIPS'20 is released!
 
 ## Project
 ```Branches
@@ -27,34 +27,33 @@ HAKE-Action-Torch
 - [Part States](http://ai.ucsd.edu/~haosu/papers/cvpr18_partstate.pdf) (CVPR'18)
 
 ## Model Zoo
-xxx
+Coming soon.
 
 ### Results on HICO-DET with different object detections.
-Faster RCNN, ResNet-101 (1. COCO: pre-trained on COCO, 2. Finetune: finetuned on HICO-DET train set, 3. GT: Ground Truth); enhanced with HAKE.
+Coming soon.
 
-tab
 
 ### Results on V-COCO with different object detections.
-Faster RCNN, ResNet-101 (1. COCO: pre-trained on COCO, 2. Finetune: finetuned on HICO-DET train set, 3. GT: Ground Truth); enhanced with HAKE.
+Coming soon.
 
-tab
 
-## Sub-Models
+## Modules
+All these modules wii be integrated into the master branch. Now the master branch covers HAKE, TIN.
 
 ### HAKE-Only (CVPR'20)
 Coming soon.
 
 ### Activity2Vec (CVPR'20)
-The independent Torch version is in this branch: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
+The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
 
 ### IDN (NeurIPS'20)
-The independent Torch version is in this branch: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) branch, you could use either it or the submodule in our HAKE-Action-Torch.
+The independent Torch version is in: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)).
 
 ### DJ-RN (CVPR'20)
-The independent Torch version is in this branch: [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
+The independent Torch version is in: [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
 ### TIN (CVPR'19)
-The independent Torch version is in this branch: [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
+The independent Torch version is in: [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
 ### SymNet (CVPR'20)
 Coming soon.
@@ -62,29 +61,19 @@ Coming soon.
 ## Citation
 If you find our works useful, please consider citing:
 ```
+---IDN:
 @inproceedings{li2020hoi,
   title={HOI Analysis: Integrating and Decomposing Human-Object Interaction},
   author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Li, Yizhuo and Lu, Cewu},
   booktitle={NeurIPS},
   year={2020}
 }
+---HAKE:
 @inproceedings{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
   author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-Shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
   booktitle={CVPR},
   year={2020}
-}
-@inproceedings{li2020detailed,
-  title={Detailed 2D-3D Joint Representation for Human-Object Interaction},
-  author={Li, Yong-Lu and Liu, Xinpeng and Lu, Han and Wang, Shiyi and Liu, Junqi and Li, Jiefeng and Lu, Cewu},
-  booktitle={CVPR},
-  year={2020}
-}
-@inproceedings{li2019transferable,
-  title={Transferable Interactiveness Knowledge for Human-Object Interaction Detection},
-  author={Li, Yong-Lu and Zhou, Siyuan and Huang, Xijie and Xu, Liang and Ma, Ze and Fang, Hao-Shu and Wang, Yanfeng and Lu, Cewu},
-  booktitle={CVPR},
-  year={2019}
 }
 @inproceedings{lu2018beyond,
   title={Beyond holistic object recognition: Enriching image understanding with part states},
@@ -92,6 +81,21 @@ If you find our works useful, please consider citing:
   booktitle={CVPR},
   year={2018}
 }
+---DJ-RN
+@inproceedings{li2020detailed,
+  title={Detailed 2D-3D Joint Representation for Human-Object Interaction},
+  author={Li, Yong-Lu and Liu, Xinpeng and Lu, Han and Wang, Shiyi and Liu, Junqi and Li, Jiefeng and Lu, Cewu},
+  booktitle={CVPR},
+  year={2020}
+}
+---TIN
+@inproceedings{li2019transferable,
+  title={Transferable Interactiveness Knowledge for Human-Object Interaction Detection},
+  author={Li, Yong-Lu and Zhou, Siyuan and Huang, Xijie and Xu, Liang and Ma, Ze and Fang, Hao-Shu and Wang, Yanfeng and Lu, Cewu},
+  booktitle={CVPR},
+  year={2019}
+}
+---SymNet
 @inproceedings{li2020symmetry,
   title={Symmetry and Group in Attribute-Object Compositions},
   author={Li, Yong-Lu and Xu, Yue and Mao, Xiaohan and Lu, Cewu},
