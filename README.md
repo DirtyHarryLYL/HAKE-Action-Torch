@@ -54,10 +54,10 @@ The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/Dir
 The independent Torch version is in: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)).
 
 ### DJ-RN (CVPR'20)
-The independent Torch version is in: [DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
+The independent Torch version is in: [DJ-RN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
 ### TIN (CVPR'19)
-The independent Torch version is in: [TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
+The independent Torch version is in: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
 ### SymNet (CVPR'20)
 Coming soon.
