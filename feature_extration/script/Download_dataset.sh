@@ -1,7 +1,9 @@
 ln -s ../script/Download_data.py ./script/Download_data.py
-mkdir Data
+ln -s ../data Data
 python script/Download_data.py 1QZcJmGVlF9f4h-XLWe9Gkmnmj2z1gSnk Data/hico_20160224_det.tar.gz
 tar -xvzf Data/hico_20160224_det.tar.gz -C Data
-rm Data/hico_20160224_det.tar.gz
+rm -rf Data/hico_20160224_det.tar.gz
 
-mkdir Weights
+python script/Download_data.py 11SLejGxS4psGlOaWL0jc89RP6yVdtq_X Weights.zip
+unzip Weights.zip
+rm -rf Weights.zip
