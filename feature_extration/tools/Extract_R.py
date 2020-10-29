@@ -12,15 +12,29 @@ from models.extractor_R import test_net
 from networks.net_R import ResNet50
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Extract features')
+    parser.add_argument('--data', dest='data',
+            help='pkl file to load',
+            default='Data/db_trainval_with_pool.pkl', type=str)
+    parser.add_argument('--image_path', dest='image_path',
+            help='image path',
+            default='Data/hico_20160224_det/images/train2015/', type=int)
+    parser.add_argument('--output', dest='output',
+            help='feature path',
+            default='Data/Union_feature/train/', type=str)
+    args = parser.parse_args()
+    return args
+
+
 if __name__ == '__main__':
 
-    ppdm = pickle.load(open('../data/db_trainval_with_pool.pkl', 'rb'))
+    db = pickle.load(open(args.data, 'rb'))
     # db_test_feat.pkl
     weight = 'Weights/model.ckpt'
   
-    output_file = os.path.join('../data/Union_feature/trainval/')
-    if not os.path.exists(output_file):
-        os.mkdir(output_file)
+    if not os.path.exists(args.output):
+        os.mkdir(args.output)
 
     # init session
     tfconfig = tf.ConfigProto(allow_soft_placement=True)
@@ -35,6 +49,6 @@ if __name__ == '__main__':
 
     print('Pre-trained weights loaded.')
     
-    test_net(sess, net, ppdm, output_file)
+    test_net(sess, net, db, args.output, args.image_path)
     sess.close()
     
