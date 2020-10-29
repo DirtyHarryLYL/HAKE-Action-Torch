@@ -60,6 +60,19 @@ class Transformer(nn.Module):
         score = torch.mean(bias * bias, dim=1) * -1
         return transformed, score
 
+class semihard_loss(nn.Module):
+    def __init__(self, pos_weight):
+        super(semihard_loss, self).__init__()
+        self.pos_weight = nn.Parameter(pos_weight)
+    def forward(self, score, label):
+        score_ = score * self.pos_weight
+        pos = score_ * label
+        neg = score_ * (1. - label)
+        l_inter = torch.mean(torch.sum(neg, dim=1) / (torch.sum(1 - label, dim=1) + 1) - torch.sum(pos, dim=1) / (torch.sum(label, dim=1) + 1))
+        l_intra = torch.mean(torch.sum(neg, dim=0) / (torch.sum(1 - label, dim=0) + 1) - torch.sum(pos, dim=0) / (torch.sum(label, dim=0) + 1))
+        loss    = l_inter + l_intra
+        return loss
+
 class AE(nn.Module):
     def __init__(self, config, hoi_weight):
         super(AE, self).__init__()
@@ -122,15 +135,18 @@ class AE(nn.Module):
                 self.binary_loss = nn.CrossEntropyLoss()
 
         if self.config.AE.NUM_CLASSES == 600:
-            self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)  
+            self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels_sro'
         elif self.config.AE.NUM_CLASSES == 29:
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)  
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels'
         else:
             verb_weight  = np.matmul(verb_mapping, hoi_weight.transpose(1, 0).numpy())
             verb_weight  = torch.from_numpy((verb_weight.reshape(1, -1) / np.sum(verb_mapping, axis=1).reshape(1, -1)))
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=verb_weight)
+            self.semihard_loss       = semihard_loss(pos_weight=verb_weight)
             self.key = 'labels_r'
         
         self.reconstruction_fac  = self.config.AE.LOSS.RECONSTRUCTION_FAC
@@ -158,7 +174,7 @@ class AE(nn.Module):
         output['p'] = p
         output['L_cls'] = L_cls
         output['L_rec'] = L_rec
-        output['loss'] = L_cls + L_rec
+        output['loss'] = L_cls + L_rec + self.semihard_loss(s, batch[self.key])
         
         if self.config.AE.BIN:
             s_bin = self.binary_classifier(z)
@@ -199,14 +215,17 @@ class IDN(nn.Module):
         
         if config.IDN.NUM_CLASSES == 600:
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)  
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels_sro'
         if config.IDN.NUM_CLASSES == 29:
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)  
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels'
         else:
             verb_weight  = np.matmul(verb_mapping, hoi_weight.transpose(1, 0).numpy())
             verb_weight  = torch.from_numpy((verb_weight.reshape(1, -1) / np.sum(verb_mapping, axis=1).reshape(1, -1)))
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=verb_weight)
+            self.semihard_loss       = semihard_loss(pos_weight=verb_weight)
             self.key = 'labels_r'
 
         self.classification_fac  = self.config.IDN.CLASSIFICATION_FAC
@@ -245,12 +264,12 @@ class IDN(nn.Module):
         output['p'] = torch.exp(score)
         output['L_cls'] = L_cls
         output['L_ae'] = self.autoencoder_fac * output_AE['loss']
-        output['loss'] = L_cls + output['L_ae']
+        output['loss'] = L_cls + output['L_ae'] + self.semihard_loss(score, batch[self.key])
 
         if self.config.IDN.REVERSE:
             rev, score_r   = self.reverse(cat, tran)
             output['L_rev']  = self.reverse_fac * self.classification_loss(score_r, batch[self.key])
-            output['loss']  += output['L_rev']
+            output['loss']  += output['L_rev'] + self.semihard_loss(score_r, batch[self.key])
             output['s_rev']  = score_r
 
         if self.config.IDN.BINARY:
