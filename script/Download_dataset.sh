@@ -12,9 +12,16 @@ python script/Download_data.py 1Y115lzCgqjRc5kMPfJQDjzkubnlAF4K9 data/Union_feat
 python script/Download_data.py 1EF7bICo-H1Iy7-J03MqwvN5z-iH12z3A data/Union_feat/test.7z.004
 python script/Download_data.py 16bRG-w18hv54_n1utumlsoxcbGoF4rI9 data/Union_feat/test.7z.005
 python script/Download_data.py 1F5SyAwZxSEAZVZ8UXryklLdaeKyR0Z5T data/Union_feat/test.7z.006
+
+mkdir data/feature/
+python script/Download_data.py 1ZqFi6v-3umwdPrilyZ9JxH5JjyOQvkkN data/feature/test.7z.001
+python script/Download_data.py 1b8o561vNe0u1LZjRmVAC7XIlu9ttMUwH data/feature/test.7z.001
+
 apt install p7zip-full
 7z x data/Union_feat/test.7z.001 -r -o data/Union_feat/
+7z x data/feature/test.7z.001 -r -o data/feature/
 rm -rf data/Union_feat/test.7z.*
+rm -rf data/feature/test.7z.*
 
 mkdir exp
 python script/Download_data.py 1hLXJKVu9FElD2DdbbuAnCVYI7hxrMPLn exp/nis.pkl
