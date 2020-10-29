@@ -88,6 +88,8 @@ Our model achieves the following performance on :
 
 ## Contributing
 
+Feel free to send us email or raise pull requests.
+
 ## Acknowledgement
 
 Some of our code are built upon [HAKE-Action](https://github.com/DirtyHarryLYL/HAKE-Action), [Analogy](https://github.com/jpeyre/analogy) and [VSGNet](https://github.com/ASMIftekhar/VSGNet).
