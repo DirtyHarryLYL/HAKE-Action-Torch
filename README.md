@@ -26,7 +26,7 @@ bash script/Download_dataset.sh
 
 ### Feature extraction
 
-For ease of reproducing our reported result, we provide the feature of HICO-DET test set in the previous step. We also show how to extract feature from raw images. For more detailed information, please refer to [feature_extraction](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)/feature_extration).
+For ease of reproducing our reported result, we provide the feature of HICO-DET test set with COCO detector in the previous step. We also show how to extract feature from raw images. For more detailed information, please refer to [feature_extraction](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)/feature_extration).
 
 ## Getting started
 
