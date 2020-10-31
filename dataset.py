@@ -121,7 +121,7 @@ class HICO_test_set(Dataset):
         sub_id, obj_id = info['pair_ids'][cand_id]
         
         spatial, shape = load_pair_objects(info, sub_id, obj_id)
-
+        # There is a typo in the next line. If you extract test feature by yourself, please change str(int(self.db[im_id]['filename'][-10:-4])) to str(im_id). We will provide a more elegant fix in the late future.
         with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(int(self.db[im_id]['filename'][-10:-4])) + '.h5'), 'r') as f:
             sub_vec = f['FH'][info['H_mapping'][sub_id], :]
             obj_vec = f['FO'][obj_id, :]
@@ -274,15 +274,15 @@ class HICO_train_set(Dataset):
             spatial.append(layout)
             shape.append(hw)
             if not self.ipt:
-                with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(int(self.db[im_id]['filename'][-10:-4])) + '.h5'), 'r') as f:
+                with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(im_id) + '.h5'), 'r') as f:
                     sub_vec.append(f['FH'][info['H_mapping'][sub_id], :])
                     obj_vec.append(f['FO'][obj_id, :])
             else:
                 sub_ipt = info['pool'][sub_id][np.random.randint(0, info['pool'][sub_id].shape[0])]
-                with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(int(self.db[sub_ipt[0]]['filename'][-10:-4])) + '.h5'), 'r') as f:
+                with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(self.db[sub_ipt[0]]) + '.h5'), 'r') as f:
                     sub_vec.append(f['FH'][info['H_mapping'][sub_ipt[1]], :])
                 obj_ipt = info['pool'][sub_id][np.random.randint(0, info['pool'][obj_id].shape[0])]
-                with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(int(self.db[obj_ipt[0]]['filename'][-10:-4])) + '.h5'), 'r') as f:
+                with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(self.db[obj_ipt[0]]) + '.h5'), 'r') as f:
                     obj_vec.append(f['FH'][info['H_mapping'][obj_ipt[1]], :])
             with h5py.File(osp.join(self.data_dir, 'Union_feature', self.split, str(im_id) + '.h5'), 'r') as f:
                 uni_vec.append(f['R'][info['feat_map'][cand_id], :])
