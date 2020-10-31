@@ -97,7 +97,7 @@ class HICO_test_set(Dataset):
     
         self.data_dir     = data_dir
         self.split = split
-        self.db    = pickle.load(open(osp.join(data_dir, 'db_' + self.split + '_with_pool.pkl'), 'rb'))
+        self.db    = pickle.load(open(osp.join(data_dir, 'db_' + self.split + '_feat.pkl'), 'rb'))
         self.cand  = pickle.load(open(osp.join(data_dir, 'candidates_' + self.split + '.pkl'), 'rb'))
         self.verb_trans   = verb_trans
         
@@ -178,7 +178,7 @@ class HICO_train_set(Dataset):
         self.train_mode   = train_mode
         self.jittering    = self.config.JITTERING
         self.ipt          = self.config.IPT
-        self.db           = pickle.load(open(osp.join(self.data_dir, 'db_' + self.split + '_feat.pkl'), 'rb'))
+        self.db           = pickle.load(open(osp.join(self.data_dir, 'db_' + self.split + '_with_pool.pkl'), 'rb'))
         self.cand_pos     = pickle.load(open(osp.join(self.data_dir, 'cand_positives_' + self.split + '.pkl'), 'rb'))
         self.cand_neg     = pickle.load(open(osp.join(self.data_dir, 'cand_negatives_' + self.split + '.pkl'), 'rb'))
         self.verb_trans   = verb_trans
