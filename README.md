@@ -34,18 +34,19 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
  # 4. data and weights
  mkdir Data/
  # Download the weights and data presented below:
- ┌───────────────────────────┬────────────────────────────────────────────────────────────────────┐
- | FILENAME                  | URL                                                                |
- ├───────────────────────────┼────────────────────────────────────────────────────────────────────┤
- | yolov3-spp.weights        | https://drive.google.com/open?id=1D47msNOOiJKvPOXlnpyzdKA3k6E97NTC |
- | fast_res50_256x192.pth    | https://drive.google.com/open?id=1kQhnMRURFiy7NsdS8EFL-8vtqEXOgECn |
- | freqs_and_weights.tgz     | https://1drv.ms/u/s!ArUVoRxpBphYgtRf6oOL9VvGxoe-6Q?e=zlCZB4        |
- | hake_40v_test_gt_lmdb.tgz | https://1drv.ms/u/s!ArUVoRxpBphYgtRgebT9Bu-iuS5uhg?e=gr1ynL        |
- | Test_all_part_lmdb.tgz    | https://1drv.ms/u/s!ArUVoRxpBphYgtRh8L-k6Rk3eaW79w?e=IUphXk        |
- | Trainval_GT_HAKE.tgz      | https://1drv.ms/u/s!ArUVoRxpBphYgtRi42sVpiMPmQon9Q?e=EBOU5a        |
- | Trainval_Neg_HAKE.tgz     | https://1drv.ms/u/s!ArUVoRxpBphYgtRj8acRHK41WSIn8Q?e=oBvDbf        |
- | evaluation_data.tgz       | https://1drv.ms/u/s!ArUVoRxpBphYgtRkzTE3tZVYovtCnA?e=uLxNSA        |
- └───────────────────────────┴────────────────────────────────────────────────────────────────────┘
+ ┌────────────────────────────┬────────────────────────────────────────────────────────────────────┐
+ | FILENAME                   | URL                                                                |
+ ├────────────────────────────┼────────────────────────────────────────────────────────────────────┤
+ | yolov3-spp.weights         | https://drive.google.com/open?id=1D47msNOOiJKvPOXlnpyzdKA3k6E97NTC |
+ | fast_res50_256x192.pth     | https://drive.google.com/open?id=1kQhnMRURFiy7NsdS8EFL-8vtqEXOgECn |
+ | freqs_and_weights.tgz      | https://1drv.ms/u/s!ArUVoRxpBphYgtRf6oOL9VvGxoe-6Q?e=zlCZB4        |
+ | hake_40v_test_gt_lmdb.tgz  | https://1drv.ms/u/s!ArUVoRxpBphYgtRgebT9Bu-iuS5uhg?e=gr1ynL        |
+ | Test_all_part_lmdb.tgz     | https://1drv.ms/u/s!ArUVoRxpBphYgtRh8L-k6Rk3eaW79w?e=IUphXk        |
+ | Trainval_GT_HAKE.tgz       | https://1drv.ms/u/s!ArUVoRxpBphYgtRi42sVpiMPmQon9Q?e=EBOU5a        |
+ | Trainval_Neg_HAKE.tgz      | https://1drv.ms/u/s!ArUVoRxpBphYgtRj8acRHK41WSIn8Q?e=oBvDbf        |
+ | evaluation_data.tgz        | https://1drv.ms/u/s!ArUVoRxpBphYgtRkzTE3tZVYovtCnA?e=uLxNSA        |
+ | pasta_pretrained_model.tar | https://1drv.ms/u/s!ArUVoRxpBphYgtRugeMQVT-ncVq0OA?e=J6aBJn        |
+ └────────────────────────────┴────────────────────────────────────────────────────────────────────┘
  # and sort them into this data stucture:
  HAKE-Activity2Vec
  ├──AlphaPose
