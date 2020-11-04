@@ -23,7 +23,7 @@ HAKE-Action-Torch
 ```
 
 ## Papers
-- [IDN]() (NeurIPS'20)
+- [IDN](https://arxiv.org/pdf/2010.16219.pdf) (NeurIPS'20)
 - [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) (CVPR'20)
 - [DJ-RN](https://arxiv.org/pdf/2004.08154.pdf) (CVPR'20)
 - [SymNet](https://arxiv.org/pdf/2004.00587.pdf) (CVPR'20)
