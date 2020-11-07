@@ -69,7 +69,7 @@ For V-COCO: Coming soon!
 
 Our model achieves the following performance on :
 
-### [HICO-DET](https://paperswithcode.com/sota/human-object-interaction-detection-on-hico)
+### [HICO-DET](https://paperswithcode.com/sota/human-object-interaction-detection-on-hico) (By GT Dectection, we mean the GT human-object pair box)
 
 |Method|Full(def) | Rare(def) | None-Rare(def)| Full(ko) | Rare(ko) | None-Rare(ko) |
 | :-:    |:-:| :-: |:-:|:-:|:-:|:-:|
