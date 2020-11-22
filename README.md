@@ -42,7 +42,7 @@ Coming soon.
 
 
 ## Modules
-All these modules wii be integrated into the master branch. Now the master branch covers HAKE, TIN.
+All these modules wii be integrated into the master branch to compose a unified model later.
 
 ### HAKE-Only (CVPR'20)
 Coming soon.
