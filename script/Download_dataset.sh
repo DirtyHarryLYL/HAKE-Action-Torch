@@ -24,6 +24,6 @@ rm -rf data/Union_feat/test.7z.*
 rm -rf data/feature/test.7z.*
 
 mkdir exp
-python script/Download_data.py 1hLXJKVu9FElD2DdbbuAnCVYI7hxrMPLn exp/nis.pkl
+python script/Download_data.py 1QZuDE7F0SqFvzO0ZJCZxoszE-qGyuMU_ exp/nis.pkl
 mkdir exp/IDN_IPT_hico/
 python script/Download_data.py 19cRqSeRu3Svuc7TA7Zso_uj9F3DwW-zI exp/IDN_IPT_hico/epoch_30.pth
