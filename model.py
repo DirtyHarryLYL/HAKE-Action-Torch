@@ -63,7 +63,7 @@ class Transformer(nn.Module):
 class semihard_loss(nn.Module):
     def __init__(self, pos_weight):
         super(semihard_loss, self).__init__()
-        self.pos_weight = nn.Parameter(pos_weight)
+        self.pos_weight = nn.Parameter(pos_weight, requires_grad=True)
     def forward(self, score, label):
         score_ = score * self.pos_weight
         pos = score_ * label
@@ -136,17 +136,14 @@ class AE(nn.Module):
 
         if self.config.AE.NUM_CLASSES == 600:
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)
-            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels_sro'
         elif self.config.AE.NUM_CLASSES == 29:
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)  
-            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels'
         else:
             verb_weight  = np.matmul(verb_mapping, hoi_weight.transpose(1, 0).numpy())
             verb_weight  = torch.from_numpy((verb_weight.reshape(1, -1) / np.sum(verb_mapping, axis=1).reshape(1, -1)))
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=verb_weight)
-            self.semihard_loss       = semihard_loss(pos_weight=verb_weight)
             self.key = 'labels_r'
         
         self.reconstruction_fac  = self.config.AE.LOSS.RECONSTRUCTION_FAC
@@ -155,7 +152,14 @@ class AE(nn.Module):
         if config.AE.CHECKPOINT:
             state = torch.load(config.AE.CHECKPOINT)['state']
             self.load_state_dict(state)
-
+            
+        if self.config.AE.NUM_CLASSES == 600:
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
+        elif self.config.AE.NUM_CLASSES == 29:
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
+        else:
+            self.semihard_loss       = semihard_loss(pos_weight=verb_weight)
+            
     def forward(self, batch):
         sp = self.spatial(batch['spatial'])
         n  = sp.shape[0]
@@ -174,7 +178,7 @@ class AE(nn.Module):
         output['p'] = p
         output['L_cls'] = L_cls
         output['L_rec'] = L_rec
-        output['loss'] = L_cls + L_rec + self.semihard_loss(s, batch[self.key])
+        output['loss'] = L_cls + L_rec + self.semihard_loss(p, batch[self.key])
         
         if self.config.AE.BIN:
             s_bin = self.binary_classifier(z)
@@ -215,17 +219,14 @@ class IDN(nn.Module):
         
         if config.IDN.NUM_CLASSES == 600:
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)  
-            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels_sro'
         if config.IDN.NUM_CLASSES == 29:
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=hoi_weight)  
-            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
             self.key = 'labels'
         else:
             verb_weight  = np.matmul(verb_mapping, hoi_weight.transpose(1, 0).numpy())
             verb_weight  = torch.from_numpy((verb_weight.reshape(1, -1) / np.sum(verb_mapping, axis=1).reshape(1, -1)))
             self.classification_loss = nn.BCEWithLogitsLoss(pos_weight=verb_weight)
-            self.semihard_loss       = semihard_loss(pos_weight=verb_weight)
             self.key = 'labels_r'
 
         self.classification_fac  = self.config.IDN.CLASSIFICATION_FAC
@@ -241,6 +242,12 @@ class IDN(nn.Module):
         if config.IDN.CHECKPOINT:
             state = torch.load(config.IDN.CHECKPOINT)['state']
             self.load_state_dict(state)
+        if self.config.AE.NUM_CLASSES == 600:
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
+        elif self.config.AE.NUM_CLASSES == 29:
+            self.semihard_loss       = semihard_loss(pos_weight=hoi_weight)
+        else:
+            self.semihard_loss       = semihard_loss(pos_weight=verb_weight)
             
 
     def forward(self, batch):
@@ -264,12 +271,12 @@ class IDN(nn.Module):
         output['p'] = torch.exp(score)
         output['L_cls'] = L_cls
         output['L_ae'] = self.autoencoder_fac * output_AE['loss']
-        output['loss'] = L_cls + output['L_ae'] + self.semihard_loss(score, batch[self.key])
+        output['loss'] = L_cls + output['L_ae'] + self.semihard_loss(output['p'], batch[self.key])
 
         if self.config.IDN.REVERSE:
             rev, score_r   = self.reverse(cat, tran)
             output['L_rev']  = self.reverse_fac * self.classification_loss(score_r, batch[self.key])
-            output['loss']  += output['L_rev'] + self.semihard_loss(score_r, batch[self.key])
+            output['loss']  += output['L_rev'] + self.semihard_loss(torch.exp(score_r), batch[self.key])
             output['s_rev']  = score_r
 
         if self.config.IDN.BINARY:
