@@ -285,7 +285,7 @@ class HICO_train_set(Dataset):
                 with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(self.db[obj_ipt[0]]) + '.h5'), 'r') as f:
                     obj_vec.append(f['FH'][info['H_mapping'][obj_ipt[1]], :])
             with h5py.File(osp.join(self.data_dir, 'Union_feature', self.split, str(im_id) + '.h5'), 'r') as f:
-                uni_vec.append(f['R'][info['feat_map'][cand_id], :])
+                uni_vec.append(f['R'][cand_id, :])
 
         labels_s   = np.concatenate(labels_s, axis=0)
         labels_ro  = np.concatenate(labels_ro, axis=0)
