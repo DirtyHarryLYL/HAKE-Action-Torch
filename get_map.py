@@ -62,6 +62,6 @@ with open('exp/'+model+'/eval_result.txt', 'w') as f:
     f.write('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map[rare < 1])), float(np.mean(mrec[rare < 1]))))
 
     f.write('eval mode: known object\n')
-    f.write('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3)), float(np.mean(mrec_ko_3))))
-    f.write('rare     ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3[rare > 1])), float(np.mean(mrec_ko_3[rare > 1]))))
-    f.write('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko_3[rare < 1])), float(np.mean(mrec_ko_3[rare < 1]))))
+    f.write('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko)), float(np.mean(mrec_ko))))
+    f.write('rare     ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko[rare > 1])), float(np.mean(mrec_ko[rare > 1]))))
+    f.write('non-rare ap: %.4f rec: %.4f \n' % (float(np.mean(map_ko[rare < 1])), float(np.mean(mrec_ko[rare < 1]))))
