@@ -118,8 +118,8 @@ def eval(net, loader, timer):
         if 's' in output:
             output['s'] = torch.matmul(output['s'], verb_mapping)
             for j in range(600):
-                output['s'][:, j] /= fac_d[j]
-            output['s'] = torch.sigmoid(output['s']).detach().cpu().numpy()
+                output['s'][:, j] /= fac_i[j]
+            output['s'] = torch.exp(output['s']).detach().cpu().numpy()
                 
         if 's_AE' in output:
             output['s_AE'] = torch.matmul(output['s_AE'], verb_mapping)
@@ -132,7 +132,7 @@ def eval(net, loader, timer):
             output['s_rev'] = output['s_rev'].detach().cpu().numpy()
             for j in range(600):
                 output['s_rev'][:, j] /= fac_d[j]
-            output['s_rev'] = torch.sigmoid(output['s_rev']).detach().cpu().numpy()
+            output['s_rev'] = torch.exp(output['s_rev']).detach().cpu().numpy()
 
         for j in range(bbox.shape[0]):
             cls = obj_class[j]
