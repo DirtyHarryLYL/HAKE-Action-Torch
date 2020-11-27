@@ -281,9 +281,9 @@ class HICO_train_set(Dataset):
                 sub_ipt = info['pool'][sub_id][np.random.randint(0, info['pool'][sub_id].shape[0])]
                 with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(self.db[sub_ipt[0]]) + '.h5'), 'r') as f:
                     sub_vec.append(f['FH'][info['H_mapping'][sub_ipt[1]], :])
-                obj_ipt = info['pool'][sub_id][np.random.randint(0, info['pool'][obj_id].shape[0])]
+                obj_ipt = info['pool'][obj_id][np.random.randint(0, info['pool'][obj_id].shape[0])]
                 with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(self.db[obj_ipt[0]]) + '.h5'), 'r') as f:
-                    obj_vec.append(f['FH'][info['H_mapping'][obj_ipt[1]], :])
+                    obj_vec.append(f['FO'][obj_ipt[1], :])
             with h5py.File(osp.join(self.data_dir, 'Union_feature', self.split, str(im_id) + '.h5'), 'r') as f:
                 uni_vec.append(f['R'][cand_id, :])
 
