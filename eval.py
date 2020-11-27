@@ -164,12 +164,12 @@ def eval(net, loader, timer):
         odet[i]       = np.array(odet[i])
         
     sel = []
+    for i in range(600):
+        sel.append(None)
     if config.TEST.NIS:
-        for i in range(600):
-            sel.append(None)
         pos = pickle.load(open('exp/nis.pkl','rb'))['pos']
         for i in range(80):
-            x, y = obj_range[cls][0] - 1, obj_range[cls][1]
+            x, y = obj_range[i][0] - 1, obj_range[i][1]
             for hoi_id in range(x, y):
                 athresh = nis_thresh[hoi_id]
                 if hoi_id + 1 in hoi_no_inter_all:
