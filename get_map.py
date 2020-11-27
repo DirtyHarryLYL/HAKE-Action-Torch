@@ -16,7 +16,7 @@ def parse_arg():
 args = parse_arg()
 model  = args.exp
 
-result_file = 'exp' + model + '/result.pkl'
+result_file = 'exp/' + model + '/result.pkl'
 res         = pickle.load(open(result_file, 'rb'))
 keys   = res['keys']
 bboxes = res['bboxes']
