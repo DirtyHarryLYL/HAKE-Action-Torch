@@ -123,13 +123,11 @@ def eval(net, loader, timer):
                 
         if 's_AE' in output:
             output['s_AE'] = torch.matmul(output['s_AE'], verb_mapping)
-            output['s_AE'] = output['s_AE'].detach().cpu().numpy()
             for j in range(600):
                 output['s_AE'][:, j] /= fac_a[j]
             output['s_AE'] = torch.sigmoid(output['s_AE']).detach().cpu().numpy()
         if 's_rev' in output:
             output['s_rev'] = torch.matmul(output['s_rev'], verb_mapping)
-            output['s_rev'] = output['s_rev'].detach().cpu().numpy()
             for j in range(600):
                 output['s_rev'][:, j] /= fac_d[j]
             output['s_rev'] = torch.exp(output['s_rev']).detach().cpu().numpy()
