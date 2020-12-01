@@ -45,7 +45,7 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
  | Trainval_GT_HAKE.tgz       | https://1drv.ms/u/s!ArUVoRxpBphYgtRi42sVpiMPmQon9Q?e=EBOU5a        |
  | Trainval_Neg_HAKE.tgz      | https://1drv.ms/u/s!ArUVoRxpBphYgtRj8acRHK41WSIn8Q?e=oBvDbf        |
  | evaluation_data.tgz        | https://1drv.ms/u/s!ArUVoRxpBphYgtRkzTE3tZVYovtCnA?e=uLxNSA        |
- | pasta_pretrained_model.tar | https://1drv.ms/u/s!ArUVoRxpBphYgtRugeMQVT-ncVq0OA?e=J6aBJn        |
+ | pretrained_res50.pth       | https://1drv.ms/u/s!ArUVoRxpBphYgtR2NT5ZOXkccHfw3A?e=EGxXGX        |
  └────────────────────────────┴────────────────────────────────────────────────────────────────────┘
  # and sort them into this data stucture:
  HAKE-Activity2Vec
