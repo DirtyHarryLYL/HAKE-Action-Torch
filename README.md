@@ -50,11 +50,21 @@ export CUDA_VISIBLE_DEVICES=0;python train.py --exp IPT --config_path configs/IP
 
 ### 4. Evaluation
 
-To get our reported result on HICO-DET (COCO Dectector), run 
+To get our reported result on HICO-DET (COCO/VCL/DRG Dectector), run 
 
 ```
 python eval.py --config_path configs/eval_hico_coco.yml --exp eval_hico_coco
 python get_map.py --exp eval_hico_coco
+```
+
+```
+python eval.py --config_path configs/eval_hico_vcl.yml --exp eval_hico_vcl
+python get_map.py --exp eval_hico_vcl
+```
+
+```
+python eval.py --config_path configs/eval_hico_drg.yml --exp eval_hico_drg
+python get_map.py --exp eval_hico_drg
 ```
 
 Other detection settings and V-COCO are coming soon!
