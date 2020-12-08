@@ -67,7 +67,7 @@ python eval.py --config_path configs/eval_hico_drg.yml --exp eval_hico_drg
 python get_map.py --exp eval_hico_drg
 ```
 
-Other detection settings and V-COCO are coming soon!
+V-COCO is coming soon!
 
 ## Pre-trained models
 
