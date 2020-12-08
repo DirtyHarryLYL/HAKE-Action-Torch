@@ -133,10 +133,18 @@ class HICO_test_set(Dataset):
         hdet      = info['obj_scores'][sub_id]
         odet      = info['obj_scores'][obj_id]
         
-        
-        labels_s  = info['labels_sr'][sub_id, :].toarray().astype(np.float32)
-        labels_r  = info['labels_r'][cand_id, :].toarray().astype(np.float32)
-        labels_ro = info['labels_ro'][obj_id, :].toarray().astype(np.float32) # 600
+        if 'labels_sr' not in info:
+            labels_s = np.zeros(117)
+        else:
+            labels_s  = info['labels_sr'][sub_id, :].toarray().astype(np.float32)
+        if 'labels_r' not in info:
+            labels_r  = np.zeros(117)
+        else:
+            labels_r  = info['labels_r'][cand_id, :].toarray().astype(np.float32)
+        if 'labels_ro' not in info:
+            labels_ro = np.zeros(600)
+        else:
+            labels_ro = info['labels_ro'][obj_id, :].toarray().astype(np.float32) # 600
         labels_sro = np.matmul(labels_s, self.verb_trans) * labels_ro
 
         return key, spatial, sub_vec, obj_vec, uni_vec, labels_s, labels_ro, labels_r, labels_sro, shape, hdet, odet, obj_class-1
