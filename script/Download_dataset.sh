@@ -5,6 +5,15 @@ python script/Download_data.py 1mgY8DsTSWouRSkCnaF6gdMdZ_QrL4akS data/cand_negat
 python script/Download_data.py 1pZk-OC31k5P_RIDR0KpDFBC-4Xt9dBdc data/db_test_feat.pkl
 python script/Download_data.py 1blaR80wqQaelIeEomfq3VtGIAzRNRvDA data/candidates_test.pkl
 
+mkdir data_drg
+python script/Download_data.py 1Z8WMEmg8T81kveksB3jm28j3OBs1cGjs data_drg/db_test_feat.pkl
+python script/Download_data.py 1GSddLTozPobzMTgxJZNsdFchur9qdodG data_drg/candidates_test.pkl
+
+mkdir data_vcl
+python script/Download_data.py 1DGX7fCFbbxGIa5E8p5GlDxmstTgUD3T5 data_vcl/db_test_feat.pkl
+python script/Download_data.py 12U-QI5ixtDPduRh2VHmV-7Dy8PvFOGZz data_vcl/candidates_test.pkl
+
+
 mkdir data/Union_feat/
 python script/Download_data.py 1UnXos3fbpmgl9ONVzgChjHiU1YuG7Cyc data/Union_feat/test.7z.001
 python script/Download_data.py 1ecvF6dOQCM2TIw66czUiD3na46_FPS8c data/Union_feat/test.7z.002
