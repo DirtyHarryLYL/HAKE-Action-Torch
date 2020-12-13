@@ -141,4 +141,4 @@ If you find our works useful, please consider citing:
 
 If you get any problems or if you find any bugs, don't hesitate to comment on GitHub or make a pull request! 
 
-HAKE-Action is freely available for free non-commercial use, and may be redistributed under these conditions. For commercial queries, please drop an e-mail. We will send the detail agreement to you.
+HAKE-Action-Torch is freely available for free non-commercial use, and may be redistributed under these conditions. For commercial queries, please drop an e-mail. We will send the detail agreement to you.
