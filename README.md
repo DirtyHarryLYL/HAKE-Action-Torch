@@ -97,9 +97,9 @@ Our model achieves the following performance on :
 | IDN    |53.3|60.3|
 
 ## TODOS
+- [x] Using different object detections (COCO, COCO+HICO-DET, GT H-O pairs) in testing
 - [ ] VCOCO model
 - [ ] Intermediate pre-trained models
-- [ ] Using different object detections (COCO, COCO+HICO-DET, GT H-O pairs)
 
 ## Contributing
 
