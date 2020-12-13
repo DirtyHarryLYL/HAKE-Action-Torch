@@ -61,25 +61,25 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 
 ## Modules
 
-### Unified Model
+### 1. Unified Model
 Coming soon.
 
-### HAKE Only (CVPR'20)
+### 2. HAKE Only (CVPR'20)
 Coming soon.
 
-### Activity2Vec (CVPR'20)
+### 3. Activity2Vec (CVPR'20)
 The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
 
-### IDN (NeurIPS'20)
+### 4. IDN (NeurIPS'20)
 The independent Torch version is in: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)).
 
-### DJ-RN (CVPR'20)
+### 5. DJ-RN (CVPR'20)
 The independent Torch version is in: [DJ-RN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
-### TIN (CVPR'19)
+### 6. TIN (CVPR'19)
 The independent Torch version is in: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
-### SymNet (CVPR'20)
+### 7. SymNet (CVPR'20)
 Coming soon.
 
 ## Citation
