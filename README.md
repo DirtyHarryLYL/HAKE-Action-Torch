@@ -1,5 +1,7 @@
 # HAKE-Action-Torch
 
+**Six-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN).
+
 Under construction.
 
 <p align='center'>
@@ -34,17 +36,35 @@ HAKE-Action-Torch
 Coming soon.
 
 ### Results on HICO-DET with different object detections.
-Coming soon.
+|Method| Detector |HAKE| Full(def) | Rare(def) | None-Rare(def)| Full(ko) | Rare(ko) | None-Rare(ko) |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| COCO |-| 17.54	|13.80	|18.65|	19.75|	15.70|	20.96|
+|[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| COCO |-| 21.34|18.53|22.18|23.69|20.64|24.60|
+|[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO|-|23.36|22.47|23.63|26.43|25.01|26.85|
+|[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO+HICO-DET|-|26.29|22.61|27.39|28.24|24.47|29.37|
+|[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| GT Pairs |-|34.26|22.90 |37.65|-|-|-|
+|[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|GT Pairs|-|43.98|40.27|45.09|-|-|-|
 
+### Results on V-COCO. 
+As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contributes marhinally to performance.
+|Method | HAKE | AP(role) |
+|:---:|:---:|:---:|
+|[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)|-|47.8|
+|[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|-|53.3|
 
-### Results on V-COCO with different object detections.
-Coming soon.
+### Results on [Ambiguous-HOI](https://github.com/DirtyHarryLYL/DJ-RN).
+|Method| mAP |
+|:---:|:---:|
+|[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| 8.22 |
+|[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| 10.37 |
 
 
 ## Modules
-All these modules wii be integrated into the master branch to compose a unified model later.
 
-### HAKE-Only (CVPR'20)
+### Unified Model
+Coming soon.
+
+### HAKE Only (CVPR'20)
 Coming soon.
 
 ### Activity2Vec (CVPR'20)
