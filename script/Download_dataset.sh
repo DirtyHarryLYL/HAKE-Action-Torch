@@ -36,3 +36,5 @@ mkdir exp
 python script/Download_data.py 1QZuDE7F0SqFvzO0ZJCZxoszE-qGyuMU_ exp/nis.pkl
 mkdir exp/IDN_IPT_hico/
 python script/Download_data.py 15Ev-O4dyghxHw_O2jjri1kvyato5Mr8I exp/IDN_IPT_hico/epoch_30.pth
+
+unzip gt_hoi_py2.zip
