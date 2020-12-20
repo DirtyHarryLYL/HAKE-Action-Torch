@@ -1,5 +1,5 @@
 # HAKE-Activity2Vec (A2V)
-A general human activity feature extractor based on HAKE data, i.e., HAKE-A2V (Activity2Vec). 
+General human activity feature extractor and human PaSta (part states) detector based on HAKE data, i.e., HAKE-A2V (Activity2Vec). 
 It works like a ImageNet/COCO pre-trained backbone, which aims at extracting the multi-modal activity representation for gerneral downstream tasks like VQA, captioning, cluster, etc. 
 
 PaSta Prediction (93 classes) + Action prediction (156 classes) + Action Vector (Visual & Language) = A2V(image, person box).
