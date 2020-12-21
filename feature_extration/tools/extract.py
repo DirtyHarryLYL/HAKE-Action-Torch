@@ -22,7 +22,7 @@ def parse_args():
             default='Data/db_trainval_with_pool.pkl', type=str)
     parser.add_argument('--image_path', dest='image_path',
             help='image path',
-            default='Data/hico_20160224_det/images/train2015/', type=int)
+            default='Data/hico_20160224_det/images/train2015/', type=str)
     parser.add_argument('--output', dest='output',
             help='feature path',
             default='Data/Union_feature/train/', type=str)
