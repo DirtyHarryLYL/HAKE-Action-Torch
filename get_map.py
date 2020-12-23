@@ -43,7 +43,8 @@ for i in range(80):
         bbox   = bboxes[i][select, :]
         key    = keys[i][select]
         score  = scores[i][select, :]
-        map[hoi_id], mrec[hoi_id], map_ko[hoi_id], mrec_ko[hoi_id] = calc_ap_ko(score, bbox, key, hoi_id, begin, ko_mask)
+        output = calc_ap_ko(score, bbox, key, hoi_id, begin, ko_mask)
+        map[hoi_id], mrec[hoi_id], map_ko[hoi_id], mrec_ko[hoi_id] = output['ap'], outputp['rec'], output['ap_ko'], output['rec_ko']
 
 print('eval mode: default\n')
 print('total    ap: %.4f rec: %.4f \n' % (float(np.mean(map)),float(np.mean(mrec))))
