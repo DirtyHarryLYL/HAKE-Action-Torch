@@ -13,3 +13,4 @@ models/
 *.egg-info/
 build/
 *.so
+*.npy
