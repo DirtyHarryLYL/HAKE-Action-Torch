@@ -9,6 +9,7 @@ Weights/
 results/
 garbage/
 models/
+!AlphaPose/alphapose/models
 *.egg-info/
 build/
 *.so

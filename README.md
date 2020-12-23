@@ -1,5 +1,5 @@
 # HAKE-Activity2Vec (A2V)
-A general human activity feature extractor based on HAKE data, i.e., HAKE-A2V (Activity2Vec). 
+General human activity feature extractor and human PaSta (part states) detector based on HAKE data, i.e., HAKE-A2V (Activity2Vec). 
 It works like a ImageNet/COCO pre-trained backbone, which aims at extracting the multi-modal activity representation for gerneral downstream tasks like VQA, captioning, cluster, etc. 
 
 PaSta Prediction (93 classes) + Action prediction (156 classes) + Action Vector (Visual & Language) = A2V(image, person box).
@@ -20,16 +20,17 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
  conda activate activity2vec
  conda install pip
  
- # 2. Activity2Vec
+ # 2. dependencies
  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.0/lib64
  git clone https://github.com/DirtyHarryLYL/HAKE-Action-Torch
  cd HAKE-Action-Torch && git checkout Activity2Vec
  pip install -r requirements.txt
  pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
 
- # 3. AlphaPose
+ # 3. AlphaPose & Activity2Vec
  cd AlphaPose && python setup.py build develop && cd ..
-
+ python setup.py build develop
+ 
  # 4. data and weights
  mkdir Data/
  # Download the weights and data presented below:
