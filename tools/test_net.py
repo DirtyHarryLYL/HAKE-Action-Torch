@@ -44,6 +44,7 @@ def parse_args():
             default=1,
             type=int)
     parser.add_argument('--no-human-score', action='store_true')
+    parser.add_argument('--no-part-box', action='store_true')
     parser.add_argument('--show-action-res', action='store_true')
     args = parser.parse_args()
     return args
@@ -114,6 +115,8 @@ if __name__ == "__main__":
     output_dir = os.path.join(cfg.ROOT_DIR, 'results', model_name, model_filename+'_results')
     cfg.TRAIN.HUMAN_SCORE_ENHANCE = not args.no_human_score
     cfg.BENCHMARK.SHOW_ACTION_RES = args.show_action_res
+    if args.no_part_box:
+        cfg.MODEL.PART_ROI_ENABLE = False
     print_and_log('==> cfg:\n'+str(pprint.pformat(cfg, indent=2)), cfg)
     if args.eval:
         os.makedirs(output_dir, exist_ok=True)
