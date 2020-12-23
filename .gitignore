@@ -11,3 +11,4 @@ garbage/
 models/
 *.egg-info/
 build/
+*.so
