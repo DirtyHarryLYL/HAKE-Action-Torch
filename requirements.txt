@@ -16,4 +16,6 @@ terminaltables
 timm
 visdom
 imutils
-scipy==1.2.1
+numpy
+scipy
+anycurve

@@ -1,0 +1,119 @@
+# --------------------------------------------------------
+# Pytorch TIN
+# Licensed under The MIT License [see LICENSE for details]
+# --------------------------------------------------------
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+import os
+import os.path as osp
+import numpy as np
+import copy
+import json
+# `pip install easydict` if you don't have it
+from easydict import EasyDict as edict
+
+__C = edict()
+__C.ROOT_DIR = osp.abspath(osp.join(osp.dirname(__file__), '..', '..'))
+__C.LOG_DIR = osp.join(__C.ROOT_DIR, 'logs')
+__C.WEIGHT_DIR = osp.join(__C.ROOT_DIR, 'Weights')
+
+# Data Configs
+__C.DATA = edict()
+__C.DATA.NUM_PASTAS = edict()
+__C.DATA.NUM_PASTAS.FOOT = 16
+__C.DATA.NUM_PASTAS.LEG = 15
+__C.DATA.NUM_PASTAS.HIP = 6
+__C.DATA.NUM_PASTAS.HAND = 34
+__C.DATA.NUM_PASTAS.ARM = 8
+__C.DATA.NUM_PASTAS.HEAD = 14
+__C.DATA.NUM_PARTS = 10
+__C.DATA.NUM_VERBS = 157
+__C.DATA.PASTA_NAMES = ['foot', 'leg', 'hip', 'hand', 'arm', 'head']
+
+# Directories of data and weights
+__C.DATA.DATA_DIR = osp.join(__C.ROOT_DIR, 'Data')
+__C.DATA.ANNO_DB_PATH = osp.join(__C.DATA.DATA_DIR, 'Trainval_HAKE')
+__C.DATA.PRED_DB_PATH = osp.join(__C.DATA.DATA_DIR, 'Test_pred_rcnn')
+__C.DATA.TEST_GT_PASTA_PATH = osp.join(__C.DATA.DATA_DIR, 'gt_pasta_data.pkl')
+__C.DATA.TEST_GT_VERB_PATH = osp.join(__C.DATA.DATA_DIR, 'gt_verb_data.pkl')
+__C.DATA.PASTA_LANGUAGE_MATRIX_PATH = osp.join(__C.DATA.DATA_DIR, 'pasta_language_matrix.npy')
+__C.DATA.PASTA_WEIGHTS_PATH = osp.join(__C.DATA.DATA_DIR, 'loss_weights.npy')
+__C.DATA.IMAGE_FOLDER_LIST = osp.join(__C.DATA.DATA_DIR, 'data_path.json')
+__C.DATA.PASTA_NAME_LIST = osp.join(__C.DATA.DATA_DIR, 'Part_State_93_new.txt')
+__C.DATA.VERB_NAME_LIST = osp.join(__C.DATA.DATA_DIR, 'verb_list_new.txt')
+
+# Training options
+__C.TRAIN = edict()
+__C.TRAIN.RESUME = False
+__C.TRAIN.CHECKPOINT_INTERVAL = 50000
+__C.TRAIN.DISPLAY_INTERVAL = 10
+__C.TRAIN.CHECKPOINT_PATH = ''
+
+# Training params
+__C.TRAIN.LEARNING_RATE = 0.0002
+# __C.TRAIN.WEIGHT_DECAY = 0.0005
+__C.TRAIN.MOMENTUM = 0.9
+__C.TRAIN.LR_SCHEDULE = 'constant'
+__C.TRAIN.MAX_EPOCH = 100
+__C.TRAIN.FREEZE_BACKBONE = True
+# TODO: multi images per batch(one image for each gpu, this may decrease the performance)
+__C.TRAIN.IM_BATCH_SIZE = 1
+
+# positive sample ratio.
+__C.TRAIN.HUMAN_PER_IM = 75
+__C.TRAIN.POS_RATIO = 0.2
+__C.TRAIN.HUMAN_SCORE_ENHANCE = True
+__C.TRAIN.SHOW_LOSS_CURVE = True
+__C.TRAIN.WITH_LOSS_WTS = True
+__C.TRAIN.LOSS_TYPE = 'bce'
+
+__C.MODEL = edict()
+__C.MODEL.DROPOUT = 0.5
+__C.MODEL.MODULE_TRAINED = ['foot', 'leg', 'hip', 'hand', 'arm', 'head', 'verb']
+__C.MODEL.PART_AGG_RULE = [[0, 3], [1, 2], [4], [6, 9], [7, 8], [5]]
+__C.MODEL.NUM_FC = 512
+__C.MODEL.PART_ROI_ENABLE = True
+__C.BENCHMARK = edict()
+__C.BENCHMARK.SHOW_ACTION_RES = False
+
+__C.DEMO = edict()
+__C.DEMO.YOLO_CFG = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'configs', 'yolov3-spp.cfg')
+__C.DEMO.YOLO_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'checkpoints', 'yolov3-spp.weights')
+__C.DEMO.POSE_CFG = osp.join(__C.ROOT_DIR, 'models', 'pose', 'configs', '256x192_res50_lr1e-3_1x.yaml')
+__C.DEMO.POSE_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'pose', 'checkpoints', 'fast_res50_256x192.pth')
+__C.DEMO.A2V_CFG = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'configs', 'a2v.yaml')
+__C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pretrained_model.pth')
+__C.DEMO.EXCLUDED_VERBS = [57, 146]
+__C.DEMO.FONT_PATH = osp.join(__C.ROOT_DIR, 'tools', 'inference_tools', 'consola.ttf')
+__C.DEMO.FONT_SIZE = 18
+__C.DEMO.MAX_HUMAN_NUM = 2
+__C.DEMO.DRAW_SKELETON = False
+__C.DEMO.PASTA_SCORE_THRES = 0.2
+__C.DEMO.VERB_SCORE_THRES = 0.2
+__C.DEMO.SKELETON_TO_PARTS = {'lfoot': [16], 'rfoot': [15], 'lleg': [11, 13, 15], 'rleg': [12, 14, 16], 'hip': [12, 11], 'rhand': [9], 'lhand': [10], 'rarm': [5, 7, 9], 'larm': [6, 8, 10], 'head': [0, 1, 2, 3, 4]}
+# Pixel mean values (BGR order) as a (1, 1, 3) array
+__C.PIXEL_MEANS = np.array([[[102.9801, 115.9465, 122.7717]]])
+
+# For reproducibility
+__C.RNG_SEED = 3
+
+# RoI Pooling Size
+__C.POOLING_SIZE = 7
+
+# GPU Id
+__C.GPU_ID = 0
+def get_cfg():
+    upper_names = [name.upper() for name in __C.DATA.PASTA_NAMES]
+    pasta_num_list = [0] + [__C.DATA.NUM_PASTAS[upper_name] for upper_name in upper_names]
+    pasta_num_list = np.array(pasta_num_list)
+    pasta_num_list = np.cumsum(pasta_num_list)
+    pasta_range_starts = list(pasta_num_list[:-1])
+    pasta_range_ends   = list(pasta_num_list[1:])
+    __C.DATA.PASTA_RANGES = list(zip(pasta_range_starts, pasta_range_ends))
+    __C.DATA.PASTA_NAME_DICT = {part_name:part_idx for part_idx, part_name in enumerate(__C.DATA.PASTA_NAMES)}
+    __C.TRAIN.DATA_SPLITS = list(json.load(open(__C.DATA.IMAGE_FOLDER_LIST,'r')).keys())
+    __C.DEMO.EXCLUDED_VERBS = list(set(__C.DEMO.EXCLUDED_VERBS + list(range(117, 157))))
+    return copy.deepcopy(__C)

@@ -1,0 +1,322 @@
+#############################################
+#  Author: Hongwei Fan                      #
+#  E-mail: hwnorm@outlook.com               #
+#  Homepage: https://github.com/hwfan       #
+#  Last Modified: Dec 3rd, 2020             #
+#############################################
+import torch
+import torch.utils
+import cv2
+import numpy as np
+import random
+import os
+import sys
+import inspect
+import pickle
+import base64
+import lmdb
+import os.path as osp
+import imageio
+import json
+import copy
+from easydict import EasyDict as edict
+from tqdm import tqdm
+
+def obj2str(obj):
+    return base64.b64encode(pickle.dumps(obj)).decode()
+
+def str2obj(strr):
+    return pickle.loads(base64.b64decode(strr))
+
+def rgba2rgb(rgba, background=(255,255,255)):
+    row, col, ch = rgba.shape
+
+    if ch == 3:
+        return rgba
+
+    assert ch == 4, 'RGBA image has 4 channels.'
+
+    rgb = np.zeros((row, col, 3), dtype='float32')
+    r, g, b, a = rgba[:,:,0], rgba[:,:,1], rgba[:,:,2], rgba[:,:,3]
+
+    a = np.asarray( a, dtype='float32' ) / 255.0
+
+    R, G, B = background
+
+    rgb[:,:,0] = r * a + (1.0 - a) * R
+    rgb[:,:,1] = g * a + (1.0 - a) * G
+    rgb[:,:,2] = b * a + (1.0 - a) * B
+
+    return np.asarray(rgb, dtype='uint8')
+
+def im_read(im_path):
+    im = cv2.imread(im_path)
+    if im is None:
+        im = imageio.imread(im_path)
+        if im.shape[-1] == 4:
+            im = rgba2rgb(im)
+            im = im[:,:,::-1]
+            im = np.array(im)
+        else:
+            raise NotImplementedError
+    return im
+
+class hake_train(torch.utils.data.Dataset):
+    def __init__(self, cfg):
+        super(hake_train, self).__init__()
+        self.cfg = cfg
+        self.db = lmdb.open(self.cfg.DATA.ANNO_DB_PATH)
+        self.txn_db = self.db.begin(write=False)
+        self.image_folder_list = json.load(open(self.cfg.DATA.IMAGE_FOLDER_LIST,'r'))
+        self.image_list = [key for key, _ in self.txn_db.cursor() if key.decode().split('/')[0] in self.cfg.TRAIN.DATA_SPLITS]
+        self.visualize = False
+        # the numbers of positive and negative samples.
+        self.pos_num = int(self.cfg.TRAIN.HUMAN_PER_IM * self.cfg.TRAIN.POS_RATIO)
+        self.neg_num = self.cfg.TRAIN.HUMAN_PER_IM - self.pos_num
+
+    def __len__(self):
+        return len(self.image_list)
+
+    def __getitem__(self, idx):
+
+        current_key_raw   = self.image_list[idx]
+        image_id          = current_key_raw.decode()
+        current_data      = str2obj(self.txn_db.get(current_key_raw))
+        dataset, filename = image_id.split('/')
+        
+        # Load image and normalize.
+        im_path  = osp.join(self.image_folder_list[dataset], filename)
+        im       = im_read(im_path)
+        if not self.visualize:
+            im   = im.astype(np.float32, copy=True)
+            im  -= self.cfg.PIXEL_MEANS
+        else:
+            print('[Warning] Visualization Mode!')
+        im_shape = im.shape
+
+        # Resize the image of each idx.
+        # long side to 512.
+        ratio = 1.0
+        if im_shape[0] > im_shape[1]:
+            if im_shape[0] > 512:
+                ratio = 512. / im_shape[0]
+        else:
+            if im_shape[1] > 512:
+                ratio = 512. / im_shape[1]
+        
+        im       = cv2.resize(im, (int(ratio*im_shape[1]), int(ratio*im_shape[0])))
+        im_shape = im.shape
+        image    = im.transpose(2, 0, 1)
+
+        # Collect the positive and negative annotations.
+        gt_annos, neg_annos = [], []
+        for anno in current_data:
+            if anno.gt_flag:
+                gt_annos.append(anno)
+            else:
+                neg_annos.append(anno)
+        
+        gt_anno_length, neg_anno_length = len(gt_annos), len(neg_annos)
+
+        # Augment the positive and negative data.
+        if self.pos_num > gt_anno_length:
+            gt_anno_idxs = np.concatenate((np.arange(gt_anno_length), np.random.choice(gt_anno_length, self.pos_num-gt_anno_length)))
+        else:
+            gt_anno_idxs = np.arange(gt_anno_length)
+        
+        if self.neg_num > neg_anno_length:
+            neg_anno_idxs = np.arange(neg_anno_length)
+        else:
+            neg_anno_idxs = np.random.permutation(neg_anno_length)[:self.neg_num]
+        
+        gt_num, neg_num = len(gt_anno_idxs), len(neg_anno_idxs)
+        anno_num = gt_num + neg_num
+        
+        annos = edict()
+        annos.gt_flag = np.zeros((anno_num, ), dtype=int)
+        annos.gt_flag[:gt_num] = 1
+        annos.verbs = np.zeros((anno_num, self.cfg.DATA.NUM_VERBS), dtype=np.float32)
+        annos.human_bboxes = np.zeros((anno_num, 4), dtype=np.float32)
+        annos.part_bboxes = np.zeros((anno_num, self.cfg.DATA.NUM_PARTS, 4), dtype=np.float32)
+        annos.pasta = edict()
+        annos.pasta.foot = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.FOOT), dtype=np.float32)
+        annos.pasta.leg = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.LEG), dtype=np.float32)
+        annos.pasta.hip = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.HIP), dtype=np.float32)
+        annos.pasta.hand = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.HAND), dtype=np.float32)
+        annos.pasta.arm = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.ARM), dtype=np.float32)
+        annos.pasta.head = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.HEAD), dtype=np.float32)
+        annos.pasta.binary = np.zeros((anno_num, self.cfg.DATA.NUM_PARTS), dtype=np.float32)
+
+        for gt_anno_aug_idx, gt_anno_ori_idx in enumerate(gt_anno_idxs):
+            this_anno = gt_annos[gt_anno_ori_idx]
+            global_idx = gt_anno_aug_idx
+            if len(this_anno.verbs) > 0:
+                annos.verbs[global_idx][np.array(this_anno.verbs)] = 1
+            else:
+                annos.verbs[global_idx][57] = 1
+            annos.human_bboxes[global_idx] = np.array(this_anno.human_bbox)
+            if this_anno.part_bboxes is None:
+                annos.part_bboxes[global_idx] = np.tile(this_anno.human_bbox, [10, 1])
+            else:
+                annos.part_bboxes[global_idx] = np.array(this_anno.part_bboxes[:, 1:])
+            annos.pasta.foot[global_idx][np.array(this_anno.pasta.foot)] = 1
+            annos.pasta.leg[global_idx][np.array(this_anno.pasta.leg)] = 1
+            annos.pasta.hip[global_idx][np.array(this_anno.pasta.hip)] = 1
+            annos.pasta.hand[global_idx][np.array(this_anno.pasta.hand)] = 1
+            annos.pasta.arm[global_idx][np.array(this_anno.pasta.arm)] = 1
+            annos.pasta.head[global_idx][np.array(this_anno.pasta.head)] = 1
+            if len(this_anno.pasta.binary) > 0:
+                annos.pasta.binary[global_idx][np.array(this_anno.pasta.binary)] = 1
+
+        for neg_anno_aug_idx, neg_anno_ori_idx in enumerate(neg_anno_idxs):
+            this_anno = neg_annos[neg_anno_ori_idx]
+            global_idx = neg_anno_aug_idx + gt_num
+            annos.verbs[global_idx][57] = 1
+            annos.human_bboxes[global_idx] = np.array(this_anno.human_bbox)
+            if this_anno.part_bboxes is None:
+                annos.part_bboxes[global_idx] = np.tile(this_anno.human_bbox, [10, 1])
+            else:
+                annos.part_bboxes[global_idx] = np.array(this_anno.part_bboxes[:, 1:])
+            annos.pasta.foot[global_idx][-1] = 1
+            annos.pasta.leg[global_idx][-1] = 1
+            annos.pasta.hip[global_idx][-1] = 1
+            annos.pasta.hand[global_idx][-1] = 1
+            annos.pasta.arm[global_idx][-1] = 1
+            annos.pasta.head[global_idx][-1] = 1
+
+        annos.human_bboxes    *= ratio
+        annos.part_bboxes     *= ratio
+
+        annos.part_bboxes[:, :, 0] = np.maximum(annos.part_bboxes[:, :, 0], 0)
+        annos.part_bboxes[:, :, 1] = np.maximum(annos.part_bboxes[:, :, 1], 0)
+        annos.part_bboxes[:, :, 2] = np.minimum(annos.part_bboxes[:, :, 2], im_shape[1])
+        annos.part_bboxes[:, :, 3] = np.minimum(annos.part_bboxes[:, :, 3], im_shape[0])
+
+        return image, annos
+
+
+class hake_test(torch.utils.data.Dataset):
+    def __init__(self, cfg):
+        super(hake_test, self).__init__()
+        self.cfg = cfg
+        self.db = lmdb.open(self.cfg.DATA.PRED_DB_PATH)
+        self.txn_db = self.db.begin(write=False)
+        self.visualize = False
+        self.image_folder_list = json.load(open(self.cfg.DATA.IMAGE_FOLDER_LIST,'r'))
+        self.image_list = [key for key, _ in self.txn_db.cursor()]
+
+    def __len__(self):
+        return len(self.image_list)
+
+    def __getitem__(self, idx):
+        current_key_raw   = self.image_list[idx]
+        image_id          = current_key_raw.decode()
+        current_data      = str2obj(self.txn_db.get(current_key_raw))
+        dataset, filename = image_id.split('/')
+
+        im_path  = osp.join(self.image_folder_list[dataset], filename)
+        image    = im_read(im_path)
+        if not self.visualize:
+            image    = image.astype(np.float32, copy=True)
+            image   -= self.cfg.PIXEL_MEANS
+        else:
+            print('[Warning] Visualization Mode!')
+        im_shape = image.shape
+        image    = image.transpose(2, 0, 1)
+        
+        annos     = edict()
+        anno_num  = len(current_data)
+        annos.human_bboxes = np.zeros((anno_num, 4), dtype=np.float32)
+        annos.part_bboxes = np.zeros((anno_num, self.cfg.DATA.NUM_PARTS, 4), dtype=np.float32)
+        annos.human_scores = np.zeros((anno_num, ), dtype=np.float32)
+        for anno_idx, anno in enumerate(current_data):
+            annos.human_bboxes[anno_idx] = np.array(anno.human_bbox)
+            annos.part_bboxes[anno_idx] = anno.part_bboxes
+            annos.human_scores[anno_idx] = anno.human_score
+        annos.part_bboxes[:, :, 0] = np.maximum(annos.part_bboxes[:, :, 0], 0)
+        annos.part_bboxes[:, :, 1] = np.maximum(annos.part_bboxes[:, :, 1], 0)
+        annos.part_bboxes[:, :, 2] = np.minimum(annos.part_bboxes[:, :, 2], im_shape[1])
+        annos.part_bboxes[:, :, 3] = np.minimum(annos.part_bboxes[:, :, 3], im_shape[0])
+        
+        return image, annos, image_id
+
+if __name__ == '__main__':
+    sys.path.append(osp.join(osp.dirname(__file__), '..', 'ult'))
+    from config import get_cfg
+    cfgs = get_cfg()
+    
+    def visualization(img, annos, verbs, pastas, mode):
+        RED = (0, 0, 255)
+        GREEN = (0, 255, 0)
+        BLUE = (255, 0, 0)
+        CYAN = (255, 255, 0)
+        YELLOW = (0, 255, 255)
+        ORANGE = (0, 165, 255)
+        PURPLE = (255, 0, 255)
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        assert mode in ['train', 'test']
+        if mode == 'train':
+            for idx in range(len(annos.gt_flag)):
+                human_bbox = annos.human_bboxes[idx]
+                if annos.gt_flag[idx]:
+                    cv2.rectangle(img, (int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3])), GREEN, 2)
+                    extra_offset = 0
+                    this_verbs = np.where(annos.verbs[idx]==1)[0]
+                    for verb in this_verbs:
+                        verb_name = verbs[verb]
+                        cv2.putText(img, verb_name, (int(human_bbox[0])+3, int(human_bbox[1])+18+extra_offset), cv2.FONT_HERSHEY_PLAIN, 1, ORANGE, 1)
+                        extra_offset += 18
+                    for pasta_key in annos.pasta:
+                        if pasta_key == 'binary':
+                            continue
+                        pasta_list = pastas[pasta_key]
+                        pasta_activated_idxs = np.where(annos.pasta[pasta_key][idx]==1)[0]
+                        for pasta_idx in pasta_activated_idxs:
+                            pasta_name = pasta_list[pasta_idx]
+                            if pasta_name != 'no_interaction':
+                                pasta_long_name = pasta_key+': '+pasta_name
+                                cv2.putText(img, pasta_long_name, (int(human_bbox[0])+3, int(human_bbox[1])+18+extra_offset), cv2.FONT_HERSHEY_PLAIN, 1, ORANGE, 1)
+                                extra_offset += 18
+                else:
+                    cv2.rectangle(img, (int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3])), RED, 2)
+        else:
+            for idx in range(len(annos.human_bboxes)):
+                human_bbox = annos.human_bboxes[idx]
+                cv2.rectangle(img, (int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3])), BLUE, 2)
+                for part_bbox in annos.part_bboxes[idx]:
+                    cv2.rectangle(img, (int(part_bbox[0]), int(part_bbox[1])), (int(part_bbox[2]),int(part_bbox[3])), GREEN, 2)
+        return img
+
+    if sys.argv[1] == 'train':
+        cfgs.TRAIN.HUMAN_PER_IM = 2
+        cfgs.TRAIN.POS_RATIO = 0.5
+        data_loader = hake_train(cfgs)
+        data_loader.visualize = True
+        verbs = []
+        for line in open(osp.join(osp.dirname(__file__), '..', '..', 'Data', 'verb_list.txt'), 'r'):
+            verb = line.strip()
+            verbs.append(verb)
+
+        pastas = edict()
+        for line in open(osp.join(osp.dirname(__file__), '..', '..', 'Data', 'Part_State_93.txt'),'r'):
+            pasta = line.strip()
+            part, state = pasta.split(':')
+            state = state[1:]
+            if part not in pastas:
+                pastas[part] = []
+            pastas[part].append(state)
+
+        for image, annos in tqdm(data_loader):
+            image = image.transpose(1, 2, 0)
+            img_to_show = visualization(image, annos, verbs, pastas, 'train')
+            cv2.imshow("Image", img_to_show)
+            cv2.waitKey(0)
+    else:
+        data_loader = hake_test(cfgs)
+        data_loader.visualize = True
+        for image, annos, _ in tqdm(data_loader):
+            image = image.transpose(1, 2, 0)
+            img_to_show = visualization(image, annos, None, None, 'test')
+            cv2.imshow("Image", img_to_show)
+            cv2.waitKey(0)

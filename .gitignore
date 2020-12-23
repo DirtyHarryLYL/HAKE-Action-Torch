@@ -1,0 +1,13 @@
+workspace-backup/
+Data
+__pycache__/
+Downloads/
+logs/
+workspace/
+Weights/
+-Results/
+results/
+garbage/
+models/
+*.egg-info/
+build/
