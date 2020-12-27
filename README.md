@@ -96,6 +96,12 @@ Our model achieves the following performance on :
 | :-:   |:-: | :-: |
 | IDN    |53.3|60.3|
 
+## Tips
+1. Sometimes the hinge loss (semi-hard) is tricky and hard to tune (e.g., exploding pointed in [issue-16](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/issues/16#issue-752809776)), as it is sensitive to the samples in a mini-banch. 
+Thus, you could also use the Sigmoid cross-entropy loss only. Most of the time, this policy also works good and can achieve performance similar to the well-modulated model with the hinge loss.
+
+2. We will also provide the pre-trained models of AE and other modules recently. Thus, users can start from different training phrases for convenience.
+
 ## TODOS
 - [x] Using different object detections (COCO, COCO+HICO-DET, GT H-O pairs) in testing
 - [ ] VCOCO model
