@@ -145,7 +145,7 @@ class vis_tool():
 
                     # rules for hip pasta
                     else:
-                        print(human_count, pasta_sub_scores[:3])
+                        # print(human_count, pasta_sub_scores[:3])
                         if max(pasta_sub_scores[:3]) < 0.1:
                             pasta_draw_names.append('')
                         else:

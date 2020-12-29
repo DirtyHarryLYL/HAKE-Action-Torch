@@ -11,6 +11,7 @@ from tqdm import tqdm
 import cv2
 import copy
 import torch
+import pickle
 
 from inference_tools.pose_inference import AlphaPose
 from inference_tools.custom_multiprocessing import process_pool
@@ -47,7 +48,7 @@ class Activity2Vec():
             vis = self.vis_tool.draw(vis, None, None, None, None, None)
             return ori_image, None, vis
         else:
-            # try:
+            try:
                 pasta_image, annos = self.pasta_model.preprocess(ori_image, pose['result'])
                 annos_cpu = copy.deepcopy(annos)
                 pasta_image = pasta_image.cuda(non_blocking=True)
@@ -75,17 +76,21 @@ class Activity2Vec():
                 p_pasta = p_pasta[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
                 p_verb = p_verb[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
                 vis = self.vis_tool.draw(vis, bboxes, keypoints, scores, p_pasta, p_verb)
-                
+
+                annos_cpu['human_bboxes'] = annos_cpu['human_bboxes'].squeeze(0)
+                annos_cpu['part_bboxes'] = annos_cpu['part_bboxes'].squeeze(0)
+                annos_cpu['keypoints'] = annos_cpu['keypoints'].squeeze(0)
+                annos_cpu['human_scores'] = annos_cpu['human_scores'].squeeze(0)
                 annos_cpu['f_pasta'] = f_pasta
                 annos_cpu['p_pasta'] = p_pasta
                 annos_cpu['p_verb'] = p_verb
                 return ori_image, annos_cpu, vis
 
-            # except:
-            #     self.logger.info('[Activity2Vec] unsuccess for {:s}'.format(image_path))
-            #     vis = ori_image
-            #     vis = self.vis_tool.draw(vis, None, None, None, None, None)
-            #     return ori_image, None, vis
+            except:
+                self.logger.info('[Activity2Vec] unsuccess for {:s}'.format(image_path))
+                vis = ori_image
+                vis = self.vis_tool.draw(vis, None, None, None, None, None)
+                return ori_image, None, vis
         
 
 def parse_args():
@@ -94,10 +99,16 @@ def parse_args():
 
     parser.add_argument('--input', type=str, required=True, 
                         help='input path/directory')
-    parser.add_argument('--output', type=str, required=True, 
-                        help='output path/directory')
+    parser.add_argument('--output', type=str, default='', 
+                        help='output directory, empty string means do not output anything')
     parser.add_argument('--mode', type=str, choices=['image', 'video'], default='image',
                         help='choose the type of input')
+    parser.add_argument('--show', action='store_true', 
+                        help='choose whether to show the output')
+    parser.add_argument('--save-res', action='store_true', 
+                        help='choose whether to save the raw results')
+    parser.add_argument('--save-vis', action='store_true', 
+                        help='choose whether to save the visualization results')
     parser.add_argument(
         "opts",
         help="See activity2vec/ult/config.py for all options",
@@ -124,7 +135,7 @@ def read_video(args):
     video_path = args.input
     clip = VideoFileClip(video_path)
     frames = []
-    args.logger.info('Reading frames ...')
+    args.logger.info('[Input] Reading frames ...')
     for frame in tqdm(clip.iter_frames()):
         frames.append(frame)
     return frames
@@ -159,11 +170,21 @@ def read_input(args):
             args.logger.info('[Input] path does not exist! Empty image list will be returned.')
             return []
     else:
+        args.logger.info('[Input] Video file detected.')
         return read_video(args)
         
 if __name__ == '__main__':
     cfg, args = setup()
-    
+    if len(args.output) > 0:
+        assert os.path.splitext(args.output)[-1] == '', 'output should be directory!'
+        if args.save_vis:
+            os.makedirs(os.path.join(args.output, 'vis'), exist_ok=True)
+        if args.save_res:
+            os.makedirs(os.path.join(args.output, 'res'), exist_ok=True)
+    else:
+        if args.save_vis:
+            raise RuntimeError('output should not be empty when save_vis is set!')
+
     loggers = setup_logging(cfg.LOG_DIR, func='inference')
     logger  = loggers.Activity2Vec
 
@@ -173,27 +194,51 @@ if __name__ == '__main__':
     image_list = read_input(args)
 
     if args.mode == 'image':
-        for image_path in image_list:
-            ori_image, _, vis = a2v.inference(image_path)
-            if vis is not None:
+        for image_path in tqdm(image_list):
+            ori_image, annos, vis = a2v.inference(image_path)
+            if args.show:
+                if vis is None:
+                    vis = ori_image
                 cv2.imshow('Activity2Vec', vis)
-            else:
-                cv2.imshow('Activity2Vec', ori_image)
-            cv2.waitKey(0)
+                cv2.waitKey(0)
+
+            if len(args.output) > 0:
+                basename = os.path.basename(image_path)
+
+                if args.save_res:
+                    base, ext = os.path.splitext(basename)
+                    ext = '.pkl'
+                    resname = base + ext
+                    res_path = os.path.join(args.output, 'res', resname)
+                    pickle.dump(annos, open(res_path, 'wb'))
+
+                if args.save_vis:
+                    vis_path = os.path.join(args.output, 'vis', basename)
+                    cv2.imwrite(vis_path, vis)
+                
     else:
         vises = []
-        for idx, image in enumerate(tqdm(image_list[:120])):
-            ori_image, _, vis = a2v.inference('%d.jpg' % idx, image)
+        res_dir = os.path.join(args.output, 'res')
+
+        for idx, image in enumerate(tqdm(image_list)):
+            ori_image, annos, vis = a2v.inference('%d.jpg' % idx, image)
+            if args.show:
+                if vis is None:
+                    vis = ori_image
+                cv2.imshow('Activity2Vec', vis)
+                cv2.waitKey(100)
             vises.append(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
-        new_clip = ImageSequenceClip(vises, fps=25)
-        if os.path.isdir(args.output):
-            new_clip.write_videofile(os.path.join(args.output, os.path.basename(args.input)))
-        else:
-            new_clip.write_videofile(args.output)
-            # if idx % 30 == 0:
-            #     ori_image, _, vis = a2v.inference('%d.jpg' % idx, image)
-            #     if vis is not None:
-            #         cv2.imshow('Activity2Vec', vis)
-            #     else:
-            #         cv2.imshow('Activity2Vec', ori_image)
-            #     cv2.waitKey(0)
+
+            if args.save_res:
+                res_path = os.path.join(res_dir, '%d.pkl' % idx)
+                pickle.dump(annos, open(res_path, 'wb'))
+
+        if args.save_vis:
+            video = cv2.VideoCapture(args.input)
+            fps = video.get(cv2.CAP_PROP_FPS)
+            video.release()
+
+            new_clip = ImageSequenceClip(vises, fps=fps)
+            basename = os.path.basename(args.input)
+            vis_path = os.path.join(args.output, 'vis', basename)
+            new_clip.write_videofile(vis_path)
