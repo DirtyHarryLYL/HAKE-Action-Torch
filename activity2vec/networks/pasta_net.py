@@ -203,23 +203,23 @@ class pasta_res50(nn.Module):
 
         if max_pool:
             pre_pool_size = self.cfg.POOLING_SIZE * 2
-            grid = F.affine_grid(theta, torch.Size((rois.size(0), 1, pre_pool_size, pre_pool_size)))
+            grid = F.affine_grid(theta, torch.Size((rois.size(0), 1, pre_pool_size, pre_pool_size)), align_corners=False)
 
             all_roi = []
             for j in range(rois.size(0)):
                 _grid = grid.narrow(0, j, 1)
-                _roi_feature = F.grid_sample(bottom.view(1,bottom.size(1), bottom.size(2), bottom.size(3)), _grid)
+                _roi_feature = F.grid_sample(bottom.view(1,bottom.size(1), bottom.size(2), bottom.size(3)), _grid, align_corners=False)
                 all_roi.append(_roi_feature)
             crops = torch.cat(all_roi)
             # crops = F.grid_sample(bottom.expand(rois.size(0), bottom.size(1), bottom.size(2), bottom.size(3)), grid)
             crops = F.max_pool2d(crops, 2, 2)
         else:
-            grid = F.affine_grid(theta, torch.Size((rois.size(0), 1, self.cfg.POOLING_SIZE, self.cfg.POOLING_SIZE)))
+            grid = F.affine_grid(theta, torch.Size((rois.size(0), 1, self.cfg.POOLING_SIZE, self.cfg.POOLING_SIZE)), align_corners=False)
 
             all_roi = []
             for j in range(rois.size(0)):
                 _grid = grid.narrow(0, j, 1)
-                _roi_feature = F.grid_sample(bottom.view(1,bottom.size(1), bottom.size(2), bottom.size(3)), _grid)
+                _roi_feature = F.grid_sample(bottom.view(1,bottom.size(1), bottom.size(2), bottom.size(3)), _grid, align_corners=False)
                 all_roi.append(_roi_feature)
             crops = torch.cat(all_roi)
             # crops = F.grid_sample(bottom.expand(rois.size(0), bottom.size(1), bottom.size(2), bottom.size(3)), grid)

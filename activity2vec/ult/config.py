@@ -20,7 +20,7 @@ __C.LOG_DIR = osp.join(__C.ROOT_DIR, 'logs')
 __C.WEIGHT_DIR = osp.join(__C.ROOT_DIR, 'Weights')
 __C.MODEL_NAME = 'default'
 
-# Data Configs
+# Data configs
 __C.DATA = CN()
 __C.DATA.NUM_PASTAS = CN()
 __C.DATA.NUM_PASTAS.FOOT = 16
@@ -62,7 +62,6 @@ __C.TRAIN.FREEZE_BACKBONE = True
 # TODO: multi images per batch(one image for each gpu, this may decrease the performance)
 __C.TRAIN.IM_BATCH_SIZE = 1
 
-# positive sample ratio.
 __C.TRAIN.HUMAN_PER_IM = 10
 __C.TRAIN.POS_RATIO = 0.1
 __C.TRAIN.HUMAN_SCORE_ENHANCE = True
@@ -72,6 +71,7 @@ __C.TRAIN.LOSS_TYPE = 'bce'
 __C.TRAIN.LOSS_WEIGHT_K = 2
 __C.TRAIN.COMBINE_PASTA = False
 
+# Model settings
 __C.MODEL = CN()
 __C.MODEL.DROPOUT = 0.5
 __C.MODEL.MODULE_TRAINED = ['foot', 'leg', 'hip', 'hand', 'arm', 'head', 'verb']
@@ -81,6 +81,7 @@ __C.MODEL.PART_ROI_ENABLE = True
 __C.MODEL.PART_ATTENTION = False
 __C.MODEL.VERB_ONE_MORE_FC = False
 
+# Benchmark and test settings
 __C.BENCHMARK = CN()
 __C.BENCHMARK.SHOW_ACTION_RES = False
 
@@ -88,23 +89,20 @@ __C.TEST = CN()
 __C.TEST.WEIGHT_PATH = ''
 __C.TEST.OUTPUT_DIR = ''
 
+# Demo settings
 __C.DEMO = CN()
 __C.DEMO.YOLO_CFG = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'configs', 'yolov3-spp.cfg')
 __C.DEMO.YOLO_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'checkpoints', 'yolov3-spp.weights')
 __C.DEMO.POSE_CFG = osp.join(__C.ROOT_DIR, 'models', 'pose', 'configs', '256x192_res50_lr1e-3_1x.yaml')
 __C.DEMO.POSE_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'pose', 'checkpoints', 'fast_res50_256x192.pth')
 __C.DEMO.A2V_CFG = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'configs', 'a2v.yaml')
-__C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pretrained_model.pth')
+__C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pretrained_model_20201229.pth')
 __C.DEMO.EXCLUDED_VERBS = [57, 146]
 __C.DEMO.FONT_PATH = osp.join(__C.ROOT_DIR, 'tools', 'inference_tools', 'consola.ttf')
 __C.DEMO.FONT_SIZE = 18
 __C.DEMO.MAX_HUMAN_NUM = 4
 __C.DEMO.DRAW_SKELETON = False
 __C.DEMO.DRAW_RIGID = True
-__C.DEMO.PASTA_SCORE_THRES = 0.2
-__C.DEMO.VERB_SCORE_THRES = 0.2
-__C.DEMO.HUMAN_SCORE_THRES = 1.0
-# __C.DEMO.SKELETON_TO_PARTS = {'lfoot': [16], 'rfoot': [15], 'lleg': [11, 13, 15], 'rleg': [12, 14, 16], 'hip': [12, 11], 'rhand': [9], 'lhand': [10], 'rarm': [5, 7, 9], 'larm': [6, 8, 10], 'head': [0, 1, 2, 3, 4]}
 
 # Pixel mean values (BGR order) as a (1, 1, 3) array
 __C.PIXEL_MEANS = [[[102.9801, 115.9465, 122.7717]]]
@@ -112,13 +110,13 @@ __C.PIXEL_MEANS = [[[102.9801, 115.9465, 122.7717]]]
 # For reproducibility
 __C.RNG_SEED = 3
 
-# RoI Pooling Size
+# RoI pooling size
 __C.POOLING_SIZE = 7
 
-# GPU Id
+# GPU id
 __C.GPU_ID = 0
 
-# Debug Hacker
+# Debug hacker
 __C.DEBUG = False
 
 def get_cfg():

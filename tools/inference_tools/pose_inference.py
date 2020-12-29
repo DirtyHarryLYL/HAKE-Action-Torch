@@ -203,7 +203,7 @@ class DataWriter():
         self.item = (boxes, scores, ids, hm_data, cropped_boxes, orig_img, im_name)
 
 class AlphaPose():
-    def __init__(self, yolo_cfg, yolo_weight, pose_cfg, pose_checkpoint):
+    def __init__(self, yolo_cfg, yolo_weight, pose_cfg, pose_checkpoint, logger):
         args = edict()
         args.checkpoint = pose_checkpoint
         args.gpus = [0]
@@ -218,7 +218,7 @@ class AlphaPose():
         # Load pose model
         self.pose_model = builder.build_sppe(self.cfg.MODEL, preset_cfg=self.cfg.DATA_PRESET)
 
-        print(f'Loading pose model from {args.checkpoint}...')
+        logger.info(f'Loading AlphaPose model from {args.checkpoint}...')
         self.pose_model.load_state_dict(torch.load(args.checkpoint, map_location='cpu'))
         self.pose_model.to(args.device)
         self.pose_model.eval()

@@ -106,4 +106,4 @@ if __name__ == "__main__":
         test(cfg, net, test_loader, cfg.TEST.OUTPUT_DIR, logger)
     
     if args.benchmark:
-        benchmark(cfg.TEST.OUTPUT_DIR, cfg)
+        benchmark(cfg.TEST.OUTPUT_DIR, cfg, logger)

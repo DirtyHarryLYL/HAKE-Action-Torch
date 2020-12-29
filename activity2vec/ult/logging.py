@@ -9,7 +9,7 @@ def setup_logging(output_dir=None, func='train'):
     """
     Sets up the logging.
     """
-    assert func in ['train', 'test']
+    assert func in ['train', 'test', 'inference']
 
     # Set up logging format.
     _FORMAT = "[%(levelname)s: %(filename)s: %(lineno)4d]: %(message)s"
@@ -21,8 +21,13 @@ def setup_logging(output_dir=None, func='train'):
 
     loggers = edict()
 
-    modes = ['train', 'test'] if func == 'train' else ['test']
-
+    if func == 'train':
+        modes = ['train', 'test']
+    elif func == 'test':
+        modes = ['test']
+    else:
+        modes = ['Activity2Vec']
+    
     for mode in modes:
         logger = logging.getLogger(mode)
         logger.setLevel(logging.DEBUG)
