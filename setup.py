@@ -82,7 +82,8 @@ setup(
     "imutils",
     "numpy",
     "scipy",
-    "anycurve"
+    "anycurve",
+    "yacs"
     ],
     packages=find_packages(),
     ext_modules=get_ext_modules(),

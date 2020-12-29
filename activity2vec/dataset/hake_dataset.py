@@ -89,7 +89,7 @@ class hake_train(torch.utils.data.Dataset):
         im       = im_read(im_path)
         if not self.visualize:
             im   = im.astype(np.float32, copy=True)
-            im  -= self.cfg.PIXEL_MEANS
+            im  -= np.array(self.cfg.PIXEL_MEANS)
         else:
             print('[Warning] Visualization Mode!')
         im_shape = im.shape

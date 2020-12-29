@@ -19,3 +19,4 @@ imutils
 numpy
 scipy
 anycurve
+yacs

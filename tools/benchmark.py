@@ -81,23 +81,25 @@ def calc_map(gt, pred_keys, pred_bboxes, pred_scores, verb_idx, recall_total, th
     ap = calc_ap(recall, predict)
     return ap
 
-def print_and_log(message, cfg):
-    print(message)
-    os.makedirs(cfg.LOG_DIR, exist_ok=True)
-    with open(osp.join(cfg.LOG_DIR, "test.log"), 'a') as f:
-        f.write(message + "\n")
-
 def load_list(list_txt):
     lines = []
     for line in open(list_txt, 'r'):
         lines.append(line.strip())
     return lines
 
-def benchmark(results_dir, cfg):
+def benchmark(results_dir, cfg, logger):
     gt_pasta_data = pickle.load(open(cfg.DATA.TEST_GT_PASTA_PATH, 'rb'))
     gt_verb_data = pickle.load(open(cfg.DATA.TEST_GT_VERB_PATH, 'rb'))
     pasta_name_list = load_list(cfg.DATA.PASTA_NAME_LIST)
     verb_name_list = load_list(cfg.DATA.VERB_NAME_LIST)
+
+    upper_names = [name.upper() for name in cfg.DATA.PASTA_NAMES]
+    pasta_num_list = [0] + [cfg.DATA.NUM_PASTAS[upper_name] for upper_name in upper_names]
+    pasta_num_list = np.array(pasta_num_list)
+    pasta_num_list = np.cumsum(pasta_num_list)
+    pasta_range_starts = list(pasta_num_list[:-1])
+    pasta_range_ends   = list(pasta_num_list[1:])
+    pasta_ranges       = list(zip(pasta_range_starts, pasta_range_ends))
 
     pasta_recall_total = dict()
     verb_recall_total = dict()
@@ -122,7 +124,7 @@ def benchmark(results_dir, cfg):
     human_bboxes_list = []
     pasta_score_list = []
     verb_score_list = []
-    print_and_log('==> Collecting results ...', cfg)
+    logger.info('==> Collecting results ...')
     for root, dirs, files in os.walk(results_dir):
         if len(dirs) == 0:
             for result_file_path in tqdm(files, ncols=40):
@@ -156,20 +158,19 @@ def benchmark(results_dir, cfg):
     pasta_score_list = np.concatenate(pasta_score_list, axis=0)
     verb_score_list = np.concatenate(verb_score_list, axis=0)
     
-    print_and_log('==> Evaluating ...', cfg)
+    logger.info('==> Evaluating ...')
     map_list = []
     for pasta in tqdm(range(sum(list(cfg.DATA.NUM_PASTAS.values()))), ncols=40):
         map_res = calc_map(gt_pasta_data, key_list, human_bboxes_list, pasta_score_list, pasta, pasta_recall_total)
         map_list.append(map_res)
     map_list = np.array(map_list)
     if cfg.BENCHMARK.SHOW_ACTION_RES:
-        print_and_log('detailed pasta results:', cfg)
+        logger.info('detailed pasta results:')
         for pasta_idx, pasta_map in enumerate(map_list):
             pasta_name = pasta_name_list[pasta_idx]
-            print_and_log('%s: %2.2f' % (pasta_name, pasta_map*100), cfg)
+            logger.info('%s: %2.2f' % (pasta_name, pasta_map*100))
 
-    print_and_log('mAP Results:', cfg)
-    pasta_ranges = cfg.DATA.PASTA_RANGES
+    logger.info('mAP Results:')
     map_w_no_interaction_list = []
     map_wo_no_interaction_list = []
     for part_idx in range(len(cfg.DATA.PASTA_NAMES)):
@@ -177,24 +178,24 @@ def benchmark(results_dir, cfg):
         map_wo_no_interaction = np.nanmean(map_list[pasta_ranges[part_idx][0]:pasta_ranges[part_idx][1]-1]) * 100
         map_w_no_interaction_list.append(map_w_no_interaction)
         map_wo_no_interaction_list.append(map_wo_no_interaction)
-        print_and_log('%s: %2.2f, %2.2f' % (cfg.DATA.PASTA_NAMES[part_idx], map_w_no_interaction, map_wo_no_interaction), cfg)
+        logger.info('%s: %2.2f, %2.2f' % (cfg.DATA.PASTA_NAMES[part_idx], map_w_no_interaction, map_wo_no_interaction))
     
     total_w_no_interaction = np.nanmean(np.array(map_w_no_interaction_list))
     total_wo_no_interaction = np.nanmean(np.array(map_wo_no_interaction_list))
-    print_and_log('pasta: %2.2f, %2.2f' % (total_w_no_interaction, total_wo_no_interaction), cfg)
+    logger.info('pasta: %2.2f, %2.2f' % (total_w_no_interaction, total_wo_no_interaction))
     verb_map_list = []
     for verb in tqdm(range(cfg.DATA.NUM_VERBS), ncols=40):
         map_res = calc_map(gt_verb_data, key_list, human_bboxes_list, verb_score_list, verb, verb_recall_total)
         verb_map_list.append(map_res)
 
     verb_mean_ap = np.nanmean(np.array(verb_map_list)) * 100
-    print_and_log('verb-157: %2.2f' % verb_mean_ap, cfg)
+    logger.info('verb-157: %2.2f' % verb_mean_ap)
     verb_mean_ap_117 = np.nanmean(np.array(verb_map_list[:117])) * 100
-    print_and_log('verb-117: %2.2f' % verb_mean_ap_117, cfg)
+    logger.info('verb-117: %2.2f' % verb_mean_ap_117)
     if cfg.BENCHMARK.SHOW_ACTION_RES:
-        print_and_log('detailed verb results:', cfg)
+        logger.info('detailed verb results:')
         for verb_idx, verb_map in enumerate(verb_map_list):
             verb_name = verb_name_list[verb_idx]
-            print_and_log('%s: %2.2f' % (verb_name, verb_map*100), cfg)
+            logger.info('%s: %2.2f' % (verb_name, verb_map*100))
 
     return total_w_no_interaction, verb_mean_ap

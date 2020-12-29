@@ -15,6 +15,42 @@ import os
 import sys
 
 from .resnet_v1.resnetv1_torch import resnet50 as resnet50_v1
+class part_attention(nn.Module):
+    def __init__(self, cfg):
+        super(part_attention, self).__init__()
+
+        self.cfg = cfg
+        self.scene_dim = 1024
+        self.part_fc_dim = cfg.MODEL.NUM_FC
+        self.conv1 = nn.Sequential(
+                        nn.Conv2d(in_channels=self.scene_dim, out_channels=self.part_fc_dim, kernel_size=1, stride=1, padding=0),
+                        nn.ReLU(inplace=True)
+                    )
+        # self.conv2 = nn.Sequential(
+        #                 nn.Conv2d(in_channels=self.scene_dim, out_channels=self.part_fc_dim, kernel_size=1, stride=1, padding=0),
+        #                 nn.ReLU(inplace=True)
+        #             )
+        
+    def forward(self, head, part_emb):
+        part_emb_expanded = part_emb.unsqueeze(-1).unsqueeze(-1)
+        att1 = self.conv1(head)
+        att1 = part_emb_expanded * att1
+        att1 = torch.mean(att1, [2, 3])
+        att1 = att1.sigmoid()
+        part_feat = part_emb * att1
+
+        # att1 = att1.unsqueeze(1)
+        
+        # att1_shape = att1.shape
+        # att1 = att1.view(att1_shape[0], att1_shape[1], -1)
+        # att1 = att1.softmax(dim=2)
+        # att1 = att1.view(att1_shape)
+
+        # att2 = self.conv2(head)
+        # att2 = att1 * att2
+        # part_feat = torch.mean(att2, [2, 3])
+        return part_feat
+
 class pasta_res50(nn.Module):
 
     def __init__(self, cfg):
@@ -43,7 +79,7 @@ class pasta_res50(nn.Module):
             self.num_fc_parts  = [self.scene_dim + self.human_dim for part_agg_num in self.part_agg_num]
         self.module_trained = cfg.MODEL.MODULE_TRAINED
         self.dropout_rate   = cfg.MODEL.DROPOUT
-
+        self.part_attention_enable = cfg.MODEL.PART_ATTENTION
         self.pasta_language_matrix  = torch.from_numpy(np.load(cfg.DATA.PASTA_LANGUAGE_MATRIX_PATH)).cuda()
         self.resnet50 = resnet50_v1()
         self.resnet50.conv1.padding = 0
@@ -92,15 +128,24 @@ class pasta_res50(nn.Module):
                                                     for pasta_idx in range(len(self.pasta_idx2name))
                                                 ]
                                             )
-
-        self.verb_cls_scores  = nn.Linear(len(self.pasta_idx2name) * self.num_fc, self.num_verbs)
+        if cfg.MODEL.VERB_ONE_MORE_FC:
+            self.verb_cls_scores = nn.Sequential(
+                            nn.Linear(len(self.pasta_idx2name) * self.num_fc, self.num_fc),
+                            nn.ReLU(inplace=True),
+                            nn.Dropout(self.dropout_rate),
+                            nn.Linear(self.num_fc, self.num_verbs)
+                        ) 
+        else:
+            self.verb_cls_scores = nn.Linear(len(self.pasta_idx2name) * self.num_fc, self.num_verbs)
 
 
         # model building.
         if cfg.TRAIN.FREEZE_BACKBONE:
             for p in self.image_to_head.parameters():
                 p.requires_grad = False
-
+            for p in self.resnet_layer4.parameters():
+                p.requires_grad = False
+            
         for pasta_idx in range(len(self.pasta_idx2name)):
             for p in self.fc7_parts[pasta_idx].parameters():
                 p.requires_grad = self.pasta_idx2name[pasta_idx] in self.module_trained
@@ -109,6 +154,16 @@ class pasta_res50(nn.Module):
 
         for p in self.verb_cls_scores.parameters():
             p.requires_grad = 'verb' in self.module_trained
+
+        if self.part_attention_enable:
+            self.attention_modules = []
+            for pasta_idx in range(len(self.pasta_idx2name)):
+                new_part_attention = part_attention(cfg)
+                self.attention_modules.append(new_part_attention)
+            self.attention_modules = nn.ModuleList(self.attention_modules)
+            for pasta_idx in range(len(self.pasta_idx2name)):
+                for p in self.attention_modules[pasta_idx].parameters():
+                    p.requires_grad = self.pasta_idx2name[pasta_idx] in self.module_trained
 
     def _crop_pool_layer(self, bottom, rois, max_pool=False):
         '''
@@ -172,7 +227,8 @@ class pasta_res50(nn.Module):
         return crops
 
     def forward(self, image, annos):
-
+        if self.cfg.DEBUG:
+            import ipdb; ipdb.set_trace()
         head = self.image_to_head(image)
         f_scene = torch.mean(head, [2, 3])
 
@@ -196,14 +252,18 @@ class pasta_res50(nn.Module):
                 f_parts_agg.append(f_part)
         else:
             f_scene_for_part = f_scene.repeat([f_human.shape[0], 1])
+            if self.part_attention_enable:
+                head_for_part = head.repeat([f_human.shape[0], 1, 1, 1])
             f_base = torch.cat([f_human, f_scene_for_part], 1)
-            f_parts_agg = [f_base for _ in range(len(self.cfg.DATA.PASTA_NAMES))]
+            f_parts_agg = [f_base for pasta_idx in range(len(self.cfg.DATA.PASTA_NAMES))]
             
         f_parts = []
         s_parts = []
         p_parts = []
         for part_idx, f_part in enumerate(f_parts_agg):
             f_part  = self.fc7_parts[part_idx](f_part)
+            if self.part_attention_enable:
+                f_part = self.attention_modules[part_idx](head_for_part, f_part)
             s_part  = self.part_cls_scores[part_idx](f_part)
             p_part  = torch.sigmoid(s_part)
             f_parts.append(f_part)

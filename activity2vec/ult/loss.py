@@ -1,6 +1,7 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 import torch
+import torch.nn as nn
 from torch.nn import functional as F
 
 
@@ -46,3 +47,32 @@ def sigmoid_focal_loss(
         loss = loss.sum()
 
     return loss
+
+def a2v_loss(cfg, s_parts, s_verb, annos, pasta_weights, pasta_name2idx):
+    losses = []
+    if cfg.TRAIN.LOSS_TYPE == 'bce':
+        loss_func = F.binary_cross_entropy_with_logits
+    elif cfg.TRAIN.LOSS_TYPE == 'focal':
+        loss_func = sigmoid_focal_loss
+    else:
+        raise NotImplementedError
+
+    for module_name in cfg.MODEL.MODULE_TRAINED:
+        if module_name != 'verb':
+            pasta_idx = pasta_name2idx[module_name]
+            preds = s_parts[pasta_idx]
+            labels = annos['pasta'][module_name]
+            weight = pasta_weights[module_name].repeat(s_parts[pasta_idx].shape[0], 1)
+        else:
+            preds = s_verb
+            labels = annos['verbs']
+            weight = pasta_weights[module_name].repeat(s_verb.shape[0], 1)
+        
+        loss = loss_func(preds, 
+                         labels, 
+                         weight=weight if cfg.TRAIN.WITH_LOSS_WTS else None, 
+                         reduction='mean'
+                         )
+        losses.append(loss)
+
+    return sum(losses)
