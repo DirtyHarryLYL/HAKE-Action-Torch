@@ -47,11 +47,11 @@ __C.DATA.VERB_NAME_LIST = osp.join(__C.DATA.DATA_DIR, 'verb_list_new.txt')
 
 # Training options
 __C.TRAIN = CN()
-__C.TRAIN.RESUME = False
 __C.TRAIN.CHECKPOINT_INTERVAL = 50000
 __C.TRAIN.SHOW_INTERVAL = 1000
 __C.TRAIN.DISPLAY_INTERVAL = 10
 __C.TRAIN.CHECKPOINT_PATH = ''
+__C.TRAIN.LOAD_HISTORY = False
 
 # Training params
 __C.TRAIN.BASE_LR  = 0.0025
@@ -64,7 +64,6 @@ __C.TRAIN.IM_BATCH_SIZE = 1
 
 __C.TRAIN.HUMAN_PER_IM = 10
 __C.TRAIN.POS_RATIO = 0.1
-__C.TRAIN.HUMAN_SCORE_ENHANCE = True
 __C.TRAIN.SHOW_LOSS_CURVE = True
 __C.TRAIN.WITH_LOSS_WTS = True
 __C.TRAIN.LOSS_TYPE = 'bce'
@@ -74,7 +73,7 @@ __C.TRAIN.COMBINE_PASTA = False
 # Model settings
 __C.MODEL = CN()
 __C.MODEL.DROPOUT = 0.5
-__C.MODEL.MODULE_TRAINED = ['foot', 'leg', 'hip', 'hand', 'arm', 'head', 'verb']
+__C.MODEL.MODULE_TRAINED = ['verb']
 __C.MODEL.PART_AGG_RULE = [[0, 3], [1, 2], [4], [6, 9], [7, 8], [5]]
 __C.MODEL.NUM_FC = 512
 __C.MODEL.PART_ROI_ENABLE = True
@@ -88,6 +87,7 @@ __C.BENCHMARK.SHOW_ACTION_RES = False
 __C.TEST = CN()
 __C.TEST.WEIGHT_PATH = ''
 __C.TEST.OUTPUT_DIR = ''
+__C.TEST.HUMAN_SCORE_ENHANCE = True
 
 # Demo settings
 __C.DEMO = CN()
@@ -120,7 +120,6 @@ __C.GPU_ID = 0
 __C.DEBUG = False
 
 def get_cfg():
-    # __C.DATA.PASTA_NAME_DICT = {part_name:part_idx for part_idx, part_name in enumerate(__C.DATA.PASTA_NAMES)}
     __C.TRAIN.DATA_SPLITS = [x for x in list(json.load(open(__C.DATA.IMAGE_FOLDER_LIST,'r')).keys()) if 'test' not in x]
     __C.DEMO.EXCLUDED_VERBS = list(set(__C.DEMO.EXCLUDED_VERBS + list(range(117, 157))))
     return __C.clone()

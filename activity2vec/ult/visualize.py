@@ -11,9 +11,14 @@ class a2v_curve():
             
         loss_curve = losscurve(db_path=loss_curve_dir, db_name='data', figsize=(20, 12))
         loss_curve.add_key('loss')
-        loss_curve.add_key('pasta_map')
-        loss_curve.add_key('verb_map')
-        
+
+        if len(self.cfg.MODEL.MODULE_TRAINED) == 1 and self.cfg.MODEL.MODULE_TRAINED[0] != 'verb':
+            loss_curve.add_key('{:s}_map_w_no_interaction'.format(self.cfg.MODEL.MODULE_TRAINED[0]))
+            loss_curve.add_key('{:s}_map_wo_no_interaction'.format(self.cfg.MODEL.MODULE_TRAINED[0]))
+        else:
+            loss_curve.add_key('pasta_map')
+            loss_curve.add_key('verb_map')
+
         loss_curve.set_xlabel('iteration')
         loss_curve.set_ylabel('loss', False)
         loss_curve.set_ylabel('mAP', True)
@@ -30,8 +35,12 @@ class a2v_curve():
             self.curve.twin()
 
             self.curve.clean()
-            self.curve.draw('iteration', 'pasta_map', self.cfg.MODEL_NAME + '_pasta')
-            self.curve.draw('iteration', 'verb_map', self.cfg.MODEL_NAME + '_verb')
+            if len(self.cfg.MODEL.MODULE_TRAINED) == 1 and self.cfg.MODEL.MODULE_TRAINED[0] != 'verb':
+                self.curve.draw('iteration', '{:s}_map_w_no_interaction'.format(self.cfg.MODEL.MODULE_TRAINED[0]), self.cfg.MODEL_NAME + '_' + self.cfg.MODEL.MODULE_TRAINED[0] + '_w_nointer')
+                self.curve.draw('iteration', '{:s}_map_wo_no_interaction'.format(self.cfg.MODEL.MODULE_TRAINED[0]), self.cfg.MODEL_NAME + '_' + self.cfg.MODEL.MODULE_TRAINED[0] + '_wo_nointer')
+            else:
+                self.curve.draw('iteration', 'pasta_map', self.cfg.MODEL_NAME + '_pasta')
+                self.curve.draw('iteration', 'verb_map', self.cfg.MODEL_NAME + '_verb')
             self.curve.twin()
 
             self.curve.reset_choice()

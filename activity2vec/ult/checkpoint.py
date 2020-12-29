@@ -15,25 +15,25 @@ def load_model(cfg, model, optimizer, scheduler, ckp_path, mode='train'):
 
     if mode == 'train':
         model.load_state_dict(checkpoint["model_state_dict"], strict=False)
+        iters = 0
+        if cfg.TRAIN.LOAD_HISTORY:
+            if 'optimizer_state_dict' in checkpoint:
+                optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+                for state in optimizer.state.values():
+                    for k, v in state.items():
+                        if isinstance(v, torch.Tensor):
+                            state[k] = v.cuda()
 
-        if 'optimizer_state_dict' in checkpoint:
-            optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-            for state in optimizer.state.values():
-                for k, v in state.items():
-                    if isinstance(v, torch.Tensor):
-                        state[k] = v.cuda()
+            if 'scheduler_state_dict' in checkpoint and scheduler is not None:
+                scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+                for state in scheduler.state.values():
+                    for k, v in state.items():
+                        if isinstance(v, torch.Tensor):
+                            state[k] = v.cuda()
 
-        if 'scheduler_state_dict' in checkpoint and scheduler is not None:
-            scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
-            for state in scheduler.state.values():
-                for k, v in state.items():
-                    if isinstance(v, torch.Tensor):
-                        state[k] = v.cuda()
-
-        if 'iters' in checkpoint:
-            iters = checkpoint['iters']
-        else:
-            iters = 0
+            if 'iters' in checkpoint:
+                iters = checkpoint['iters']
+                
         return model, optimizer, scheduler, iters
 
     else:

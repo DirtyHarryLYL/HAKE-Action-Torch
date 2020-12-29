@@ -198,4 +198,4 @@ def benchmark(results_dir, cfg, logger):
             verb_name = verb_name_list[verb_idx]
             logger.info('%s: %2.2f' % (verb_name, verb_map*100))
 
-    return total_w_no_interaction, verb_mean_ap
+    return total_w_no_interaction, verb_mean_ap, map_w_no_interaction_list, map_wo_no_interaction_list

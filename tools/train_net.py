@@ -95,8 +95,14 @@ def train(cfg, net, train_loader, test_loader, optimizer, scheduler, global_iter
                     net.eval()
                     with torch.no_grad():
                         test(cfg, net, test_loader, output_dir, loggers.test)
-                        pasta_map, verb_map = benchmark(output_dir, cfg, loggers.test)
-                        loss_curve.log({'iteration': global_iter, 'pasta_map': pasta_map, 'verb_map': verb_map})
+                        pasta_map, verb_map, map_w_no_interaction_list, map_wo_no_interaction_list = benchmark(output_dir, cfg, loggers.test)
+                        
+                        if len(cfg.MODEL.MODULE_TRAINED) == 1 and cfg.MODEL.MODULE_TRAINED[0] != 'verb':
+                            loss_curve.log({'iteration': global_iter, 
+                                            '{:s}_map_w_no_interaction'.format(cfg.MODEL.MODULE_TRAINED[0]): map_w_no_interaction_list[net.pasta_name2idx[cfg.MODEL.MODULE_TRAINED[0]]], 
+                                            '{:s}_map_wo_no_interaction'.format(cfg.MODEL.MODULE_TRAINED[0]): map_wo_no_interaction_list[net.pasta_name2idx[cfg.MODEL.MODULE_TRAINED[0]]]})
+                        else:
+                            loss_curve.log({'iteration': global_iter, 'pasta_map': pasta_map, 'verb_map': verb_map})
                     net.train()
 
             # show training schedule
@@ -117,27 +123,15 @@ def setup():
     # arg parsing
     cfg = get_cfg()
     args = parse_args()
+    cfg.merge_from_file(args.cfg)
     cfg.merge_from_list(args.opts)
 
     assert len(cfg.MODEL_NAME) != 0
     assert cfg.TRAIN.IM_BATCH_SIZE == 1
     
-    cfg.TRAIN.RESUME = args.resume
     cfg.MODEL_NAME = args.model
     cfg.WEIGHT_DIR = os.path.join(cfg.WEIGHT_DIR, cfg.MODEL_NAME)
     cfg.LOG_DIR = os.path.join(cfg.LOG_DIR, cfg.MODEL_NAME)
-
-    if args.trained_modules == 'all':
-        cfg.MODEL.MODULE_TRAINED = ['foot', 'leg', 'hip', 'hand', 'arm', 'head', 'verb']
-    elif args.trained_modules == 'all_pasta':
-        cfg.MODEL.MODULE_TRAINED = ['foot', 'leg', 'hip', 'hand', 'arm', 'head']
-    elif args.trained_modules == 'verb':
-        cfg.MODEL.MODULE_TRAINED = ['verb']
-    else:
-        cfg.MODEL.MODULE_TRAINED = args.trained_modules.split(',')
-
-    if len(args.data_splits) > 0:
-        cfg.TRAIN.DATA_SPLITS = [x.strip() for x in args.data_splits.split(',')]
 
     os.environ['CUDA_VISIBLE_DEVICES'] = str(cfg.GPU_ID)
     cfg.freeze()
@@ -188,8 +182,7 @@ if __name__ == "__main__":
 
     global_iter = 0
     # load weight if continue training
-    if cfg.TRAIN.RESUME:
-        assert len(cfg.TRAIN.CHECKPOINT_PATH) > 0
+    if len(cfg.TRAIN.CHECKPOINT_PATH) > 0:
         loggers.train.info("==> Loading weight from: {}".format(cfg.TRAIN.CHECKPOINT_PATH), cfg)
         net, optimizer, scheduler, global_iter = load_model(cfg, net, optimizer, scheduler, cfg.TRAIN.CHECKPOINT_PATH)
 

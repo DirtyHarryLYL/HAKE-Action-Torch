@@ -182,8 +182,8 @@ if __name__ == '__main__':
         if args.save_res:
             os.makedirs(os.path.join(args.output, 'res'), exist_ok=True)
     else:
-        if args.save_vis:
-            raise RuntimeError('output should not be empty when save_vis is set!')
+        if args.save_vis or args.save_res:
+            raise RuntimeError('output should not be empty when save_vis or save_res is set!')
 
     loggers = setup_logging(cfg.LOG_DIR, func='inference')
     logger  = loggers.Activity2Vec
