@@ -61,6 +61,21 @@ def im_read(im_path):
             raise NotImplementedError
     return im
 
+def draw_relation(joints, size=64, is_fake=False):
+    if is_fake:
+        return np.zeros((size, size), dtype='float32')
+    else:
+        joint_relation = [[1, 3], [2, 4], [0, 1], [0, 2], [0, 17], [5, 17], [6, 17], [5, 7], [6, 8], [7, 9], [8, 10], [11, 17], [12, 17], [11, 13], [12, 14], [13, 15], [14, 16]]
+        color = [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+        skeleton = np.zeros((size, size, 1), dtype='float32')
+        draw_joints = np.zeros((18, 2), dtype='float32')
+        draw_joints[0:17] = joints
+        draw_joints[17] = (draw_joints[5] + draw_joints[6]) / 2
+        for i in range(len(joint_relation)):
+            cv2.line(skeleton, (int(draw_joints[joint_relation[i][0]][0]*size), int(draw_joints[joint_relation[i][0]][1]*size)), (int(draw_joints[joint_relation[i][1]][0]*size), int(draw_joints[joint_relation[i][1]][1]*size)), color[i])
+        skeleton = skeleton[:, :, 0]
+        return skeleton
+
 class hake_train(torch.utils.data.Dataset):
     def __init__(self, cfg):
         super(hake_train, self).__init__()
@@ -87,6 +102,7 @@ class hake_train(torch.utils.data.Dataset):
         # Load image and normalize.
         im_path  = osp.join(self.image_folder_list[dataset], filename)
         im       = im_read(im_path)
+        ori_im_shape = im.shape
         if not self.visualize:
             im   = im.astype(np.float32, copy=True)
             im  -= np.array(self.cfg.PIXEL_MEANS)
@@ -146,10 +162,23 @@ class hake_train(torch.utils.data.Dataset):
         annos.pasta.arm = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.ARM), dtype=np.float32)
         annos.pasta.head = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.HEAD), dtype=np.float32)
         annos.pasta.binary = np.zeros((anno_num, self.cfg.DATA.NUM_PARTS), dtype=np.float32)
-
+        annos.skeletons = np.zeros((anno_num, 1, self.cfg.DATA.SKELETON_SIZE, self.cfg.DATA.SKELETON_SIZE), dtype=np.float32)
         for gt_anno_aug_idx, gt_anno_ori_idx in enumerate(gt_anno_idxs):
             this_anno = gt_annos[gt_anno_ori_idx]
             global_idx = gt_anno_aug_idx
+
+            if this_anno.keypoints is not None:
+                keypoints = this_anno.keypoints
+                height, width, _ = ori_im_shape
+                keypoints = np.array(keypoints).reshape(17, 3)
+                keypoints[:, 0] /= width
+                keypoints[:, 1] /= height
+                skeleton_image = draw_relation(keypoints[:, :2])
+                annos.skeletons[global_idx, 0] = skeleton_image
+            else:
+                skeleton_image = draw_relation(None, is_fake=True)
+                annos.skeletons[global_idx, 0] = skeleton_image
+
             if len(this_anno.verbs) > 0:
                 annos.verbs[global_idx][np.array(this_anno.verbs)] = 1
             else:
@@ -171,6 +200,19 @@ class hake_train(torch.utils.data.Dataset):
         for neg_anno_aug_idx, neg_anno_ori_idx in enumerate(neg_anno_idxs):
             this_anno = neg_annos[neg_anno_ori_idx]
             global_idx = neg_anno_aug_idx + gt_num
+
+            if this_anno.keypoints is not None:
+                keypoints = this_anno.keypoints
+                height, width, _ = ori_im_shape
+                keypoints = np.array(keypoints).astype(np.float32).reshape(17, 3)
+                keypoints[:, 0] /= width
+                keypoints[:, 1] /= height
+                skeleton_image = draw_relation(keypoints[:, :2])
+                annos.skeletons[global_idx, 0] = skeleton_image
+            else:
+                skeleton_image = draw_relation(None, is_fake=True)
+                annos.skeletons[global_idx, 0] = skeleton_image
+
             annos.verbs[global_idx][57] = 1
             annos.human_bboxes[global_idx] = np.array(this_anno.human_bbox)
             if this_anno.part_bboxes is None:
@@ -216,6 +258,7 @@ class hake_test(torch.utils.data.Dataset):
 
         im_path  = osp.join(self.image_folder_list[dataset], filename)
         image    = im_read(im_path)
+        ori_im_shape = image.shape
         if not self.visualize:
             image    = image.astype(np.float32, copy=True)
             image   -= self.cfg.PIXEL_MEANS
@@ -229,7 +272,20 @@ class hake_test(torch.utils.data.Dataset):
         annos.human_bboxes = np.zeros((anno_num, 4), dtype=np.float32)
         annos.part_bboxes = np.zeros((anno_num, self.cfg.DATA.NUM_PARTS, 4), dtype=np.float32)
         annos.human_scores = np.zeros((anno_num, ), dtype=np.float32)
+        annos.skeletons = np.zeros((anno_num, 1, self.cfg.DATA.SKELETON_SIZE, self.cfg.DATA.SKELETON_SIZE), dtype=np.float32)
+
         for anno_idx, anno in enumerate(current_data):
+            if anno.keypoints is not None:
+                keypoints = anno.keypoints
+                height, width, _ = ori_im_shape
+                keypoints = np.array(keypoints).astype(np.float32).reshape(17, 3)
+                keypoints[:, 0] /= width
+                keypoints[:, 1] /= height
+                skeleton_image = draw_relation(keypoints[:, :2])
+                annos.skeletons[anno_idx, 0] = skeleton_image
+            else:
+                skeleton_image = draw_relation(None, is_fake=True)
+                annos.skeletons[anno_idx, 0] = skeleton_image
             annos.human_bboxes[anno_idx] = np.array(anno.human_bbox)
             annos.part_bboxes[anno_idx] = anno.part_bboxes
             annos.human_scores[anno_idx] = anno.human_score

@@ -31,6 +31,7 @@ __C.DATA.NUM_PASTAS.ARM = 8
 __C.DATA.NUM_PASTAS.HEAD = 14
 __C.DATA.NUM_PARTS = 10
 __C.DATA.NUM_VERBS = 157
+__C.DATA.SKELETON_SIZE = 64
 __C.DATA.PASTA_NAMES = ['foot', 'leg', 'hip', 'hand', 'arm', 'head']
 
 # Directories of data and weights
@@ -61,7 +62,7 @@ __C.TRAIN.MAX_EPOCH = 100
 __C.TRAIN.FREEZE_BACKBONE = True
 # TODO: multi images per batch(one image for each gpu, this may decrease the performance)
 __C.TRAIN.IM_BATCH_SIZE = 1
-
+__C.TRAIN.NUM_WORKERS = 1
 __C.TRAIN.HUMAN_PER_IM = 10
 __C.TRAIN.POS_RATIO = 0.1
 __C.TRAIN.SHOW_LOSS_CURVE = True
@@ -69,7 +70,7 @@ __C.TRAIN.WITH_LOSS_WTS = True
 __C.TRAIN.LOSS_TYPE = 'bce'
 __C.TRAIN.LOSS_WEIGHT_K = 2
 __C.TRAIN.COMBINE_PASTA = False
-
+__C.TRAIN.FREEZE_RES4 = True
 # Model settings
 __C.MODEL = CN()
 __C.MODEL.DROPOUT = 0.5
@@ -79,7 +80,8 @@ __C.MODEL.NUM_FC = 512
 __C.MODEL.PART_ROI_ENABLE = True
 __C.MODEL.PART_ATTENTION = False
 __C.MODEL.VERB_ONE_MORE_FC = False
-
+__C.MODEL.POSE_MAP = False
+__C.MODEL.SKELETON_DIM = 2704
 # Benchmark and test settings
 __C.BENCHMARK = CN()
 __C.BENCHMARK.SHOW_ACTION_RES = False
@@ -88,7 +90,7 @@ __C.TEST = CN()
 __C.TEST.WEIGHT_PATH = ''
 __C.TEST.OUTPUT_DIR = ''
 __C.TEST.HUMAN_SCORE_ENHANCE = True
-
+__C.TEST.NUM_WORKERS = 1
 # Demo settings
 __C.DEMO = CN()
 __C.DEMO.YOLO_CFG = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'configs', 'yolov3-spp.cfg')

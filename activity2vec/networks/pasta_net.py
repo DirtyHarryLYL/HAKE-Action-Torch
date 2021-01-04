@@ -77,6 +77,10 @@ class pasta_res50(nn.Module):
             self.num_fc_parts  = [part_agg_num*self.roi_dim + self.scene_dim + self.human_dim for part_agg_num in self.part_agg_num]
         else:
             self.num_fc_parts  = [self.scene_dim + self.human_dim for part_agg_num in self.part_agg_num]
+        
+        if self.cfg.MODEL.SKELETON_DIM:
+            self.num_fc_parts  = [(x + cfg.MODEL.SKELETON_DIM) for x in self.num_fc_parts]
+            
         self.module_trained = cfg.MODEL.MODULE_TRAINED
         self.dropout_rate   = cfg.MODEL.DROPOUT
         self.part_attention_enable = cfg.MODEL.PART_ATTENTION
@@ -143,8 +147,9 @@ class pasta_res50(nn.Module):
         if cfg.TRAIN.FREEZE_BACKBONE:
             for p in self.image_to_head.parameters():
                 p.requires_grad = False
-            for p in self.resnet_layer4.parameters():
-                p.requires_grad = False
+            if cfg.TRAIN.FREEZE_RES4:
+                for p in self.resnet_layer4.parameters():
+                    p.requires_grad = False
             
         for pasta_idx in range(len(self.pasta_idx2name)):
             for p in self.fc7_parts[pasta_idx].parameters():
@@ -155,6 +160,23 @@ class pasta_res50(nn.Module):
         for p in self.verb_cls_scores.parameters():
             p.requires_grad = 'verb' in self.module_trained
 
+        if cfg.MODEL.POSE_MAP:
+            self.pool2_flat_pose_maps = nn.ModuleList(
+                                                [
+                                                    nn.Sequential(nn.Conv2d(1, 32, (5, 5), stride=(1, 1), padding=0),
+                                                                  nn.ReLU(inplace=True),
+                                                                  nn.MaxPool2d((2, 2)),
+
+                                                                  nn.Conv2d(32, 16, (5, 5), stride=(1, 1), padding=0),
+                                                                  nn.ReLU(inplace=True),
+                                                                  nn.MaxPool2d((2, 2)))
+                                                    for pasta_idx in range(len(self.pasta_idx2name))
+                                                ]
+                                            )
+            for pasta_idx in range(len(self.pasta_idx2name)):
+                for p in self.pool2_flat_pose_maps[pasta_idx].parameters():
+                    p.requires_grad = self.pasta_idx2name[pasta_idx] in self.module_trained
+                    
         if self.part_attention_enable:
             self.attention_modules = []
             for pasta_idx in range(len(self.pasta_idx2name)):
@@ -227,8 +249,12 @@ class pasta_res50(nn.Module):
         return crops
 
     def forward(self, image, annos):
-        if self.cfg.DEBUG:
-            import ipdb; ipdb.set_trace()
+        skeleton_feats = []
+        for pasta_idx in range(len(self.pasta_idx2name)):
+            skeleton_feat = self.pool2_flat_pose_maps[pasta_idx](annos['skeletons'])
+            skeleton_feat = skeleton_feat.view(skeleton_feat.shape[0], -1)
+            skeleton_feats.append(skeleton_feat)
+
         head = self.image_to_head(image)
         f_scene = torch.mean(head, [2, 3])
 
@@ -261,12 +287,18 @@ class pasta_res50(nn.Module):
         s_parts = []
         p_parts = []
         for part_idx, f_part in enumerate(f_parts_agg):
-            f_part  = self.fc7_parts[part_idx](f_part)
+            if self.cfg.MODEL.POSE_MAP:
+                f_part_cat  = torch.cat([f_part, skeleton_feat], 1)
+                f_part_fc7  = self.fc7_parts[part_idx](f_part_cat)
+            else:
+                f_part_fc7  = self.fc7_parts[part_idx](f_part)
+                
             if self.part_attention_enable:
-                f_part = self.attention_modules[part_idx](head_for_part, f_part)
-            s_part  = self.part_cls_scores[part_idx](f_part)
+                f_part_fc7 = self.attention_modules[part_idx](head_for_part, f_part_fc7)
+
+            s_part  = self.part_cls_scores[part_idx](f_part_fc7)
             p_part  = torch.sigmoid(s_part)
-            f_parts.append(f_part)
+            f_parts.append(f_part_fc7)
             s_parts.append(s_part)
             p_parts.append(p_part)
         

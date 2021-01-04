@@ -63,7 +63,6 @@ def train(cfg, net, train_loader, test_loader, optimizer, scheduler, global_iter
                     annos[key] = annos[key].squeeze(0)
             annos['human_bboxes'] = torch.cat([torch.zeros(annos['human_bboxes'].shape[0], 1).cuda(), annos['human_bboxes']], 1)
             annos['part_bboxes'] = torch.cat([torch.zeros(annos['part_bboxes'].shape[0], annos['part_bboxes'].shape[1], 1).cuda(), annos['part_bboxes']], 2)
-
             s_parts, s_verb = net(image, annos)
             loss = a2v_loss(cfg, s_parts, s_verb, annos, pasta_weights, net.pasta_name2idx)
 
@@ -157,13 +156,13 @@ if __name__ == "__main__":
     train_loader = torch.utils.data.DataLoader(dataset=hake_train(cfg), 
                                                batch_size=cfg.TRAIN.IM_BATCH_SIZE, 
                                                shuffle=True, 
-                                               num_workers=cfg.TRAIN.IM_BATCH_SIZE
+                                               num_workers=cfg.TRAIN.NUM_WORKERS
                                                )
     test_loader = torch.utils.data.DataLoader(dataset=hake_test(cfg), 
                                               batch_size=1, 
                                               shuffle=False, 
                                               collate_fn=custom_collate, 
-                                              num_workers=1
+                                              num_workers=cfg.TEST.NUM_WORKERS
                                               )
 
     data_length  = len(train_loader)

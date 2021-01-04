@@ -26,10 +26,10 @@ def load_model(cfg, model, optimizer, scheduler, ckp_path, mode='train'):
 
             if 'scheduler_state_dict' in checkpoint and scheduler is not None:
                 scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
-                for state in scheduler.state.values():
-                    for k, v in state.items():
-                        if isinstance(v, torch.Tensor):
-                            state[k] = v.cuda()
+                # for state in scheduler.state.values():
+                #     for k, v in state.items():
+                #         if isinstance(v, torch.Tensor):
+                #             state[k] = v.cuda()
 
             if 'iters' in checkpoint:
                 iters = checkpoint['iters']
