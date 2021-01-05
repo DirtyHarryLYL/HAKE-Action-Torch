@@ -152,11 +152,10 @@ def read_input(args):
                 args.logger.info('[Input] Image directory detected.')
                 imgpaths = []
                 for root, dirs, files in os.walk(filepath):
-                    if len(dirs) == 0:
-                        for file in files:
-                            if check_img(file):
-                                imagepath = os.path.join(root, file)
-                                imgpaths.append(imagepath)
+                    for file in files:
+                        if check_img(file):
+                            imagepath = os.path.join(root, file)
+                            imgpaths.append(imagepath)
             elif check_img(filepath):
                 args.logger.info('[Input] Image file detected.')
                 imgpaths = [filepath]

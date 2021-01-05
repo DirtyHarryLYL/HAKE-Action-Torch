@@ -199,11 +199,12 @@ class pasta_res50(nn.Module):
         return crops
 
     def forward(self, image, annos):
-        skeleton_feats = []
-        for pasta_idx in range(len(self.pasta_idx2name)):
-            skeleton_feat = self.pool2_flat_pose_maps[pasta_idx](annos['skeletons'])
-            skeleton_feat = skeleton_feat.view(skeleton_feat.shape[0], -1)
-            skeleton_feats.append(skeleton_feat)
+        if self.cfg.MODEL.POSE_MAP:
+            skeleton_feats = []
+            for pasta_idx in range(len(self.pasta_idx2name)):
+                skeleton_feat = self.pool2_flat_pose_maps[pasta_idx](annos['skeletons'])
+                skeleton_feat = skeleton_feat.view(skeleton_feat.shape[0], -1)
+                skeleton_feats.append(skeleton_feat)
 
         head = self.image_to_head(image)
         f_scene = torch.mean(head, [2, 3])
