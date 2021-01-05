@@ -16,7 +16,6 @@ Load the pretrained ResNet-50 model and finetune the pasta classifier of foot pa
 python -u tools/train_net.py --cfg models/a2v/configs/foot.yaml \
                              --model finetune-foot \
                              TRAIN.CHECKPOINT_PATH models/a2v/checkpoints/pretrained_res50.pth \
-                             MODEL.POSE_MAP True \
                              GPU_ID 2
 ```
 
@@ -26,7 +25,6 @@ Load the pretrained ResNet-50 model with finetuned pasta classifier and finetune
 python -u tools/train_net.py --cfg models/a2v/configs/verb.yaml \
                              --model finetune-verb \
                              TRAIN.CHECKPOINT_PATH models/a2v/checkpoints/pretrained_model.pth \
-                             MODEL.POSE_MAP True \
                              GPU_ID 3
 ```
 
