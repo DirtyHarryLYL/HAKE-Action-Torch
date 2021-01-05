@@ -14,7 +14,7 @@ ls *.* | xargs -n1 tar xzvf
 rm *.tgz && rm *.tar.gz && cd ..
 ```
 
-3. Download the pretrained models package [models.tar.gz](https://1drv.ms/u/s!ArUVoRxpBphYgtYQP6rEsNmwfGpIXQ?e=fZ0AoC) to the root folder, and extract the models: 
+3. Download the pretrained models package [models.tar.gz](https://1drv.ms/u/s!ArUVoRxpBphYgtYRayw7WEVhTf4HHw?e=7tjFTF) to the root folder, and extract the models: 
 ```
 tar xzvf models.tar.gz
 rm models.tar.gz
