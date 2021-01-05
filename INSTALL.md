@@ -1,4 +1,4 @@
-## Steps of installing Activity2Vec
+## Steps of Installing Activity2Vec
  ### Prerequisites
  - Python 3.7
  - CUDA 10.0
