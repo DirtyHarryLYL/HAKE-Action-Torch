@@ -81,13 +81,15 @@ class Activity2Vec():
                 annos_cpu['part_bboxes'] = annos_cpu['part_bboxes'].squeeze(0)
                 annos_cpu['keypoints'] = annos_cpu['keypoints'].squeeze(0)
                 annos_cpu['human_scores'] = annos_cpu['human_scores'].squeeze(0)
+                annos_cpu['skeletons'] = annos_cpu['skeletons'].squeeze(0)
                 annos_cpu['f_pasta'] = f_pasta
                 annos_cpu['p_pasta'] = p_pasta
                 annos_cpu['p_verb'] = p_verb
                 return ori_image, annos_cpu, vis
 
-            except:
+            except Exception as e:
                 self.logger.info('[Activity2Vec] unsuccess for {:s}'.format(image_path))
+                self.logger.info('{:s}'.format(str(e)))
                 vis = ori_image
                 vis = self.vis_tool.draw(vis, None, None, None, None, None)
                 return ori_image, None, vis
@@ -97,6 +99,8 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description='Activity2Vec Demo')
 
+    parser.add_argument('--cfg', type=str, required=True, 
+                        help='configuration file')
     parser.add_argument('--input', type=str, required=True, 
                         help='input path/directory')
     parser.add_argument('--output', type=str, default='', 
@@ -121,9 +125,9 @@ def parse_args():
 def setup():
     cfg = get_cfg()
     args = parse_args()
-    cfg.merge_from_file(cfg.DEMO.A2V_CFG)
+    cfg.merge_from_file(args.cfg)
     cfg.merge_from_list(args.opts)
-
+    
     os.environ['CUDA_VISIBLE_DEVICES'] = str(cfg.GPU_ID)
     cfg.freeze()
     return cfg, args

@@ -14,6 +14,7 @@ import copy
 import json
 from yacs.config import CfgNode as CN
 
+# General configs of directories and model name.
 __C = CN()
 __C.ROOT_DIR = osp.abspath(osp.join(osp.dirname(__file__), '..', '..'))
 __C.LOG_DIR = osp.join(__C.ROOT_DIR, 'logs')
@@ -71,6 +72,7 @@ __C.TRAIN.LOSS_TYPE = 'bce'
 __C.TRAIN.LOSS_WEIGHT_K = 2
 __C.TRAIN.COMBINE_PASTA = False
 __C.TRAIN.FREEZE_RES4 = True
+
 # Model settings
 __C.MODEL = CN()
 __C.MODEL.DROPOUT = 0.5
@@ -82,6 +84,7 @@ __C.MODEL.PART_ATTENTION = False
 __C.MODEL.VERB_ONE_MORE_FC = False
 __C.MODEL.POSE_MAP = False
 __C.MODEL.SKELETON_DIM = 2704
+
 # Benchmark and test settings
 __C.BENCHMARK = CN()
 __C.BENCHMARK.SHOW_ACTION_RES = False
@@ -91,13 +94,17 @@ __C.TEST.WEIGHT_PATH = ''
 __C.TEST.OUTPUT_DIR = ''
 __C.TEST.HUMAN_SCORE_ENHANCE = True
 __C.TEST.NUM_WORKERS = 1
+
 # Demo settings
 __C.DEMO = CN()
 __C.DEMO.YOLO_CFG = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'configs', 'yolov3-spp.cfg')
 __C.DEMO.YOLO_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'checkpoints', 'yolov3-spp.weights')
 __C.DEMO.POSE_CFG = osp.join(__C.ROOT_DIR, 'models', 'pose', 'configs', '256x192_res50_lr1e-3_1x.yaml')
 __C.DEMO.POSE_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'pose', 'checkpoints', 'fast_res50_256x192.pth')
+
+# Warning: this config has been deprecated in the newest version.
 __C.DEMO.A2V_CFG = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'configs', 'a2v.yaml')
+
 __C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pretrained_model_20201229.pth')
 __C.DEMO.EXCLUDED_VERBS = [57, 146]
 __C.DEMO.FONT_PATH = osp.join(__C.ROOT_DIR, 'tools', 'inference_tools', 'consola.ttf')
@@ -121,6 +128,7 @@ __C.GPU_ID = 0
 # Debug hacker
 __C.DEBUG = False
 
+# Config handler.
 def get_cfg():
     __C.TRAIN.DATA_SPLITS = [x for x in list(json.load(open(__C.DATA.IMAGE_FOLDER_LIST,'r')).keys()) if 'test' not in x]
     __C.DEMO.EXCLUDED_VERBS = list(set(__C.DEMO.EXCLUDED_VERBS + list(range(117, 157))))

@@ -14,6 +14,7 @@ import numpy as np
 import cv2
 import torch
 import copy
+from activity2vec.dataset.hake_dataset import draw_relation
 from activity2vec.networks.pasta_net import pasta_res50
 from activity2vec.ult.config import get_cfg
 from easydict import EasyDict as edict
@@ -46,6 +47,7 @@ class pasta_model():
         annos.part_bboxes = []
         annos.keypoints = []
         annos.human_scores = []
+        annos.skeletons = []
         for human in pose_result:
             each_human = copy.deepcopy(human)
             # xywh to xyxy
@@ -59,11 +61,12 @@ class pasta_model():
             annos.part_bboxes.append(part_bbox)
             annos.keypoints.append(keypoints.unsqueeze(0))
             annos.human_scores.append(each_human['proposal_score'].unsqueeze(0))
+            annos.skeletons.append(torch.tensor(draw_relation(keypoints[:, :2])).unsqueeze(0))
         annos.human_bboxes = torch.tensor(annos.human_bboxes).unsqueeze(0).float()
         annos.part_bboxes = torch.tensor(annos.part_bboxes).unsqueeze(0).float()
         annos.keypoints = torch.cat(annos.keypoints, 0).unsqueeze(0).float()
         annos.human_scores = torch.cat(annos.human_scores, 0).unsqueeze(0).float()
-
+        annos.skeletons = torch.cat(annos.skeletons, 0).unsqueeze(1).unsqueeze(0).float()
         return image, annos
 
     def inference(self, image, annos):
