@@ -1,4 +1,4 @@
-# Getting Started with Activity2Vec
+## Getting Started with Activity2Vec
 
 Inference with pretrained model on GPU 0 and show the visualization results of the images in demo folder:
 

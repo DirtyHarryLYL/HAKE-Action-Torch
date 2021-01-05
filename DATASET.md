@@ -1,4 +1,4 @@
-# Preparing HAKE dataset/models for Activity2Vec
+## Preparing HAKE dataset/models for Activity2Vec
 
 For the downloading of HAKE dataset, please follow these steps:
 
