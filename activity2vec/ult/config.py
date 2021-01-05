@@ -105,7 +105,7 @@ __C.DEMO.POSE_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'pose', 'checkpoints', '
 # Warning: this config has been deprecated in the newest version.
 __C.DEMO.A2V_CFG = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'configs', 'a2v.yaml')
 
-__C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pretrained_model_20201229.pth')
+__C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pretrained_model.pth')
 __C.DEMO.EXCLUDED_VERBS = [57, 146]
 __C.DEMO.FONT_PATH = osp.join(__C.ROOT_DIR, 'tools', 'inference_tools', 'consola.ttf')
 __C.DEMO.FONT_SIZE = 18
