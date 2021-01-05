@@ -1,6 +1,6 @@
 ## Preparing HAKE dataset/models for Activity2Vec
 
-For the downloading of HAKE dataset, please follow these steps:
+For the downloading of HAKE dataset/models, please follow these steps:
 
 1. prepare a directory with enough free space(more than 60GB) to store data.
 ```
