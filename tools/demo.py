@@ -127,6 +127,7 @@ def setup():
     cfg.merge_from_file(args.cfg)
     cfg.merge_from_list(args.opts)
     
+    os.makedirs(cfg.LOG_DIR, exist_ok=True)
     os.environ['CUDA_VISIBLE_DEVICES'] = str(cfg.GPU_ID)
     cfg.freeze()
     return cfg, args

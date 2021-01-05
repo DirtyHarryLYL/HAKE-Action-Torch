@@ -20,3 +20,4 @@ numpy
 scipy
 anycurve
 yacs
+moviepy

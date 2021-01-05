@@ -83,7 +83,8 @@ setup(
     "numpy",
     "scipy",
     "anycurve",
-    "yacs"
+    "yacs",
+    "moviepy"
     ],
     packages=find_packages(),
     ext_modules=get_ext_modules(),
