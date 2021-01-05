@@ -99,7 +99,7 @@ class hake_train(torch.utils.data.Dataset):
         dataset, filename = image_id.split('/')
         
         # Load image and normalize.
-        im_path  = osp.join(self.image_folder_list[dataset], filename)
+        im_path  = osp.join(self.cfg.DATA.DATA_DIR, self.image_folder_list[dataset], filename)
         im       = im_read(im_path)
         ori_im_shape = im.shape
         if not self.visualize:

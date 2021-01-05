@@ -70,6 +70,7 @@ def test(cfg, net, test_loader, output_dir, logger):
 def setup():
     cfg = get_cfg()
     args = test_parse_args()
+    cfg.merge_from_file(args.cfg)
     cfg.merge_from_list(args.opts)
 
     cfg.TEST.WEIGHT_PATH  = os.path.abspath(cfg.TEST.WEIGHT_PATH)

@@ -228,8 +228,6 @@ class pasta_res50(nn.Module):
                 f_parts_agg.append(f_part)
         else:
             f_scene_for_part = f_scene.repeat([f_human.shape[0], 1])
-            if self.part_attention_enable:
-                head_for_part = head.repeat([f_human.shape[0], 1, 1, 1])
             f_base = torch.cat([f_human, f_scene_for_part], 1)
             f_parts_agg = [f_base for pasta_idx in range(len(self.cfg.DATA.PASTA_NAMES))]
             
@@ -243,9 +241,6 @@ class pasta_res50(nn.Module):
             else:
                 f_part_fc7  = self.fc7_parts[part_idx](f_part)
                 
-            if self.part_attention_enable:
-                f_part_fc7 = self.attention_modules[part_idx](head_for_part, f_part_fc7)
-
             s_part  = self.part_cls_scores[part_idx](f_part_fc7)
             p_part  = torch.sigmoid(s_part)
             f_parts.append(f_part_fc7)

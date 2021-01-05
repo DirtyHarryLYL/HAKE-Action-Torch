@@ -129,7 +129,7 @@ def setup():
 
     assert len(cfg.MODEL_NAME) != 0
     assert cfg.TRAIN.IM_BATCH_SIZE == 1
-    
+    assert len(list(set(cfg.TRAIN.DATA_SPLITS) - set(cfg.DATA.FULL_SET_NAMES))) == 0, 'Unknown training split exists!'
     cfg.MODEL_NAME = args.model
     cfg.WEIGHT_DIR = os.path.join(cfg.WEIGHT_DIR, cfg.MODEL_NAME)
     cfg.LOG_DIR = os.path.join(cfg.LOG_DIR, cfg.MODEL_NAME)

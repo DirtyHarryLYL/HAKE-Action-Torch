@@ -26,6 +26,10 @@ def parse_args():
 
 def test_parse_args():
     parser = argparse.ArgumentParser(description='Testing Activity2Vec')
+    parser.add_argument('--cfg',
+            default='', 
+            type=str,
+            help='define the configuration file of model.')
     parser.add_argument('--eval', 
             help='specific stage for evaluation',
             default=1,

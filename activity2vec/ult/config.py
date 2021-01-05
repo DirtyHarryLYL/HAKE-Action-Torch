@@ -34,19 +34,34 @@ __C.DATA.NUM_PASTAS.HEAD = 14
 __C.DATA.NUM_PARTS = 10
 __C.DATA.NUM_VERBS = 157
 __C.DATA.SKELETON_SIZE = 64
-__C.DATA.PASTA_NAMES = ['foot', 'leg', 'hip', 'hand', 'arm', 'head']
+__C.DATA.PASTA_NAMES = ['foot', 
+                        'leg', 
+                        'hip', 
+                        'hand', 
+                        'arm', 
+                        'head']
 
+__C.DATA.FULL_SET_NAMES = ['hico-train', 
+                           'hico-test',
+                           'hcvrd', 
+                           'openimage', 
+                           'vcoco', 
+                           'pic', 
+                           'long_tail_1', 
+                           'long_tail_2',
+                           'collect']
+                           
 # Directories of data and weights
 __C.DATA.DATA_DIR = osp.join(__C.ROOT_DIR, 'Data')
 __C.DATA.ANNO_DB_PATH = osp.join(__C.DATA.DATA_DIR, 'Trainval_HAKE')
 __C.DATA.PRED_DB_PATH = osp.join(__C.DATA.DATA_DIR, 'Test_pred_rcnn')
-__C.DATA.TEST_GT_PASTA_PATH = osp.join(__C.DATA.DATA_DIR, 'gt_pasta_data.pkl')
-__C.DATA.TEST_GT_VERB_PATH = osp.join(__C.DATA.DATA_DIR, 'gt_verb_data.pkl')
-__C.DATA.PASTA_LANGUAGE_MATRIX_PATH = osp.join(__C.DATA.DATA_DIR, 'pasta_language_matrix.npy')
-__C.DATA.PASTA_WEIGHTS_PATH = osp.join(__C.DATA.DATA_DIR, 'loss_weights.npy')
-__C.DATA.IMAGE_FOLDER_LIST = osp.join(__C.DATA.DATA_DIR, 'data_path.json')
-__C.DATA.PASTA_NAME_LIST = osp.join(__C.DATA.DATA_DIR, 'Part_State_93_new.txt')
-__C.DATA.VERB_NAME_LIST = osp.join(__C.DATA.DATA_DIR, 'verb_list_new.txt')
+__C.DATA.TEST_GT_PASTA_PATH = osp.join(__C.DATA.DATA_DIR, 'metadata', 'gt_pasta_data.pkl')
+__C.DATA.TEST_GT_VERB_PATH = osp.join(__C.DATA.DATA_DIR, 'metadata', 'gt_verb_data.pkl')
+__C.DATA.PASTA_LANGUAGE_MATRIX_PATH = osp.join(__C.DATA.DATA_DIR, 'metadata', 'pasta_language_matrix.npy')
+__C.DATA.PASTA_WEIGHTS_PATH = osp.join(__C.DATA.DATA_DIR, 'metadata', 'loss_weights.npy')
+__C.DATA.IMAGE_FOLDER_LIST = osp.join(__C.DATA.DATA_DIR, 'metadata', 'data_path.json')
+__C.DATA.PASTA_NAME_LIST = osp.join(__C.DATA.DATA_DIR, 'metadata', 'Part_State_93_new.txt')
+__C.DATA.VERB_NAME_LIST = osp.join(__C.DATA.DATA_DIR, 'metadata', 'verb_list_new.txt')
 
 # Training options
 __C.TRAIN = CN()

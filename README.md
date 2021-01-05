@@ -13,80 +13,69 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
  - CUDA 10.0
  - Anaconda 3(optional)
 
+## Dataset/Models
+ For the procedure of preparing HAKE dataset/models for Activity2Vec, please refer to [DATASET.md](./DATASET.md).
+
 ## Installation
-```
- # 1. conda environment(optional)
+ ### 1. Create a new conda environment(optional)
+ ```
  conda create -y -n activity2vec python=3.7
  conda activate activity2vec
  conda install pip
- 
- # 2. dependencies
+ ```
+ ### 2. Install the dependencies
+ ```
  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.0/lib64
  git clone https://github.com/DirtyHarryLYL/HAKE-Action-Torch
  cd HAKE-Action-Torch && git checkout Activity2Vec
  pip install -r requirements.txt
  pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
+ ```
 
- # 3. AlphaPose & Activity2Vec
+ ### 3. Setup AlphaPose and Activity2Vec
+ ```
  cd AlphaPose && python setup.py build develop && cd ..
  python setup.py build develop
- 
- # 4. data and weights
- mkdir Data/
- # Download the weights and data presented below:
- ┌────────────────────────────┬────────────────────────────────────────────────────────────────────┐
- | FILENAME                   | URL                                                                |
- ├────────────────────────────┼────────────────────────────────────────────────────────────────────┤
- | yolov3-spp.weights         | https://drive.google.com/open?id=1D47msNOOiJKvPOXlnpyzdKA3k6E97NTC |
- | fast_res50_256x192.pth     | https://drive.google.com/open?id=1kQhnMRURFiy7NsdS8EFL-8vtqEXOgECn |
- | freqs_and_weights.tgz      | https://1drv.ms/u/s!ArUVoRxpBphYgtRf6oOL9VvGxoe-6Q?e=zlCZB4        |
- | hake_40v_test_gt_lmdb.tgz  | https://1drv.ms/u/s!ArUVoRxpBphYgtRgebT9Bu-iuS5uhg?e=gr1ynL        |
- | Test_all_part_lmdb.tgz     | https://1drv.ms/u/s!ArUVoRxpBphYgtRh8L-k6Rk3eaW79w?e=IUphXk        |
- | Trainval_GT_HAKE.tgz       | https://1drv.ms/u/s!ArUVoRxpBphYgtRi42sVpiMPmQon9Q?e=EBOU5a        |
- | Trainval_Neg_HAKE.tgz      | https://1drv.ms/u/s!ArUVoRxpBphYgtRj8acRHK41WSIn8Q?e=oBvDbf        |
- | evaluation_data.tgz        | https://1drv.ms/u/s!ArUVoRxpBphYgtRkzTE3tZVYovtCnA?e=uLxNSA        |
- | pretrained_res50.pth       | https://1drv.ms/u/s!ArUVoRxpBphYgtR2NT5ZOXkccHfw3A?e=EGxXGX        |
- └────────────────────────────┴────────────────────────────────────────────────────────────────────┘
- # and sort them into this data stucture:
- HAKE-Activity2Vec
- ├──AlphaPose
- |  ├──detector/yolo/data/yolov3-spp.weights
- |  └──pretrained_models/fast_res50_256x192.pth
- ├──Data
- |  ├──freqs_and_weights.tgz
- |  ├──hake_40v_test_gt_lmdb.tgz
- |  ├──Test_all_part_lmdb.tgz
- |  ├──Trainval_GT_HAKE.tgz
- |  └──Trainval_Neg_HAKE.tgz
- └──./-Results/evaluation_data.tgz
+ ```
 
- # 5. post processing
- cd Data && ls *.tgz | xargs -n1 tar xzvf && rm *.tgz && cd ..
- cd ./-Results && ls *.tgz | xargs -n1 tar xzvf && rm *.tgz && cd ..
+## Getting Started
 
- # 6. custom configuration
- # configure lib/ult/data_path.json to your own data path.
+Inference with pretrained model on GPU 0 and show the visualization results of the images in demo folder:
+
 ```
-## Usage
-
-### Activity2Vec Inference
-```
-python -u tools/main.py --indir YOUR_IMAGE_DIR --pasta-model YOUR_MODEL
+python -u tools/demo.py --cfg models/a2v/configs/a2v.yaml \
+                        --input demo/ \
+                        --mode image \
+                        --show \
+                        GPU_ID 0
 ```
 
-### Training
+Load the pretrained ResNet-50 model and finetune the pasta classifier of foot part on GPU 2:
+
 ```
-CUDA_VISIBLE_DEVICES={GPU_ID} python -u tools/train_pasta_net.py --model {MODEL_NAME} --base_lr {LEARNING_RATE} --pasta_trained {PASTA_TRAINED}
+python -u tools/train_net.py --cfg models/a2v/configs/foot.yaml \
+                             --model finetune-foot \
+                             TRAIN.CHECKPOINT_PATH models/a2v/checkpoints/pretrained_res50.pth \
+                             MODEL.POSE_MAP True \
+                             GPU_ID 2
 ```
 
-### Testing
+Load the pretrained ResNet-50 model with finetuned pasta classifier and finetune the verb classifier of foot part on GPU 3:
+
 ```
-CUDA_VISIBLE_DEVICES={GPU_ID} python -u tools/test_pasta_net.py --weight {WEIGHT_PATH}
+python -u tools/train_net.py --cfg models/a2v/configs/verb.yaml \
+                             --model finetune-verb \
+                             TRAIN.CHECKPOINT_PATH models/a2v/checkpoints/pretrained_model.pth \
+                             MODEL.POSE_MAP True \
+                             GPU_ID 3
 ```
 
-### Finetuning
+Test the finetuned model on the test set with the detection results from Faster-RCNN:
+
 ```
-CUDA_VISIBLE_DEVICES={GPU_ID} python -u tools/train_pasta_net.py --model {MODEL_NAME} --train_continue 1 --weight {WEIGHT_PATH} --base_lr {BASE_LR} --pasta_trained {PASTA_TRAINED}
+python -u tools/test_net.py --cfg models/a2v/configs/verb.yaml \
+                            TEST.WEIGHT_PATH models/a2v/configs/pretrained_model.pth \
+                            GPU_ID 0
 ```
 
 ## Citation
