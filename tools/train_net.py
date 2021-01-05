@@ -2,7 +2,6 @@
 #  Author: Hongwei Fan                      #
 #  E-mail: hwnorm@outlook.com               #
 #  Homepage: https://github.com/hwfan       #
-#  Last Modified: Dec 8th, 2020             #
 #############################################
 from __future__ import absolute_import
 from __future__ import division
@@ -14,6 +13,7 @@ import torch.optim as optim
 from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
 
 import os
+import shutil
 import numpy as np
 import argparse
 from tqdm import tqdm
@@ -104,6 +104,8 @@ def train(cfg, net, train_loader, test_loader, optimizer, scheduler, global_iter
                             loss_curve.log({'iteration': global_iter, 'pasta_map': pasta_map, 'verb_map': verb_map})
                     net.train()
 
+                    shutil.rmtree(output_dir)
+                    
             # show training schedule
             if global_iter % cfg.TRAIN.DISPLAY_INTERVAL == 0:
                 out_str = "|iteration: {:6d}|loss: {:.6f}|lr: {:.6f}|time: {:3f}|net_time: {:3f}|data_time: {:3f}|eta: {:s}|".format(global_iter, mean_loss, float(optimizer.param_groups[0]['lr']), global_timer.average_time, net_timer.average_time, data_timer.average_time, time2str(int((len(train_loader) - (i + 1)) * global_timer.average_time)))

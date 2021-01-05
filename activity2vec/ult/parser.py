@@ -1,3 +1,8 @@
+#############################################
+#  Author: Hongwei Fan                      #
+#  E-mail: hwnorm@outlook.com               #
+#  Homepage: https://github.com/hwfan       #
+#############################################
 import argparse
 
 def parse_args():

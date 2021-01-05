@@ -2,7 +2,6 @@
 #  Author: Hongwei Fan                      #
 #  E-mail: hwnorm@outlook.com               #
 #  Homepage: https://github.com/hwfan       #
-#  Last Modified: Oct 22th, 2020            #
 #############################################
 from queue import Queue, Empty
 from threading import Thread

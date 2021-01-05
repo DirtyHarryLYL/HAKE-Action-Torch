@@ -2,7 +2,6 @@
 #  Author: Hongwei Fan                      #
 #  E-mail: hwnorm@outlook.com               #
 #  Homepage: https://github.com/hwfan       #
-#  Last Modified: Dec 3rd, 2020             #
 #############################################
 from __future__ import absolute_import
 from __future__ import division

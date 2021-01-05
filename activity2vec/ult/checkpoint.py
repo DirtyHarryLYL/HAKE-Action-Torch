@@ -1,3 +1,8 @@
+#############################################
+#  Author: Hongwei Fan                      #
+#  E-mail: hwnorm@outlook.com               #
+#  Homepage: https://github.com/hwfan       #
+#############################################
 import torch
 
 def save_model(net, optimizer, scheduler, iters, ckp_path):

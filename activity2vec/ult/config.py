@@ -1,7 +1,8 @@
-# --------------------------------------------------------
-# Pytorch TIN
-# Licensed under The MIT License [see LICENSE for details]
-# --------------------------------------------------------
+#############################################
+#  Author: Hongwei Fan                      #
+#  E-mail: hwnorm@outlook.com               #
+#  Homepage: https://github.com/hwfan       #
+#############################################
 
 from __future__ import absolute_import
 from __future__ import division
@@ -80,7 +81,6 @@ __C.MODEL.MODULE_TRAINED = ['verb']
 __C.MODEL.PART_AGG_RULE = [[0, 3], [1, 2], [4], [6, 9], [7, 8], [5]]
 __C.MODEL.NUM_FC = 512
 __C.MODEL.PART_ROI_ENABLE = True
-__C.MODEL.PART_ATTENTION = False
 __C.MODEL.VERB_ONE_MORE_FC = False
 __C.MODEL.POSE_MAP = False
 __C.MODEL.SKELETON_DIM = 2704

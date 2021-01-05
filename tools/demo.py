@@ -2,7 +2,6 @@
 #  Author: Hongwei Fan                      #
 #  E-mail: hwnorm@outlook.com               #
 #  Homepage: https://github.com/hwfan       #
-#  Last Modified: Dec 9th, 2020             #
 #############################################
 import argparse
 import os

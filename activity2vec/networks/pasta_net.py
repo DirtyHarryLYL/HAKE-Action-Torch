@@ -2,54 +2,14 @@
 #  Author: Hongwei Fan                      #
 #  E-mail: hwnorm@outlook.com               #
 #  Homepage: https://github.com/hwfan       #
-#  Last Modified: Dec 3rd, 2020             #
 #############################################
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 import numpy as np
-import copy
-import pickle
-import os
-import sys
 
 from .resnet_v1.resnetv1_torch import resnet50 as resnet50_v1
-class part_attention(nn.Module):
-    def __init__(self, cfg):
-        super(part_attention, self).__init__()
-
-        self.cfg = cfg
-        self.scene_dim = 1024
-        self.part_fc_dim = cfg.MODEL.NUM_FC
-        self.conv1 = nn.Sequential(
-                        nn.Conv2d(in_channels=self.scene_dim, out_channels=self.part_fc_dim, kernel_size=1, stride=1, padding=0),
-                        nn.ReLU(inplace=True)
-                    )
-        # self.conv2 = nn.Sequential(
-        #                 nn.Conv2d(in_channels=self.scene_dim, out_channels=self.part_fc_dim, kernel_size=1, stride=1, padding=0),
-        #                 nn.ReLU(inplace=True)
-        #             )
-        
-    def forward(self, head, part_emb):
-        part_emb_expanded = part_emb.unsqueeze(-1).unsqueeze(-1)
-        att1 = self.conv1(head)
-        att1 = part_emb_expanded * att1
-        att1 = torch.mean(att1, [2, 3])
-        att1 = att1.sigmoid()
-        part_feat = part_emb * att1
-
-        # att1 = att1.unsqueeze(1)
-        
-        # att1_shape = att1.shape
-        # att1 = att1.view(att1_shape[0], att1_shape[1], -1)
-        # att1 = att1.softmax(dim=2)
-        # att1 = att1.view(att1_shape)
-
-        # att2 = self.conv2(head)
-        # att2 = att1 * att2
-        # part_feat = torch.mean(att2, [2, 3])
-        return part_feat
 
 class pasta_res50(nn.Module):
 
@@ -83,7 +43,6 @@ class pasta_res50(nn.Module):
             
         self.module_trained = cfg.MODEL.MODULE_TRAINED
         self.dropout_rate   = cfg.MODEL.DROPOUT
-        self.part_attention_enable = cfg.MODEL.PART_ATTENTION
         self.pasta_language_matrix  = torch.from_numpy(np.load(cfg.DATA.PASTA_LANGUAGE_MATRIX_PATH)).cuda()
         self.resnet50 = resnet50_v1()
         self.resnet50.conv1.padding = 0
@@ -177,15 +136,6 @@ class pasta_res50(nn.Module):
                 for p in self.pool2_flat_pose_maps[pasta_idx].parameters():
                     p.requires_grad = self.pasta_idx2name[pasta_idx] in self.module_trained
                     
-        if self.part_attention_enable:
-            self.attention_modules = []
-            for pasta_idx in range(len(self.pasta_idx2name)):
-                new_part_attention = part_attention(cfg)
-                self.attention_modules.append(new_part_attention)
-            self.attention_modules = nn.ModuleList(self.attention_modules)
-            for pasta_idx in range(len(self.pasta_idx2name)):
-                for p in self.attention_modules[pasta_idx].parameters():
-                    p.requires_grad = self.pasta_idx2name[pasta_idx] in self.module_trained
 
     def _crop_pool_layer(self, bottom, rois, max_pool=False):
         '''
