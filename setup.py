@@ -84,7 +84,8 @@ setup(
     "scipy",
     "anycurve",
     "yacs",
-    "moviepy"
+    "moviepy",
+    "h5py"
     ],
     packages=find_packages(),
     ext_modules=get_ext_modules(),

@@ -255,7 +255,7 @@ class hake_test(torch.utils.data.Dataset):
         current_data      = str2obj(self.txn_db.get(current_key_raw))
         dataset, filename = image_id.split('/')
 
-        im_path  = osp.join(self.image_folder_list[dataset], filename)
+        im_path  = osp.join(self.cfg.DATA.DATA_DIR, self.image_folder_list[dataset], filename)
         image    = im_read(im_path)
         ori_im_shape = image.shape
         if not self.visualize:

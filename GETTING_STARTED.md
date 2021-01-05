@@ -34,6 +34,6 @@ Test the finetuned model on the test set with the detection results from Faster-
 
 ```
 python -u tools/test_net.py --cfg models/a2v/configs/verb.yaml \
-                            TEST.WEIGHT_PATH models/a2v/configs/pretrained_model.pth \
+                            TEST.WEIGHT_PATH models/a2v/checkpoints/pretrained_model.pth \
                             GPU_ID 0
 ```
