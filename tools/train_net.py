@@ -91,6 +91,7 @@ def train(cfg, net, train_loader, test_loader, optimizer, scheduler, global_iter
                     model_name = os.path.split(model_dir)[-1]
                     output_dir = os.path.join(cfg.ROOT_DIR, 'results', model_name, model_filename+'_results')
 
+                    torch.cuda.empty_cache()
                     net.eval()
                     with torch.no_grad():
                         test(cfg, net, test_loader, output_dir, loggers.test)
@@ -103,7 +104,8 @@ def train(cfg, net, train_loader, test_loader, optimizer, scheduler, global_iter
                         else:
                             loss_curve.log({'iteration': global_iter, 'pasta_map': pasta_map, 'verb_map': verb_map})
                     net.train()
-
+                    torch.cuda.empty_cache()
+                    
                     shutil.rmtree(output_dir)
                     
             # show training schedule

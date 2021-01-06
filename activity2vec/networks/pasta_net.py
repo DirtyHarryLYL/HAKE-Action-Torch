@@ -38,7 +38,7 @@ class pasta_res50(nn.Module):
         else:
             self.num_fc_parts  = [self.scene_dim + self.human_dim for part_agg_num in self.part_agg_num]
         
-        if self.cfg.MODEL.SKELETON_DIM:
+        if self.cfg.MODEL.POSE_MAP:
             self.num_fc_parts  = [(x + cfg.MODEL.SKELETON_DIM) for x in self.num_fc_parts]
             
         self.module_trained = cfg.MODEL.MODULE_TRAINED
