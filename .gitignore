@@ -17,4 +17,5 @@ build/
 *.mp4
 upload
 *.tar.gz
-
+Weights
+Weights-old

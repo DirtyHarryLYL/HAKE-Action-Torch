@@ -237,7 +237,7 @@ class pasta_res50(nn.Module):
         p_parts = []
         for part_idx, f_part in enumerate(f_parts_agg):
             if self.cfg.MODEL.POSE_MAP:
-                f_part_cat  = torch.cat([f_part, skeleton_feat], 1)
+                f_part_cat  = torch.cat([f_part, skeleton_feats[part_idx]], 1)
                 f_part_fc7  = self.fc7_parts[part_idx](f_part_cat)
             else:
                 f_part_fc7  = self.fc7_parts[part_idx](f_part)

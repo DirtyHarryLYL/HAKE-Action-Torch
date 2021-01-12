@@ -22,3 +22,4 @@ anycurve
 yacs
 moviepy
 h5py
+PyTurboJPEG

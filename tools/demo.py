@@ -106,7 +106,7 @@ def parse_args():
                         help='output directory, empty string means do not output anything')
     parser.add_argument('--mode', type=str, choices=['image', 'video'], default='image',
                         help='choose the type of input')
-    parser.add_argument('--show', action='store_true', 
+    parser.add_argument('--show-res', action='store_true', 
                         help='choose whether to show the output')
     parser.add_argument('--save-res', action='store_true', 
                         help='choose whether to save the raw results')
@@ -199,7 +199,7 @@ if __name__ == '__main__':
     if args.mode == 'image':
         for image_path in tqdm(image_list):
             ori_image, annos, vis = a2v.inference(image_path)
-            if args.show:
+            if args.show_res:
                 if vis is None:
                     vis = ori_image
                 cv2.imshow('Activity2Vec', vis)
@@ -225,7 +225,7 @@ if __name__ == '__main__':
 
         for idx, image in enumerate(tqdm(image_list)):
             ori_image, annos, vis = a2v.inference('%d.jpg' % idx, image)
-            if args.show:
+            if args.show_res:
                 if vis is None:
                     vis = ori_image
                 cv2.imshow('Activity2Vec', vis)
@@ -236,6 +236,9 @@ if __name__ == '__main__':
                 res_path = os.path.join(res_dir, '%d.pkl' % idx)
                 pickle.dump(annos, open(res_path, 'wb'))
 
+            del annos
+            del vis
+            
         if args.save_vis:
             video = cv2.VideoCapture(args.input)
             fps = video.get(cv2.CAP_PROP_FPS)

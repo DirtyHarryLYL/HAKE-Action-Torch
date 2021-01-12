@@ -20,6 +20,8 @@ import json
 import copy
 from easydict import EasyDict as edict
 from tqdm import tqdm
+from turbojpeg import TurboJPEG
+reader = TurboJPEG()
 
 def obj2str(obj):
     return base64.b64encode(pickle.dumps(obj)).decode()
@@ -49,7 +51,10 @@ def rgba2rgb(rgba, background=(255,255,255)):
     return np.asarray(rgb, dtype='uint8')
 
 def im_read(im_path):
-    im = cv2.imread(im_path)
+    try:
+        im = reader.decode(open(im_path, 'rb').read(), 1)
+    except:
+        im = cv2.imread(im_path)
     if im is None:
         im = imageio.imread(im_path)
         if im.shape[-1] == 4:

@@ -85,7 +85,8 @@ setup(
     "anycurve",
     "yacs",
     "moviepy",
-    "h5py"
+    "h5py",
+    "PyTurboJPEG"
     ],
     packages=find_packages(),
     ext_modules=get_ext_modules(),
