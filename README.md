@@ -27,6 +27,7 @@ HAKE-Action-Torch
 ```
 
 ## Papers
+- [Extended TIN]() (TPAMI'21)
 - [IDN](https://arxiv.org/pdf/2010.16219.pdf) (NeurIPS'20)
 - [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) (CVPR'20)
 - [DJ-RN](https://arxiv.org/pdf/2004.08154.pdf) (CVPR'20)
