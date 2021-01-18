@@ -104,6 +104,8 @@ Thus, you could also use the Sigmoid cross-entropy loss only. Most of the time, 
 
 3. Sometimes, during training, the GPU utilization maybe very low, this may due to the heavy IO for loading pre-extracted features. So we suggest that you could put these features in SSD to accelate the IO. Then the training would be 10-20 times faster. And the larger batch and multi-gpu training would be possible. Starting from inputting images is also OK, as a result, a batch may be hard to contain multiple humans/obejcts from different images and thus degrade the performance.
 
+4. Inputting the **GT human-object pairs from the annotation** is to test the HOI classification only without the affect of object detection. Here, we directly input the GT pairs into our model, without fusing the "jittered" human boxes (in the labels, a person with multi-HOI would be labeled by different annotators, thus result in several slightly different boxes for a single person, each of them would be given a HOI label).
+
 ## TODOS
 - [x] Using different object detections (COCO, COCO+HICO-DET, GT H-O pairs) in testing
 - [ ] VCOCO model
