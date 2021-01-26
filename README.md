@@ -12,7 +12,7 @@ HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understandi
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu and Zhanke Zhou, Hongwei Fan.
 
-#### **News**: (2021.1.15) Our extended version of [TIN (Transferable Interactiveness Network)](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network) is accepted by TPAMI! New paper and code will be released soon.
+#### **News**: (2021.1.15) Our extended version of [TIN (Transferable Interactiveness Network)](https://arxiv.org/abs/2101.10292) is accepted by TPAMI!
 
 (2020.10.27) The code of [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) ([Paper](https://arxiv.org/abs/2010.16219)) in NeurIPS'20 is released!
 
