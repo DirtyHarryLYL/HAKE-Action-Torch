@@ -50,7 +50,6 @@ class Tracker(BaseDetector):
         self.kalman_filter = KalmanFilter()
 
     def load_model(self):
-        print('Loading tracking model..')
         self.model = Darknet(self.model_cfg, self.img_size, nID=14455)
         # load_darknet_weights(self.model, args.weights)
         self.model.load_state_dict(torch.load(self.model_weights, map_location='cpu')['model'], strict=False)
@@ -64,9 +63,6 @@ class Tracker(BaseDetector):
         else:
             self.model.cuda()
         self.model.eval()
-        print("Network successfully loaded")
-
-        
 
     def image_preprocess(self, img_source):
         """
@@ -212,21 +208,13 @@ class Tracker(BaseDetector):
             self.removed_stracks.extend(removed_stracks)
             self.tracked_stracks, self.lost_stracks = remove_duplicate_stracks(self.tracked_stracks, self.lost_stracks)
 
-            if self.tracker_opt.debug:
-                logger.debug('===========Frame {}=========='.format(self.frame_id))
-                logger.debug('Activated: {}'.format([track.track_id for track in activated_starcks]))
-                logger.debug('Refind: {}'.format([track.track_id for track in refind_stracks]))
-                logger.debug('Lost: {}'.format([track.track_id for track in lost_stracks]))
-                logger.debug('Removed: {}'.format([track.track_id for track in removed_stracks]))
-
             # Add tracks to outputs
             for t in self.tracked_stracks:
                 tlwh = t.tlwh
                 tid = t.track_id
                 tlbr = t.tlbr
                 ts = t.score
-                if tlwh[2] * tlwh[3] > self.tracker_opt.min_box_area:
-                    res = torch.tensor([image_i, tlbr[0], tlbr[1], tlbr[2], tlbr[3], ts, tid])
+                res = torch.tensor([image_i, tlbr[0], tlbr[1], tlbr[2], tlbr[3], ts, tid])
                 output_stracks.append(res)
 
         if len(output_stracks) == 0:

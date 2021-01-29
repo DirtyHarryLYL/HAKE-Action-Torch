@@ -25,11 +25,12 @@ from PIL import Image, ImageDraw, ImageFont
 from moviepy.editor import *
 
 class Activity2Vec():
-    def __init__(self, cfg, logger):
+    def __init__(self, mode, cfg, logger):
+        self.mode = mode
         self.cfg = cfg
         self.logger = logger
-        self.vis_tool = vis_tool(cfg)
-        self.alphapose = AlphaPose(cfg.DEMO.YOLO_CFG, cfg.DEMO.YOLO_WEIGHT, cfg.DEMO.POSE_CFG, cfg.DEMO.POSE_WEIGHT, logger)
+        self.vis_tool = vis_tool(cfg, mode)
+        self.alphapose = AlphaPose(cfg.DEMO.DETECTOR, cfg.DEMO.YOLO_CFG, cfg.DEMO.YOLO_WEIGHT, cfg.DEMO.POSE_CFG, cfg.DEMO.POSE_WEIGHT, cfg.DEMO.TRACKER_WEIGHT, logger)
         self.pasta_model = pasta_model(cfg)
         logger.info('Loading Activity2Vec model from {}...'.format(cfg.DEMO.A2V_WEIGHT))
         
@@ -44,11 +45,17 @@ class Activity2Vec():
         if pose is None:
             self.logger.info('[Activity2Vec] no pose result for {:s}'.format(image_path))
             vis = ori_image
-            vis = self.vis_tool.draw(vis, None, None, None, None, None)
+            vis = self.vis_tool.draw(vis, None, None, None, None, None, None)
             return ori_image, None, vis
         else:
             try:
                 pasta_image, annos = self.pasta_model.preprocess(ori_image, pose['result'])
+
+                human_ids = []
+                for human in pose['result']:
+                    human_idx = int(np.array(human['idx']).flatten()[0])
+                    human_ids.append(human_idx)
+
                 annos_cpu = copy.deepcopy(annos)
                 pasta_image = pasta_image.cuda(non_blocking=True)
                 for key in annos:
@@ -74,7 +81,7 @@ class Activity2Vec():
                 keypoints = annos_cpu['keypoints'][0].numpy()[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
                 p_pasta = p_pasta[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
                 p_verb = p_verb[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
-                vis = self.vis_tool.draw(vis, bboxes, keypoints, scores, p_pasta, p_verb)
+                vis = self.vis_tool.draw(vis, bboxes, keypoints, scores, p_pasta, p_verb, human_ids)
 
                 annos_cpu['human_bboxes'] = annos_cpu['human_bboxes'].squeeze(0)
                 annos_cpu['part_bboxes'] = annos_cpu['part_bboxes'].squeeze(0)
@@ -90,7 +97,7 @@ class Activity2Vec():
                 self.logger.info('[Activity2Vec] unsuccess for {:s}'.format(image_path))
                 self.logger.info('{:s}'.format(str(e)))
                 vis = ori_image
-                vis = self.vis_tool.draw(vis, None, None, None, None, None)
+                vis = self.vis_tool.draw(vis, None, None, None, None, None, None)
                 return ori_image, None, vis
         
 
@@ -126,7 +133,7 @@ def setup():
     args = parse_args()
     cfg.merge_from_file(args.cfg)
     cfg.merge_from_list(args.opts)
-    
+
     os.makedirs(cfg.LOG_DIR, exist_ok=True)
     os.environ['CUDA_VISIBLE_DEVICES'] = str(cfg.GPU_ID)
     cfg.freeze()
@@ -190,10 +197,10 @@ if __name__ == '__main__':
 
     loggers = setup_logging(cfg.LOG_DIR, func='inference')
     logger  = loggers.Activity2Vec
-
-    logger.info('cfg:\n'+cfg.dump())
+    logger.info('cfg:\n')
+    logger.info(cfg)
     args.logger = logger
-    a2v = Activity2Vec(cfg, logger)
+    a2v = Activity2Vec(args.mode, cfg, logger)
     image_list = read_input(args)
 
     if args.mode == 'image':

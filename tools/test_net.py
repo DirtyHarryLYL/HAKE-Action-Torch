@@ -87,7 +87,7 @@ if __name__ == "__main__":
     cfg, args = setup()
 
     logger = setup_logging(cfg.LOG_DIR).test
-    logger.info('==> cfg:\n' + cfg.dump())
+    logger.info('==> cfg:\n' + cfg)
 
     if args.eval:
         os.makedirs(cfg.TEST.OUTPUT_DIR, exist_ok=True)

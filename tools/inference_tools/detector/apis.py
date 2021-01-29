@@ -17,6 +17,8 @@ def get_detector(detector_mode='yolo', opt=None):
     elif detector_mode == 'tracker':
         from .tracker_api import Tracker
         from .tracker_cfg import cfg
+        cfg.CONFIG = opt.yolo_cfg
+        cfg.WEIGHTS = opt.yolo_weight
         return Tracker(cfg, opt)
     elif detector_mode.startswith('efficientdet_d'):
         from .effdet_api import EffDetDetector

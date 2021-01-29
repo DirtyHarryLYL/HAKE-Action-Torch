@@ -47,6 +47,7 @@ class pasta_model():
         annos.keypoints = []
         annos.human_scores = []
         annos.skeletons = []
+        
         for human in pose_result:
             each_human = copy.deepcopy(human)
             # xywh to xyxy
@@ -55,12 +56,13 @@ class pasta_model():
             human_bbox = np.array(each_human['bbox'], dtype=float)
             keypoints = torch.cat([each_human['keypoints'], each_human['kp_score']], 1)
             part_bbox = output_part_box(map_17_to_16(keypoints.numpy()), human_bbox)[:, 1:]
-
+            
             annos.human_bboxes.append(each_human['bbox'])
             annos.part_bboxes.append(part_bbox)
             annos.keypoints.append(keypoints.unsqueeze(0))
             annos.human_scores.append(each_human['proposal_score'].unsqueeze(0))
             annos.skeletons.append(torch.tensor(draw_relation(keypoints[:, :2])).unsqueeze(0))
+
         annos.human_bboxes = torch.tensor(annos.human_bboxes).unsqueeze(0).float()
         annos.part_bboxes = torch.tensor(annos.part_bboxes).unsqueeze(0).float()
         annos.keypoints = torch.cat(annos.keypoints, 0).unsqueeze(0).float()

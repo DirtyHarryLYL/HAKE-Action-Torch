@@ -116,6 +116,7 @@ __C.DEMO.YOLO_CFG = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'configs', 'yolov3-
 __C.DEMO.YOLO_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'checkpoints', 'yolov3-spp.weights')
 __C.DEMO.POSE_CFG = osp.join(__C.ROOT_DIR, 'models', 'pose', 'configs', '256x192_res50_lr1e-3_1x.yaml')
 __C.DEMO.POSE_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'pose', 'checkpoints', 'fast_res50_256x192.pth')
+__C.DEMO.TRACKER_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'checkpoints', 'osnet.pth')
 
 # Warning: this config has been deprecated in the newest version.
 __C.DEMO.A2V_CFG = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'configs', 'a2v.yaml')
@@ -127,6 +128,7 @@ __C.DEMO.FONT_SIZE = 18
 __C.DEMO.MAX_HUMAN_NUM = 4
 __C.DEMO.DRAW_SKELETON = False
 __C.DEMO.DRAW_RIGID = True
+__C.DEMO.DETECTOR = 'yolo'
 
 # Pixel mean values (BGR order) as a (1, 1, 3) array
 __C.PIXEL_MEANS = [[[102.9801, 115.9465, 122.7717]]]

@@ -1,9 +1,12 @@
 import numpy as np
 import torch
+import sys
+import os
 
 from . import nms_cpu, nms_cuda
 from .soft_nms_cpu import soft_nms_cpu
-
+# import nms_cpu, nms_cuda
+# from soft_nms_cpu import soft_nms_cpu
 
 def nms(dets, iou_thr, device_id=None):
     """Dispatch to either CPU or GPU NMS implementations.

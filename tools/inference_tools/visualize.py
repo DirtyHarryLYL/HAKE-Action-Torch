@@ -23,7 +23,8 @@ DARKGREEN = (48, 128, 20)
 ID_COLOR_LIST = [DARKGREEN, BROWN, STRAWBERRY, JACKIE_BLUE, BLUE]
 
 class vis_tool():
-    def __init__(self, cfg):
+    def __init__(self, cfg, mode):
+        self.mode = mode
         self.cfg = cfg
         self.pasta_name_list = np.array([x.strip() for x in open(cfg.DATA.PASTA_NAME_LIST).readlines()])
         self.verb_name_list = np.array([x.strip() for x in open(cfg.DATA.VERB_NAME_LIST).readlines()])
@@ -55,7 +56,7 @@ class vis_tool():
         part_width = 2 * (np.sqrt(np.sum(norm_vec ** 2)))
         return drawer, part_width
 
-    def draw(self, image, human_bboxes, keypoints, human_scores, p_pasta, p_verb, topk=5):
+    def draw(self, image, human_bboxes, keypoints, human_scores, p_pasta, p_verb, human_ids, topk=5):
 
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         im_shape = list(image.shape)
@@ -171,12 +172,16 @@ class vis_tool():
 
                 # Draw human box and human id box.
                 draw.rectangle([(int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3]))], fill=None, outline=BLUE+(255, ), width=2)
-                draw.rectangle([(int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[0]+1.5 * self.cfg.DEMO.FONT_SIZE / 1.7),int(human_bbox[1]+self.cfg.DEMO.FONT_SIZE+3))], fill=ID_COLOR_LIST[human_count % 5]+(255,))
                 
-                draw.text((int(human_bbox[0])+3, int(human_bbox[1])+3), str(human_count), font=font_id, fill=WHITE+(255, ))
+                draw_id = human_count
+                # draw_id = human_ids[idx] if self.mode == 'video' else human_count
+
+                draw.rectangle([(int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[0]+1.5 * self.cfg.DEMO.FONT_SIZE / 1.7),int(human_bbox[1]+self.cfg.DEMO.FONT_SIZE+3))], fill=ID_COLOR_LIST[draw_id % 5]+(255,))
+                
+                draw.text((int(human_bbox[0])+3, int(human_bbox[1])+3), str(draw_id), font=font_id, fill=WHITE+(255, ))
 
                 # Update sidebar.
-                draw.text((im_shape[1]+1, 3+extra_offset), 'ID: '+str(human_count), font=font, fill=CYAN+(255, ))  # +' {:.3f}'.format(verb_scores[verb_idx])
+                draw.text((im_shape[1]+1, 3+extra_offset), 'ID: '+str(draw_id), font=font, fill=CYAN+(255, ))  # +' {:.3f}'.format(verb_scores[verb_idx])
                 extra_offset += self.cfg.DEMO.FONT_SIZE
                 for draw_name in verb_draw_names:
                     draw.text((im_shape[1]+1, 3+extra_offset), draw_name, font=font, fill=GREEN+(255, ))  # +' {:.3f}'.format(verb_scores[verb_idx])

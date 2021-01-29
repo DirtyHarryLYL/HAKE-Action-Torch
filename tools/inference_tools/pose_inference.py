@@ -26,13 +26,16 @@ from alphapose.utils.transforms import get_affine_transform, im_to_torch
 from alphapose.utils.vis import vis_frame
 
 from .detector import get_detector
+# from .trackers.tracker_api import Tracker
+# from .trackers.tracker_cfg import cfg as tcfg
+# from .trackers import track
 
 class DetectionLoader():
     def __init__(self, detector, cfg, opt):
         self.cfg = cfg
         self.opt = opt
         self.detector = detector
-
+        
         self._input_size = cfg.DATA_PRESET.IMAGE_SIZE
         self._aspect_ratio = float(self._input_size[1]) / self._input_size[0]
         self._output_size = cfg.DATA_PRESET.HEATMAP_SIZE
@@ -69,6 +72,7 @@ class DetectionLoader():
         self.image_detection()
         # start to post process cropped human image for pose estimation
         self.image_postprocess()
+
         return self
 
     def image_preprocess(self, im_name, image):
@@ -105,7 +109,8 @@ class DetectionLoader():
             dets = dets.cpu()
             boxes = dets[:, 1:5]
             scores = dets[:, 5:6]
-            ids = torch.zeros(scores.shape)
+            ids = dets[:, 6:7]
+            # ids = torch.zeros(scores.shape)
 
         boxes = boxes[dets[:, 0] == 0]
         if isinstance(boxes, int) or boxes.shape[0] == 0:
@@ -134,7 +139,6 @@ class DetectionLoader():
 
     def read(self):
         return self.pose
-
 
 class DataWriter():
     def __init__(self, cfg, opt):
@@ -203,12 +207,12 @@ class DataWriter():
         self.item = (boxes, scores, ids, hm_data, cropped_boxes, orig_img, im_name)
 
 class AlphaPose():
-    def __init__(self, yolo_cfg, yolo_weight, pose_cfg, pose_checkpoint, logger):
+    def __init__(self, detector_name, yolo_cfg, yolo_weight, pose_cfg, pose_checkpoint, tracker_weight, logger):
         args = edict()
         args.checkpoint = pose_checkpoint
         args.gpus = [0]
         args.device = torch.device('cuda:0')
-        args.detector = 'yolo'
+        args.detector = detector_name
         args.yolo_cfg = yolo_cfg
         args.yolo_weight = yolo_weight
 
@@ -225,6 +229,10 @@ class AlphaPose():
         
         self.det_loader = DetectionLoader(get_detector(self.args.detector, self.args), self.cfg, self.args)
 
+        # tcfg.loadmodel = tracker_weight
+        # logger.info(f'Loading OSNet model from {tracker_weight}...')
+        # self.tracker = Tracker(tcfg)
+
     def process(self, im_name, image):
         # Init data writer
         self.writer = DataWriter(self.cfg, self.args)
@@ -239,6 +247,13 @@ class AlphaPose():
                 inps = inps.to(self.args.device)
                 hm = self.pose_model(inps)
                 hm = hm.cpu()
+
+                # boxes, scores, ids, hm, cropped_boxes = track(self.tracker, orig_img, inps, boxes, hm, cropped_boxes, im_name, scores)
+                # boxes = torch.tensor(boxes)
+                # scores = torch.stack(scores, 0)
+                # ids = torch.tensor(ids).unsqueeze(1)
+                # cropped_boxes = torch.stack(cropped_boxes, 0)
+                
                 self.writer.save(boxes, scores, ids, hm, cropped_boxes, orig_img, im_name)
                 pose = self.writer.start()
 

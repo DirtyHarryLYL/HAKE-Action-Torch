@@ -3,7 +3,6 @@ import random
 import time
 import os
 import os.path as osp
-import sys
 
 import cv2
 import matplotlib.pyplot as plt
@@ -12,10 +11,8 @@ import torch
 import torch.nn.functional as F
 
 import platform
-
 if platform.system() != 'Windows':
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'nms')))
-    import nms_wrapper
+    from detector.nms import nms_wrapper
 
 # Set printoptions
 torch.set_printoptions(linewidth=1320, precision=5, profile='long')
@@ -442,7 +439,7 @@ def non_max_suppression(prediction, conf_thres=0.5, nms_thres=0.4, method=-1):
     for image_i, pred in enumerate(prediction):
         # Filter out confidence scores below threshold
         # Get score and class with highest confidence
-
+        
         v = pred[:, 4] > conf_thres
         v = v.nonzero().squeeze()
         if len(v.shape) == 0:
