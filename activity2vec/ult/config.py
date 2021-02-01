@@ -125,11 +125,9 @@ __C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pr
 __C.DEMO.EXCLUDED_VERBS = [57, 146]
 __C.DEMO.FONT_PATH = osp.join(__C.ROOT_DIR, 'tools', 'inference_tools', 'consola.ttf')
 __C.DEMO.FONT_SIZE = 18
-__C.DEMO.MAX_HUMAN_NUM = 4
-__C.DEMO.DRAW_SKELETON = False
-__C.DEMO.DRAW_RIGID = True
+__C.DEMO.MAX_HUMAN_NUM = 5
 __C.DEMO.DETECTOR = 'yolo'
-
+__C.DEMO.SCORE_THRES = 1.5
 # Pixel mean values (BGR order) as a (1, 1, 3) array
 __C.PIXEL_MEANS = [[[102.9801, 115.9465, 122.7717]]]
 

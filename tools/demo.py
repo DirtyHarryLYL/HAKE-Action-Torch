@@ -71,16 +71,17 @@ class Activity2Vec():
                 
                 f_pasta, p_pasta, p_verb = self.pasta_model.inference(pasta_image, annos)
                 vis = ori_image
-                if self.cfg.DEMO.DRAW_SKELETON:
-                    vis = self.alphapose.vis(vis, pose)
 
                 scores = annos_cpu['human_scores'][0].numpy()[:, 0]
-                score_rank = np.argsort(scores, axis=0)[::-1]
-                scores = scores[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
-                bboxes = annos_cpu['human_bboxes'][0].numpy()[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
-                keypoints = annos_cpu['keypoints'][0].numpy()[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
-                p_pasta = p_pasta[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
-                p_verb = p_verb[score_rank][:self.cfg.DEMO.MAX_HUMAN_NUM]
+                bboxes = annos_cpu['human_bboxes'][0].numpy()
+                keypoints = annos_cpu['keypoints'][0].numpy()
+
+                score_filter = scores > self.cfg.DEMO.SCORE_THRES
+                scores = scores[score_filter]
+                bboxes = bboxes[score_filter]
+                keypoints = keypoints[score_filter]
+                p_pasta = p_pasta[score_filter]
+                p_verb = p_verb[score_filter]
                 vis = self.vis_tool.draw(vis, bboxes, keypoints, scores, p_pasta, p_verb, human_ids)
 
                 annos_cpu['human_bboxes'] = annos_cpu['human_bboxes'].squeeze(0)
@@ -210,7 +211,7 @@ if __name__ == '__main__':
                 if vis is None:
                     vis = ori_image
                 cv2.imshow('Activity2Vec', vis)
-                cv2.waitKey(0)
+                cv2.waitKey(100)
 
             if len(args.output) > 0:
                 basename = os.path.basename(image_path)

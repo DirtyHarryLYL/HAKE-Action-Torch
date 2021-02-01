@@ -48,11 +48,10 @@ class vis_tool():
         point2 = start_keypoint - norm_vec
         point3 = end_keypoint + norm_vec
         point4 = end_keypoint - norm_vec
-        if self.cfg.DEMO.DRAW_RIGID:
-            drawer.line(tuple(point1) + tuple(point3), fill=color+(255, ), width=2)
-            drawer.line(tuple(point2) + tuple(point4), fill=color+(255, ), width=2)
-            drawer.line(tuple(point1) + tuple(point2), fill=color+(255, ), width=2)
-            drawer.line(tuple(point3) + tuple(point4), fill=color+(255, ), width=2)
+        drawer.line(tuple(point1) + tuple(point3), fill=color+(255, ), width=2)
+        drawer.line(tuple(point2) + tuple(point4), fill=color+(255, ), width=2)
+        drawer.line(tuple(point1) + tuple(point2), fill=color+(255, ), width=2)
+        drawer.line(tuple(point3) + tuple(point4), fill=color+(255, ), width=2)
         part_width = 2 * (np.sqrt(np.sum(norm_vec ** 2)))
         return drawer, part_width
 
@@ -84,9 +83,16 @@ class vis_tool():
         if human_bboxes is not None:
             human_count = 0
             extra_offset = self.cfg.DEMO.FONT_SIZE
+            
+            # areas = np.array([(human_bboxes[idx][2]-human_bboxes[idx][0])*(human_bboxes[idx][3]-human_bboxes[idx][1]) for idx in range(len(human_bboxes))])
+            areas = np.array([(human_bboxes[idx][2]-human_bboxes[idx][0]) for idx in range(len(human_bboxes))])
+            centres_x = np.array([(human_bboxes[idx][2]+human_bboxes[idx][0])/2 for idx in range(len(human_bboxes))])
+            area_tops = np.argsort(areas)[::-1][:self.cfg.DEMO.MAX_HUMAN_NUM]
+            centres_x = centres_x[area_tops]
+            centre_ranks = np.argsort(centres_x)
+            area_tops = area_tops[centre_ranks]
 
-            for idx in range(len(human_bboxes)):
-
+            for idx in area_tops:
                 # Get meta information.
                 human_bbox = human_bboxes[idx]
                 human_keypoints = keypoints[idx]
@@ -111,8 +117,8 @@ class vis_tool():
                     pasta_sub_scores = pasta_scores[pasta_range[0]:pasta_range[1]]
                     pasta_names = self.pasta_name_list[pasta_range[0]:pasta_range[1]]
 
-                    # rules for foot, hand and head pasta
-                    if self.cfg.DATA.PASTA_NAMES[pasta_range_idx] != 'hip' and self.cfg.DATA.PASTA_NAMES[pasta_range_idx] != 'leg' and self.cfg.DATA.PASTA_NAMES[pasta_range_idx] != 'arm':
+                    # rules for head pasta
+                    if self.cfg.DATA.PASTA_NAMES[pasta_range_idx] == 'head':
                         pasta_sub_idxs = np.argsort(pasta_sub_scores)[::-1]
                         for pasta_sub_idx in pasta_sub_idxs:
                             pasta_name = pasta_names[pasta_sub_idx]
@@ -120,55 +126,118 @@ class vis_tool():
                                 pasta_draw_names.append(pasta_name.split(':')[-1].strip())
                                 break
                     
-                    # rules for arm pasta
-                    elif self.cfg.DATA.PASTA_NAMES[pasta_range_idx] == 'arm':
+                    # rules for hand pasta
+                    elif self.cfg.DATA.PASTA_NAMES[pasta_range_idx] == 'hand':
                         pasta_sub_idxs = np.argsort(pasta_sub_scores)[::-1]
+                        # print(pasta_names)
+                        # print(human_count, pasta_sub_scores)
+                        # print('hold', ori_verb_scores[36])
                         for pasta_sub_idx in pasta_sub_idxs:
                             pasta_name = pasta_names[pasta_sub_idx]
                             if 'no_interaction' not in pasta_name:
-                                if 'be close to' not in pasta_name:
-                                    pasta_draw_names.append(pasta_name.split(':')[-1].strip())
-                                else:
-                                    pasta_draw_names.append('')
+                                if 'hold' in pasta_name and ori_verb_scores[36] < 0.1:
+                                    continue
+                                pasta_draw_names.append(pasta_name.split(':')[-1].strip())
                                 break
+
+                    # rules for foot pasta
+                    elif self.cfg.DATA.PASTA_NAMES[pasta_range_idx] == 'foot':
+                        pasta_sub_idxs = np.argsort(pasta_sub_scores)[::-1]
+                        if max(pasta_sub_scores[:-1]) < 0.1:
+                            pasta_draw_names.append('stand')
+                        else:
+                            for pasta_sub_idx in pasta_sub_idxs:
+                                pasta_name = pasta_names[pasta_sub_idx]
+                                if 'no_interaction' not in pasta_name:
+                                    pasta_draw_names.append(pasta_name.split(':')[-1].strip())
+                                    break
+
+                    # rules for arm pasta
+                    elif self.cfg.DATA.PASTA_NAMES[pasta_range_idx] == 'arm':
+                        pasta_sub_idxs = np.argsort(pasta_sub_scores)[::-1]
+                        if max(pasta_sub_scores[:-1]) < 0.1:
+                            pasta_draw_names.append('')
+                        else:
+                            for pasta_sub_idx in pasta_sub_idxs:
+                                pasta_name = pasta_names[pasta_sub_idx]
+                                if 'no_interaction' not in pasta_name:
+                                    if 'be close to' not in pasta_name:
+                                        pasta_draw_names.append(pasta_name.split(':')[-1].strip())
+                                    else:
+                                        pasta_draw_names.append('lean on')
+                                    break
 
                     # rules for leg pasta  
                     elif self.cfg.DATA.PASTA_NAMES[pasta_range_idx] == 'leg':
                         pasta_sub_idxs = np.argsort(pasta_sub_scores)[::-1]
-                        for pasta_sub_idx in pasta_sub_idxs:
-                            pasta_name = pasta_names[pasta_sub_idx]
-                            if 'no_interaction' not in pasta_name:
-                                if 'is close with' not in pasta_name:
-                                    pasta_draw_names.append(pasta_name.split(':')[-1].strip())
-                                else:
-                                    pasta_draw_names.append('')
-                                break
+                        if max(pasta_sub_scores[:-1]) < 0.05:
+                            pasta_draw_names.append('')
+                        else:
+                            for pasta_sub_idx in pasta_sub_idxs:
+                                pasta_name = pasta_names[pasta_sub_idx]
+                                if 'no_interaction' not in pasta_name:
+                                    if 'is close with' not in pasta_name:
+                                        pasta_draw_names.append(pasta_name.split(':')[-1].strip())
+                                    else:
+                                        pasta_draw_names.append('lean on')
+                                    break
 
                     # rules for hip pasta
                     else:
                         # print(human_count, pasta_sub_scores[:3])
-                        if max(pasta_sub_scores[:3]) < 0.17:
+                        # if max(pasta_sub_scores[:3]) < 0.3:
+                        #     pasta_draw_names.append('')
+                        # else:
+                        #     pasta_draw_names.append('sit')
+                        pasta_sub_idxs = np.argsort(pasta_sub_scores)[::-1]
+                        if pasta_sub_scores[-1] > 0.9:
                             pasta_draw_names.append('')
                         else:
-                            pasta_draw_names.append('sit')
+                            for pasta_sub_idx in pasta_sub_idxs:
+                                pasta_name = pasta_names[pasta_sub_idx]
+                                if 'no_interaction' not in pasta_name:
+                                    pasta_draw_names.append(pasta_name.split(':')[-1].strip())
+                                    break
                 
-                # rules between pastas
+
+                # extra rules for foot
+                if ori_verb_scores[76] > 0.5:
+                    if pasta_draw_names[0] not in ['jump']:
+                        pasta_draw_names[0] = 'tread'
+
+                # extra rules for leg
                 if pasta_draw_names[0] == 'stand' and pasta_draw_names[1] == 'jump' and 'jump' not in verb_draw_names[:3]:
                     pasta_draw_names[1] = ''
-                if pasta_draw_names[1] == 'walk':
+                if pasta_draw_names[0] == 'stand' and pasta_draw_names[1] == 'walk' and 'walk' not in verb_draw_names[:3]:
+                    pasta_draw_names[1] = ''
+                if 'straddle' in verb_draw_names[:3] and pasta_draw_names[1] == '':
+                    pasta_draw_names[1] = 'straddle'
+
+                # extra rules for hip
+                if pasta_draw_names[1] in ['walk', 'jump']:
                     pasta_draw_names[2] = ''
-                if pasta_draw_names[1] == 'is close with':
-                    pasta_draw_names[1] = ''
-                if pasta_draw_names[4] == 'be close to':
-                    pasta_draw_names[4] = ''
-                if pasta_draw_names[2] == 'sit' and pasta_draw_names[1] == 'jump':
-                    pasta_draw_names[1] = ''
-                if pasta_draw_names[2] == 'sit' and pasta_draw_names[1] == 'walk':
-                    pasta_draw_names[1] = ''
-                if pasta_draw_names[2] == 'sit' and pasta_draw_names[0] == 'jump':
-                    pasta_draw_names[0] = 'stand'
-                if pasta_draw_names[2] == 'sit' and pasta_draw_names[0] == 'walk':
-                    pasta_draw_names[0] = 'stand'
+
+                verb_sit_score = max(ori_verb_scores[86], ori_verb_scores[87])
+                if verb_sit_score < 0.2 and ori_verb_scores[76] < 0.1:
+                    pasta_draw_names[2] = ''
+                # if verb_draw_names[0] == 'sit':
+                #     pasta_draw_names[2] = 'sit'
+
+                # extra rules for hand
+                # if verb_draw_names[0] == 'hold':
+                #     pasta_draw_names[3] = 'hold'
+                # if pasta_draw_names[1] == 'is close with':
+                #     pasta_draw_names[1] = ''
+                # if pasta_draw_names[4] == 'be close to':
+                #     pasta_draw_names[4] = ''
+                # if pasta_draw_names[2] == 'sit' and pasta_draw_names[1] == 'jump':
+                #     pasta_draw_names[1] = ''
+                # if pasta_draw_names[2] == 'sit' and pasta_draw_names[1] == 'walk':
+                #     pasta_draw_names[1] = ''
+                # if pasta_draw_names[2] == 'sit' and pasta_draw_names[0] == 'jump':
+                #     pasta_draw_names[0] = 'stand'
+                # if pasta_draw_names[2] == 'sit' and pasta_draw_names[0] == 'walk':
+                #     pasta_draw_names[0] = 'stand'
 
                 # Draw human box and human id box.
                 draw.rectangle([(int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3]))], fill=None, outline=BLUE+(255, ), width=2)
