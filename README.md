@@ -21,7 +21,7 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
  Comming soon.
 
 ## Contributors
- This branch is contributed by Hongwei Fan and Yong-Lu Li.
+ This branch is contributed by Hongwei Fan(@hwfan) and Yong-Lu Li(@DirtyHarryLYL). Please contact us if any problem occurs.
  
 ## Citation
  If you find our works useful, please consider citing:
