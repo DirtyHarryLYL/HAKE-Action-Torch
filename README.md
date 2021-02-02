@@ -18,7 +18,7 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
  To start your journey with Activity2Vec, please refer to [GETTING_STARTED.md](./GETTING_STARTED.md).
 
 ## Demo
- Comming soon.
+ ![avatar](./demo/a2v-demo.gif)
 
 ## Contributors
  This branch is contributed by Hongwei Fan([@hwfan](https://github.com/hwfan)) and Yong-Lu Li([@DirtyHarryLYL](https://github.com/DirtyHarryLYL)). Please contact us if there are any problems.
