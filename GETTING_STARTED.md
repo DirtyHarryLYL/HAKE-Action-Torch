@@ -1,11 +1,11 @@
 ## Getting Started with Activity2Vec
 
 ### Demo
-Inference with the pretrained model on GPU 0 and show the visualization results of the images in demo folder:
+Inference with the pretrained model on GPU 0 and show the visualization results of the images in hico-test set:
 
 ```
 python -u tools/demo.py --cfg models/a2v/configs/a2v.yaml \
-                        --input demo/ \
+                        --input Data/hake-large/hico-test \
                         --mode image \
                         --show \
                         GPU_ID 0
