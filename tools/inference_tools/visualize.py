@@ -206,9 +206,9 @@ class vis_tool():
                         pasta_draw_names[0] = 'tread'
 
                 # extra rules for leg
-                if pasta_draw_names[0] == 'stand' and pasta_draw_names[1] == 'jump' and 'jump' not in verb_draw_names[:3]:
+                if pasta_draw_names[0] in ['stand', 'tread'] and pasta_draw_names[1] == 'jump' and 'jump' not in verb_draw_names[:3]:
                     pasta_draw_names[1] = ''
-                if pasta_draw_names[0] == 'stand' and pasta_draw_names[1] == 'walk' and 'walk' not in verb_draw_names[:3]:
+                if pasta_draw_names[0] in ['stand', 'tread'] and pasta_draw_names[1] == 'walk' and 'walk' not in verb_draw_names[:3]:
                     pasta_draw_names[1] = ''
                 if 'straddle' in verb_draw_names[:3] and pasta_draw_names[1] == '':
                     pasta_draw_names[1] = 'straddle'
@@ -218,7 +218,7 @@ class vis_tool():
                     pasta_draw_names[2] = ''
 
                 verb_sit_score = max(ori_verb_scores[86], ori_verb_scores[87])
-                if verb_sit_score < 0.2 and ori_verb_scores[76] < 0.1:
+                if verb_sit_score < 0.1 and ori_verb_scores[76] < 0.1:
                     pasta_draw_names[2] = ''
                 # if verb_draw_names[0] == 'sit':
                 #     pasta_draw_names[2] = 'sit'

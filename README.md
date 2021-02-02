@@ -19,9 +19,12 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
 
 ## Demo
  Comming soon.
+
+## Contributors
+ This branch is contributed by Hongwei Fan and Yong-Lu Li.
  
 ## Citation
-If you find our works useful, please consider citing:
+ If you find our works useful, please consider citing:
 ```
 @inproceedings{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
