@@ -9,8 +9,10 @@ Meanwhile, the language feature is based on the recognized PaSta scores and thei
 For each PaSta, we will multiply its probability to its Bert vector (base 768) of its PaSta class name. More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) and [HAKE-Action](https://github.com/DirtyHarryLYL/HAKE-Action).
 
 <p align='center'>
-    <img src="demo/images/HAKE-A2V.gif", height="300">
+    <img src="demo/images/HAKE-A2V.gif", height="400">
 </p>
+- Contents in demo: human ID & box & skeleton, body part box & states, human actions. 
+- An official demo is coming soon, together with the new version of HAKE-A2V (code, model)!
 
 ## Prerequisites
  - Python 3.7
