@@ -8,6 +8,10 @@ The visual feature is based on the human PaSta (Part States from [PaStaNet](http
 Meanwhile, the language feature is based on the recognized PaSta scores and their corresponding Bert feature. 
 For each PaSta, we will multiply its probability to its Bert vector (base 768) of its PaSta class name. More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) and [HAKE-Action](https://github.com/DirtyHarryLYL/HAKE-Action).
 
+<p align='center'>
+    <img src="misc/HAKE-A2V.gif", height="300">
+</p>
+
 ## Prerequisites
  - Python 3.7
  - CUDA 10.0
