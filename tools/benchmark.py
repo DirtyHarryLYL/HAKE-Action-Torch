@@ -188,9 +188,14 @@ def benchmark(results_dir, cfg, logger):
         verb_map_list.append(map_res)
 
     verb_mean_ap = np.nanmean(np.array(verb_map_list)) * 100
-    logger.info('verb-157: %2.2f' % verb_mean_ap)
+    verb_mean_ap_wo_no_interaction = np.nanmean(np.array(verb_map_list[:57] + verb_map_list[58:])) * 100
+    logger.info('verb-157: %2.2f, %2.2f' % (verb_mean_ap, verb_mean_ap_wo_no_interaction))
+
     verb_mean_ap_117 = np.nanmean(np.array(verb_map_list[:117])) * 100
-    logger.info('verb-117: %2.2f' % verb_mean_ap_117)
+    verb_mean_ap_117_wo_no_interaction = np.nanmean(np.array(verb_map_list[:57] + verb_map_list[58:117])) * 100
+    logger.info('verb-117: %2.2f, %2.2f' % (verb_mean_ap_117, verb_mean_ap_117_wo_no_interaction))
+    
+    import ipdb; ipdb.set_trace()
     if cfg.BENCHMARK.SHOW_ACTION_RES:
         logger.info('detailed verb results:')
         for verb_idx, verb_map in enumerate(verb_map_list):

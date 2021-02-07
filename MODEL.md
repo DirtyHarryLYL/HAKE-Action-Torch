@@ -1,5 +1,21 @@
 ## Pretrained Models of Activity2Vec
 
+### Results
+
+We evaluate the performance of the pretrained model on PaSta and verb detection tasks, and report the mAP results on each task. We also report the results when "no_interaction" is not included to show the detection performance only when the interaction occurs.
+
+|  Task         | w/ no_interaction(mAP) | w/o no_interaction(mAP) |
+|    ----       | ---- | ---- |
+|  PaSta: foot  | 16.99 | 14.74 |
+|  PaSta: leg   | 14.34 | 11.35 |
+|  PaSta: hip   | 34.27 | 32.12 |
+|  PaSta: hand  | 7.82  | 6.94  |
+|  PaSta: arm   | 33.85 | 29.38 |
+|  PaSta: head  | 18.92 | 16.36 |
+|  PaSta: avg   | 21.03 | 18.48 |
+|  verb         | 12.23 | 12.26 |
+
+### Download
 You can download the pretrained models of Activity2Vec in the following two ways:
 
 1. All-in-one package
