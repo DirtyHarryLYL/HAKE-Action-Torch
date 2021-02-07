@@ -1,0 +1,29 @@
+DATA:
+  NUM_PASTAS:
+    FOOT: 16
+    LEG: 15
+    HIP: 6
+    HAND: 34
+    ARM: 8
+    HEAD: 14
+  NUM_PARTS: 10
+  NUM_VERBS: 157
+  PASTA_NAMES: ['foot', 'leg', 'hip', 'hand', 'arm', 'head']
+
+MODEL:
+  DROPOUT: 0.5
+  PART_AGG_RULE: [[0, 3], [1, 2], [4], [6, 9], [7, 8], [5]]
+  NUM_FC: 512
+  MODULE_TRAINED: ['foot']
+  PART_ROI_ENABLE: true
+  POSE_MAP: true
+  
+TRAIN:
+  BASE_LR: 0.0001
+  LR_SCHEDULE: 'cosine'
+  FREEZE_BACKBONE: true
+  HUMAN_PER_IM: 10
+  POS_RATIO: 0.1
+  WITH_LOSS_WTS: true
+  LOSS_TYPE: 'bce'
+  LOSS_WEIGHT_K: 2

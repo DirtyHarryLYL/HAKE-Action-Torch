@@ -20,3 +20,4 @@ upload
 *.tar.gz
 Weights
 Weights-old
+checkpoints

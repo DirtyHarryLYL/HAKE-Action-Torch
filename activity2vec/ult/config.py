@@ -112,16 +112,16 @@ __C.TEST.NUM_WORKERS = 1
 
 # Demo settings
 __C.DEMO = CN()
-__C.DEMO.YOLO_CFG = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'configs', 'yolov3-spp.cfg')
-__C.DEMO.YOLO_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'checkpoints', 'yolov3-spp.weights')
-__C.DEMO.POSE_CFG = osp.join(__C.ROOT_DIR, 'models', 'pose', 'configs', '256x192_res50_lr1e-3_1x.yaml')
-__C.DEMO.POSE_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'pose', 'checkpoints', 'fast_res50_256x192.pth')
-__C.DEMO.TRACKER_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'yolo', 'checkpoints', 'osnet.pth')
+__C.DEMO.YOLO_CFG = osp.join(__C.ROOT_DIR, 'configs', 'yolo', 'yolov3-spp.cfg')
+__C.DEMO.YOLO_WEIGHT = osp.join(__C.ROOT_DIR, 'checkpoints', 'yolo', 'yolov3-spp.weights')
+__C.DEMO.POSE_CFG = osp.join(__C.ROOT_DIR, 'configs', 'pose', '256x192_res50_lr1e-3_1x.yaml')
+__C.DEMO.POSE_WEIGHT = osp.join(__C.ROOT_DIR, 'checkpoints', 'pose', 'fast_res50_256x192.pth')
+__C.DEMO.TRACKER_WEIGHT = osp.join(__C.ROOT_DIR, 'checkpoints', 'yolo', 'osnet.pth')
 
 # Warning: this config has been deprecated in the newest version.
-__C.DEMO.A2V_CFG = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'configs', 'a2v.yaml')
+__C.DEMO.A2V_CFG = osp.join(__C.ROOT_DIR, 'configs', 'a2v', 'a2v.yaml')
 
-__C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'models', 'a2v', 'checkpoints', 'pretrained_model.pth')
+__C.DEMO.A2V_WEIGHT = osp.join(__C.ROOT_DIR, 'checkpoints', 'a2v', 'pretrained_model.pth')
 __C.DEMO.EXCLUDED_VERBS = [57, 146]
 __C.DEMO.FONT_PATH = osp.join(__C.ROOT_DIR, 'tools', 'inference_tools', 'consola.ttf')
 __C.DEMO.FONT_SIZE = 18
