@@ -1,3 +1,5 @@
+# Copied from fvcore/nn/focal_loss.py of fvcore repository: 
+# https://github.com/facebookresearch/fvcore/blob/master/fvcore/nn/focal_loss.py
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 import torch

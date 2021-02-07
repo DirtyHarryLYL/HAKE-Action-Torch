@@ -6,6 +6,7 @@
 import torch
 
 def save_model(net, optimizer, scheduler, iters, ckp_path):
+    # checkpoint saver
     torch.save({
                 "iters": iters,
                 "model_state_dict": net.state_dict(),
@@ -14,7 +15,7 @@ def save_model(net, optimizer, scheduler, iters, ckp_path):
                 }, ckp_path)
 
 def load_model(cfg, model, optimizer, scheduler, ckp_path, mode='train'):
-    
+    # checkpoint loader
     checkpoint = torch.load(ckp_path, map_location='cpu')
     assert mode in ['train', 'test']
 

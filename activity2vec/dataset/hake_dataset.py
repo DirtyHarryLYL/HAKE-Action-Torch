@@ -23,6 +23,7 @@ from tqdm import tqdm
 from turbojpeg import TurboJPEG
 reader = TurboJPEG()
 
+# Transform between object and string items.
 def obj2str(obj):
     return base64.b64encode(pickle.dumps(obj)).decode()
 
@@ -65,6 +66,7 @@ def im_read(im_path):
             raise NotImplementedError
     return im
 
+# Generate the skeleton input for each human pose.
 def draw_relation(joints, size=64, is_fake=False):
     if is_fake:
         return np.zeros((size, size), dtype='float32')
@@ -167,6 +169,8 @@ class hake_train(torch.utils.data.Dataset):
         annos.pasta.head = np.zeros((anno_num, self.cfg.DATA.NUM_PASTAS.HEAD), dtype=np.float32)
         annos.pasta.binary = np.zeros((anno_num, self.cfg.DATA.NUM_PARTS), dtype=np.float32)
         annos.skeletons = np.zeros((anno_num, 1, self.cfg.DATA.SKELETON_SIZE, self.cfg.DATA.SKELETON_SIZE), dtype=np.float32)
+
+        # Load the annotations in one batch.
         for gt_anno_aug_idx, gt_anno_ori_idx in enumerate(gt_anno_idxs):
             this_anno = gt_annos[gt_anno_ori_idx]
             global_idx = gt_anno_aug_idx
@@ -247,7 +251,6 @@ class hake_test(torch.utils.data.Dataset):
         self.cfg = cfg
         self.db = lmdb.open(self.cfg.DATA.PRED_DB_PATH)
         self.txn_db = self.db.begin(write=False)
-        self.visualize = False
         self.image_folder_list = json.load(open(self.cfg.DATA.IMAGE_FOLDER_LIST,'r'))
         self.image_list = [key for key, _ in self.txn_db.cursor()]
 
@@ -260,14 +263,12 @@ class hake_test(torch.utils.data.Dataset):
         current_data      = str2obj(self.txn_db.get(current_key_raw))
         dataset, filename = image_id.split('/')
 
+        # Load image and normalize.
         im_path  = osp.join(self.cfg.DATA.DATA_DIR, self.image_folder_list[dataset], filename)
         image    = im_read(im_path)
         ori_im_shape = image.shape
-        if not self.visualize:
-            image    = image.astype(np.float32, copy=True)
-            image   -= self.cfg.PIXEL_MEANS
-        else:
-            print('[Warning] Visualization Mode!')
+        image    = image.astype(np.float32, copy=True)
+        image   -= self.cfg.PIXEL_MEANS
         im_shape = image.shape
         image    = image.transpose(2, 0, 1)
         
@@ -278,6 +279,7 @@ class hake_test(torch.utils.data.Dataset):
         annos.human_scores = np.zeros((anno_num, ), dtype=np.float32)
         annos.skeletons = np.zeros((anno_num, 1, self.cfg.DATA.SKELETON_SIZE, self.cfg.DATA.SKELETON_SIZE), dtype=np.float32)
 
+        # Load the predicted annotations in one batch.
         for anno_idx, anno in enumerate(current_data):
             if anno.keypoints is not None:
                 keypoints = anno.keypoints
@@ -299,84 +301,3 @@ class hake_test(torch.utils.data.Dataset):
         annos.part_bboxes[:, :, 3] = np.minimum(annos.part_bboxes[:, :, 3], im_shape[0])
         
         return image, annos, image_id
-
-if __name__ == '__main__':
-    sys.path.append(osp.join(osp.dirname(__file__), '..', 'ult'))
-    from config import get_cfg
-    cfgs = get_cfg()
-    
-    def visualization(img, annos, verbs, pastas, mode):
-        RED = (0, 0, 255)
-        GREEN = (0, 255, 0)
-        BLUE = (255, 0, 0)
-        CYAN = (255, 255, 0)
-        YELLOW = (0, 255, 255)
-        ORANGE = (0, 165, 255)
-        PURPLE = (255, 0, 255)
-        WHITE = (255, 255, 255)
-        BLACK = (0, 0, 0)
-        assert mode in ['train', 'test']
-        if mode == 'train':
-            for idx in range(len(annos.gt_flag)):
-                human_bbox = annos.human_bboxes[idx]
-                if annos.gt_flag[idx]:
-                    cv2.rectangle(img, (int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3])), GREEN, 2)
-                    extra_offset = 0
-                    this_verbs = np.where(annos.verbs[idx]==1)[0]
-                    for verb in this_verbs:
-                        verb_name = verbs[verb]
-                        cv2.putText(img, verb_name, (int(human_bbox[0])+3, int(human_bbox[1])+18+extra_offset), cv2.FONT_HERSHEY_PLAIN, 1, ORANGE, 1)
-                        extra_offset += 18
-                    for pasta_key in annos.pasta:
-                        if pasta_key == 'binary':
-                            continue
-                        pasta_list = pastas[pasta_key]
-                        pasta_activated_idxs = np.where(annos.pasta[pasta_key][idx]==1)[0]
-                        for pasta_idx in pasta_activated_idxs:
-                            pasta_name = pasta_list[pasta_idx]
-                            if pasta_name != 'no_interaction':
-                                pasta_long_name = pasta_key+': '+pasta_name
-                                cv2.putText(img, pasta_long_name, (int(human_bbox[0])+3, int(human_bbox[1])+18+extra_offset), cv2.FONT_HERSHEY_PLAIN, 1, ORANGE, 1)
-                                extra_offset += 18
-                else:
-                    cv2.rectangle(img, (int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3])), RED, 2)
-        else:
-            for idx in range(len(annos.human_bboxes)):
-                human_bbox = annos.human_bboxes[idx]
-                cv2.rectangle(img, (int(human_bbox[0]), int(human_bbox[1])), (int(human_bbox[2]),int(human_bbox[3])), BLUE, 2)
-                for part_bbox in annos.part_bboxes[idx]:
-                    cv2.rectangle(img, (int(part_bbox[0]), int(part_bbox[1])), (int(part_bbox[2]),int(part_bbox[3])), GREEN, 2)
-        return img
-
-    if sys.argv[1] == 'train':
-        cfgs.TRAIN.HUMAN_PER_IM = 2
-        cfgs.TRAIN.POS_RATIO = 0.5
-        data_loader = hake_train(cfgs)
-        data_loader.visualize = True
-        verbs = []
-        for line in open(osp.join(osp.dirname(__file__), '..', '..', 'Data', 'verb_list.txt'), 'r'):
-            verb = line.strip()
-            verbs.append(verb)
-
-        pastas = edict()
-        for line in open(osp.join(osp.dirname(__file__), '..', '..', 'Data', 'Part_State_93.txt'),'r'):
-            pasta = line.strip()
-            part, state = pasta.split(':')
-            state = state[1:]
-            if part not in pastas:
-                pastas[part] = []
-            pastas[part].append(state)
-
-        for image, annos in tqdm(data_loader):
-            image = image.transpose(1, 2, 0)
-            img_to_show = visualization(image, annos, verbs, pastas, 'train')
-            cv2.imshow("Image", img_to_show)
-            cv2.waitKey(0)
-    else:
-        data_loader = hake_test(cfgs)
-        data_loader.visualize = True
-        for image, annos, _ in tqdm(data_loader):
-            image = image.transpose(1, 2, 0)
-            img_to_show = visualization(image, annos, None, None, 'test')
-            cv2.imshow("Image", img_to_show)
-            cv2.waitKey(0)

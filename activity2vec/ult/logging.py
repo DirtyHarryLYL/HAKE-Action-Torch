@@ -1,3 +1,5 @@
+# Copied from slowfast/utils/logging.py of SlowFast repository: 
+# https://github.com/facebookresearch/SlowFast/blob/master/slowfast/utils/logging.py
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 import logging

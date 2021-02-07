@@ -47,7 +47,11 @@ class pasta_res50(nn.Module):
         self.resnet50 = resnet50_v1()
         self.resnet50.conv1.padding = 0
 
-        # tf: image_to_head
+        ########################
+        # Building the network #
+        ########################
+
+        # ResNet-style image head.
         self.image_to_head = nn.Sequential(
             # pad with 0
             nn.ConstantPad2d((0, 0, 3, 3), 0),
@@ -69,8 +73,10 @@ class pasta_res50(nn.Module):
             self.resnet50.layer2,
             self.resnet50.layer3 )
 
+        # Human feature extractor.
         self.resnet_layer4 = self.resnet50.layer4
 
+        # PaSta classifier.
         self.fc7_parts   = nn.ModuleList(
                                             [
                                                 nn.Sequential(
@@ -91,6 +97,8 @@ class pasta_res50(nn.Module):
                                                     for pasta_idx in range(len(self.pasta_idx2name))
                                                 ]
                                             )
+        
+        # Verb classifier.
         if cfg.MODEL.VERB_ONE_MORE_FC:
             self.verb_cls_scores = nn.Sequential(
                             nn.Linear(len(self.pasta_idx2name) * self.num_fc, self.num_fc),
@@ -101,8 +109,10 @@ class pasta_res50(nn.Module):
         else:
             self.verb_cls_scores = nn.Linear(len(self.pasta_idx2name) * self.num_fc, self.num_verbs)
 
+        ##############################
+        # Freeze the useless params. #
+        ##############################
 
-        # model building.
         if cfg.TRAIN.FREEZE_BACKBONE:
             for p in self.image_to_head.parameters():
                 p.requires_grad = False
@@ -118,6 +128,10 @@ class pasta_res50(nn.Module):
 
         for p in self.verb_cls_scores.parameters():
             p.requires_grad = 'verb' in self.module_trained
+
+        ###########################################
+        # Building the extractor of pose feature. #
+        ###########################################
 
         if cfg.MODEL.POSE_MAP:
             self.pool2_flat_pose_maps = nn.ModuleList(
@@ -199,6 +213,7 @@ class pasta_res50(nn.Module):
         return crops
 
     def forward(self, image, annos):
+        # Extract the feature of skeleton image.
         if self.cfg.MODEL.POSE_MAP:
             skeleton_feats = []
             for pasta_idx in range(len(self.pasta_idx2name)):
@@ -207,12 +222,16 @@ class pasta_res50(nn.Module):
                 skeleton_feats.append(skeleton_feat)
 
         head = self.image_to_head(image)
+
+        # scene feature
         f_scene = torch.mean(head, [2, 3])
 
+        # human roi feature
         f_human_roi = self._crop_pool_layer(head, annos['human_bboxes'])
         f_human = self.resnet_layer4(f_human_roi)
         f_human = torch.mean(f_human, [2, 3])
 
+        # part roi feature
         if self.cfg.MODEL.PART_ROI_ENABLE:
             f_parts_roi = []
             for part_idx in range(self.num_parts):
@@ -235,6 +254,8 @@ class pasta_res50(nn.Module):
         f_parts = []
         s_parts = []
         p_parts = []
+
+        # classify the part states
         for part_idx, f_part in enumerate(f_parts_agg):
             if self.cfg.MODEL.POSE_MAP:
                 f_part_cat  = torch.cat([f_part, skeleton_feats[part_idx]], 1)
@@ -251,12 +272,16 @@ class pasta_res50(nn.Module):
         f_pasta_visual = torch.cat(f_parts, 1)
         p_pasta = torch.cat(p_parts, 1)
 
+        # classify the verbs
         s_verb = self.verb_cls_scores(f_pasta_visual)
         p_verb = torch.sigmoid(s_verb)
 
         f_pasta_language = torch.matmul(p_pasta, self.pasta_language_matrix)
         f_pasta = torch.cat([f_pasta_visual, f_pasta_language], 1)
 
+        # return the pasta feature and pasta probs if in test/inference mode, 
+        # else return the pasta scores for loss input.
+        
         if not self.training:
             return f_pasta, p_pasta, p_verb
         else:
