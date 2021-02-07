@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def map_17_to_16(joint_17):
     joint_16 = np.zeros((16, 3), dtype=np.float32)
     dict_map = {0:16, 1:14, 2:12, 3:11, 4:13, 5:15, 6:[11, 12], 7:[5,6], 9:[1,2], 10:10, 11:8, 12:6, 13:5, 14:7, 15:9}
@@ -82,7 +81,7 @@ def output_part_box(joint, img_bbox):
                     bbox[i, 1] = img_bbox[1]
                     bbox[i, 2] = img_bbox[2]
                     bbox[i, 3] = img_bbox[3]
-            elif i in [9,10]: # left arm group
+            elif i in [8,9]: # left arm group
                 if group_score_left_arm > 0.2: 
                     half_box_width = get_distance(joint, 13, 15)
                     pbox = get_part_box(i, joint, half_box_width)
@@ -108,7 +107,7 @@ def output_part_box(joint, img_bbox):
                     bbox[i, 1] = img_bbox[1]
                     bbox[i, 2] = img_bbox[2]
                     bbox[i, 3] = img_bbox[3]
-            elif i in [2,3]: # right arm group
+            elif i in [2,3]: # left leg group
                 if group_score_left_leg > 0.2: 
                     half_box_width = get_distance(joint, 3, 5)
                     pbox = get_part_box(i, joint, half_box_width)
@@ -169,9 +168,9 @@ def check_iou(human_bbox_pkl, human_bbox_pose):
     else:
         return 0
 
-# Given the human bounding box and the corresponding human pose, Generate the correponding part box
-
-hbox = np.zeros((4))
-joint_17 = np.zeros((17, 3))                # the pose
-joint_16 = map_17_to_16(joint_17)
-part_box = output_part_box(joint_16, hbox) # return the part bounding box
+if __name__ == '__main__':
+    # Given the human bounding box and the corresponding human pose, Generate the correponding part box
+    hbox = np.zeros((4))
+    joint_17 = np.zeros((17, 3))               # the pose
+    joint_16 = map_17_to_16(joint_17)
+    part_box = output_part_box(joint_16, hbox) # return the part bounding box
