@@ -28,21 +28,7 @@ You can download the pretrained models of Activity2Vec in the following two ways
 
 2. Single files
 
-    Download the files listed in the table and sort them to the structure beside:
-    ```
-    HAKE-Action-Torch(Activity2Vec)
-    |_ checkpoints
-    |_ a2v
-    |  |_ pretrained_model.pth
-    |  |_ pretrained_res50.pth
-    |
-    |_ pose
-    |  |_ fast_res50_256x192.pth
-    |
-    |_ yolo
-        |_ yolov3-spp.weights
-        |_ osnet.pth
-    ```
+    Download the files listed in the table,
 
     |  File Name  | Description |
     |    ----     |     ----      |
@@ -51,3 +37,20 @@ You can download the pretrained models of Activity2Vec in the following two ways
     |  [yolov3-spp.weights](https://1drv.ms/u/s!ArUVoRxpBphYgtdt_fcADRpQtT_F2Q?e=JHNEG2)    | Pretrained YOLO weights for AlphaPose inference. More details can be found in https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/INSTALL.md |
     |  [fast_res50_256x192.pth](https://1drv.ms/u/s!ArUVoRxpBphYgtdq7kP6LV_lzF3H9w?e=vGc9C9)  | Pretrained pose estimator weights for AlphaPose inference. More details can be found in https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/MODEL_ZOO.md |
     |  [osnet.pth](https://1drv.ms/u/s!ArUVoRxpBphYgtdo_Gjz3yQI3EiU7w?e=4rLswB)  | Pretrained weights for person re-id in AlphaPose inference. More details can be found in https://github.com/MVIG-SJTU/AlphaPose/tree/master/trackers |
+
+    and sort them to the structure beside:
+
+    ```
+    HAKE-Action-Torch(Activity2Vec)
+    |_ checkpoints
+       |_ a2v
+       |  |_ pretrained_model.pth
+       |  |_ pretrained_res50.pth
+       |
+       |_ pose
+       |  |_ fast_res50_256x192.pth
+       |
+       |_ yolo
+          |_ yolov3-spp.weights
+          |_ osnet.pth
+    ```
