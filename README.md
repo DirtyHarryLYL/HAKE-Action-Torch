@@ -2,7 +2,7 @@
 
 **Seven-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Extended TIN).
 
-Under construction.
+Work in progress.
 
 <p align='center'>
     <img src="misc/hake_demo.jpg", height="300">
