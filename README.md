@@ -8,7 +8,16 @@ The visual feature is based on the human PaSta (Part States from [PaStaNet](http
 Meanwhile, the language feature is based on the recognized PaSta scores and their corresponding Bert feature. 
 For each PaSta, we will multiply its probability to its Bert vector (base 768) of its PaSta class name. More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) and [HAKE-Action](https://github.com/DirtyHarryLYL/HAKE-Action).
 
-![demo-gif](./demo/a2v-demo.gif)
+<p align='center'>
+    <img src="demo/a2v-demo.gif", height="400">
+</p>
+
+#### Contents in demo
+- human ID & box & skeleton
+- body part box & states
+- human actions
+
+An official demo is coming soon, together with the new version of HAKE-A2V backbone (code, model)!
 
 ## Installation
  To install the overall framework of Activity2Vec, please follow [INSTALL.md](./INSTALL.md).
