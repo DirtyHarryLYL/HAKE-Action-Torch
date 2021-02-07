@@ -16,4 +16,10 @@ terminaltables
 timm
 visdom
 imutils
-scipy==1.2.1
+numpy
+scipy
+anycurve
+yacs
+moviepy
+h5py
+PyTurboJPEG
