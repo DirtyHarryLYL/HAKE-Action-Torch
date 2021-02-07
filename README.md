@@ -1,12 +1,17 @@
 # HAKE-Activity2Vec(A2V)
 General human activity feature extractor and human PaSta (part states) detector based on HAKE data, i.e., HAKE-A2V (Activity2Vec). 
-It works like an ImageNet/COCO pre-trained backbone, which aims at extracting the multi-modal activity representation for gerneral downstream tasks like VQA, captioning, cluster, etc. 
+It works like an ImageNet/COCO pre-trained backbone, which aims at extracting multi-modal activity representation for downstream tasks like VQA, captioning, clustering, etc. 
 
-PaSta Prediction (93 classes) + Action prediction (156 classes) + Action Vector (Visual & Language) = A2V(image, person box).
+### Pipeline: 
+Image --> human detection + pose estimation --> body part boxes --> PaSta classification --> Action classification
 
-The visual feature is based on the human PaSta (Part States from [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf)) recognition, i.e., the features of all human body parts extracted from the PaSta classifiers. 
-Meanwhile, the language feature is based on the recognized PaSta scores and their corresponding Bert feature. 
-For each PaSta, we will multiply its probability to its Bert vector (base 768) of its PaSta class name. More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) and [HAKE-Action](https://github.com/DirtyHarryLYL/HAKE-Action).
+HAKE-A2V(image, person box) = PaSta detection (93 classes) + Action classification (156 classes) + Action Vector (Visual & Language).
+
+- Visual feature: based on human PaSta (Part States from [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf)) recognition, i.e., features from PaSta classifiers. 
+- Language feature: based on the recognized PaSta scores and the corresponding Bert features. 
+For each PaSta, we multiply its probability to its Bert vector (base 768) of its PaSta class name (as tokens). 
+
+More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) and [HAKE-Action](https://github.com/DirtyHarryLYL/HAKE-Action).
 
 <p align='center'>
     <img src="demo/a2v-demo.gif", height="400">
