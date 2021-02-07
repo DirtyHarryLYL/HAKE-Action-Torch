@@ -12,8 +12,8 @@ We evaluate the performance of the pretrained model on PaSta and verb detection 
 |  PaSta: hand  | 7.82  | 6.94  |
 |  PaSta: arm   | 33.85 | 29.38 |
 |  PaSta: head  | 18.92 | 16.36 |
-|  PaSta: avg   | 21.03 | 18.48 |
-|  verb         | 12.23 | 12.26 |
+|  **PaSta: avg**   | **21.03** | **18.48** |
+|  **verb**         | **12.23** | **12.26** |
 
 ### Download
 You can download the pretrained models of Activity2Vec in the following two ways:
