@@ -26,12 +26,10 @@ HAKE-Action-Torch(Activity2Vec)
    |_ Trainval_HAKE
    |  |_ data.mdb
    |  |_ lock.mdb
-   |  |_ ...
    |
    |_ Test_pred_rcnn
    |  |_ data.mdb
    |  |_ lock.mdb
-   |  |_ ...
    |
    |_ metadata
       |_ data_path.json
