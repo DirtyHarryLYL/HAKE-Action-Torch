@@ -12,12 +12,13 @@ For each PaSta, we will multiply its probability to its Bert vector (base 768) o
     <img src="demo/a2v-demo.gif", height="400">
 </p>
 
+
 #### Contents in demo
 - human ID & box & skeleton
 - body part box & states
 - human actions
 
-An official demo is coming soon, together with the new version of HAKE-A2V backbone (code, model)!
+An official video demo is coming soon!
 
 ## Installation
  To install the overall framework of Activity2Vec, please follow [INSTALL.md](./INSTALL.md).
