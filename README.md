@@ -40,9 +40,6 @@ HAKE-Action-Torch
 - [TIN](https://arxiv.org/pdf/1811.08264.pdf) (CVPR'19)
 - [Part States](http://ai.ucsd.edu/~haosu/papers/cvpr18_partstate.pdf) (CVPR'18)
 
-## Model Zoo
-Coming soon.
-
 ### Results on HICO-DET with different object detections.
 |Method| Detector |HAKE| Full(def) | Rare(def) | None-Rare(def)| Full(ko) | Rare(ko) | None-Rare(ko) |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -71,7 +68,7 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 |[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| 8.22 |
 |[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| 10.37 |
 
-**PaStaNet-HOI**
+### Results on [PaStaNet-HOI](https://arxiv.org/abs/2101.10292)
 |Method| mAP |
 |:---:|:---:|
 |TIN-PAMI| 15.38|
@@ -148,6 +145,7 @@ If you find our works useful, please consider citing:
 - [x] Refined Activity2Vec
 - [ ] Extended DJ-RN
 - [ ] SymNet in Torch
+- [ ] Unified model (better A2V, early/late fusion, new representation)
 
 ## [HAKE](http://hake-mvig.cn/home/)
 **HAKE**[[website]](http://hake-mvig.cn/home/) is a new large-scale knowledge base and engine for human activity understanding. HAKE provides elaborate and abundant **body part state** labels for active human instances in a large scale of images and videos. With HAKE, we boost the action understanding performance on widely-used human activity benchmarks. Now we are still enlarging and enriching it, and looking forward to working with outstanding researchers around the world on its applications and further improvements. If you have any pieces of advice or interests, please feel free to contact [Yong-Lu Li](https://dirtyharrylyl.github.io/) (yonglu_li@sjtu.edu.cn).
