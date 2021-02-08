@@ -35,7 +35,7 @@ You could download the pretrained models of Activity2Vec in the following two wa
     |  File Name  | Description |
     |    ----     |     ----      |
     |  [pretrained_res50.pth](https://1drv.ms/u/s!ArUVoRxpBphYgtdpNrCZmkAWc2e09A?e=u7gPTu)  | The backbone weights pretrained by HAKE-Large data. It can be used to finetune the PaSta classifier from random initialization. |
-    |  [pretrained_model.pth](https://1drv.ms/u/s!ArUVoRxpBphYgtdsloRx5CNBosUW-w?e=Dzq7rv)  | The whole weights pretrained by HAKE-Large data. It can be used to inference the human activities and extract the corresponding Activity2Vec features from a raw image. |
+    |  [pretrained_model.pth](https://1drv.ms/u/s!ArUVoRxpBphYgtdsloRx5CNBosUW-w?e=Dzq7rv)  | The whole weights pretrained by HAKE-Large data. It can be used to infer the human activities and extract the corresponding Activity2Vec features from a raw image. |
     |  [yolov3-spp.weights](https://1drv.ms/u/s!ArUVoRxpBphYgtdt_fcADRpQtT_F2Q?e=JHNEG2)    | Pretrained YOLO weights for AlphaPose inference. More details can be found in https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/INSTALL.md |
     |  [fast_res50_256x192.pth](https://1drv.ms/u/s!ArUVoRxpBphYgtdq7kP6LV_lzF3H9w?e=vGc9C9)  | Pretrained pose estimator weights for AlphaPose inference. More details can be found in https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/MODEL_ZOO.md |
     |  [osnet.pth](https://1drv.ms/u/s!ArUVoRxpBphYgtdo_Gjz3yQI3EiU7w?e=4rLswB)  | Pretrained weights for person re-id in AlphaPose inference. More details can be found in https://github.com/MVIG-SJTU/AlphaPose/tree/master/trackers |
