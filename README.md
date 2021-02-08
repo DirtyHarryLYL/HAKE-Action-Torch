@@ -38,7 +38,7 @@ An official video demo is coming soon!
  To start your journey with Activity2Vec, please refer to [GETTING_STARTED.md](./GETTING_STARTED.md).
 
 ## Contributors
- This branch is contributed by Hongwei Fan([@hwfan](https://github.com/hwfan)) and Yong-Lu Li([@DirtyHarryLYL](https://github.com/DirtyHarryLYL)). Please contact them if there are any problems.
+ This branch is contributed by Hongwei Fan ([@hwfan](https://github.com/hwfan)) and Yong-Lu Li ([@DirtyHarryLYL](https://github.com/DirtyHarryLYL)). Please contact them if there are any problems.
  
 ## Citation
  If you find our works useful, please consider citing:
