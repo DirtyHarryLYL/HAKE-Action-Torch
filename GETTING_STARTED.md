@@ -7,7 +7,7 @@ Inference with the pretrained model on GPU 0 and show the visualization results 
 python -u tools/demo.py --cfg configs/a2v/a2v.yaml \
                         --input Data/hake-large/hico-test \
                         --mode image \
-                        --show \
+                        --show-res \
                         GPU_ID 0
 ```
 
