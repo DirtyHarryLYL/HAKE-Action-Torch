@@ -3,9 +3,9 @@ General human activity feature extractor and human PaSta (part states) detector 
 It works like an ImageNet/COCO pre-trained backbone, which aims at extracting multi-modal activity representation for downstream tasks like VQA, captioning, clustering, etc. 
 
 ### Pipeline: 
-Image --> human detection + pose estimation --> body part boxes --> PaSta classification --> Action classification
+Image/Video --> human detection + pose estimation --> body part boxes --> PaSta classification --> Action classification
 
-HAKE-A2V(image, person box) = PaSta detection (93 classes) + Action classification (156 classes) + Action Vector (Visual & Language).
+HAKE-A2V(image/frame, person box) = PaSta detection (93 classes) + Action classification (156 classes) + Action Vector (Visual & Language).
 
 - Visual feature: based on human PaSta (Part States from [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf)) recognition, i.e., features from PaSta classifiers. 
 - Language feature: based on the recognized PaSta scores and the corresponding Bert features. 
