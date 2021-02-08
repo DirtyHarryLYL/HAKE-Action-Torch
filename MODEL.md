@@ -2,7 +2,9 @@
 
 ### Results
 
-We evaluate the performance of the pretrained model on **PaSta and verb detection** tasks, and report the mAP results on each task. We also report the results when "no_interaction" is not included to show the detection performance only when specific interaction occurs.
+We evaluate the performance of the pretrained model on **PaSta and verb detection** tasks, and report the mAP results on each task. We also report the results when "no_interaction" is not included to show the detection performance only when specific interaction occurs. 
+
+More explorations about more advanced models, better utilization of data, transfer learning, leveraging HAKE-A2v on other tasks, etc. are welcome! Please feel free to contact us or pull a request.
 
 |  Task         | w/ no_interaction(mAP) | w/o no_interaction(mAP) |
 |    ----       | ---- | ---- |
