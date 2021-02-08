@@ -47,6 +47,9 @@ Coming soon.
 |Method| Detector |HAKE| Full(def) | Rare(def) | None-Rare(def)| Full(ko) | Rare(ko) | None-Rare(ko) |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| COCO |-| 17.54	|13.80	|18.65|	19.75|	15.70|	20.96|
+|TIN| COCO | HAKE-HICO-DET| 22.12 |20.19|22.69|24.06|22.19|24.62|
+|TIN| COCO | HAKE-Large| 22.66 |21.17|23.09|24.53|23.00|24.99|
+|TIN-PAMI|COCO|-|20.93|18.95|21.32|23.02|20.96|23.42|
 |[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| COCO |-| 21.34|18.53|22.18|23.69|20.64|24.60|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO|-|23.36|22.47|23.63|26.43|25.01|26.85|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO+HICO-DET|-|26.29|22.61|27.39|28.24|24.47|29.37|
@@ -58,6 +61,8 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 |Method | HAKE | AP(role) |
 |:---:|:---:|:---:|
 |[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)|-|47.8|
+|TIN| HAKE-Large | 51.0|
+|TIN-PAMI|-|49.1|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|-|53.3|
 
 ### Results on [Ambiguous-HOI](https://github.com/DirtyHarryLYL/DJ-RN).
@@ -66,28 +71,30 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 |[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| 8.22 |
 |[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| 10.37 |
 
+**PaStaNet-HOI**
+|Method| mAP |
+|:---:|:---:|
+|TIN-PAMI| 15.38|
+
 
 ## Modules
 
-### 1. Unified Model
+### Unified Model
 Coming soon.
 
-### 2. HAKE Only (CVPR'20)
-Coming soon.
-
-### 3. Activity2Vec (CVPR'20)
+### Activity2Vec (CVPR'20)
 The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
 
-### 4. IDN (NeurIPS'20)
+### IDN (NeurIPS'20)
 The independent Torch version is in: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)).
 
-### 5. DJ-RN (CVPR'20)
+### DJ-RN (CVPR'20)
 The independent Torch version is in: [DJ-RN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
-### 6. TIN (CVPR'19)
+### TIN (CVPR'19)
 The independent Torch version is in: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
-### 7. SymNet (CVPR'20)
+### SymNet (CVPR'20)
 Coming soon.
 
 ## Citation
@@ -138,10 +145,9 @@ If you find our works useful, please consider citing:
 
 ## TODO
 - [ ] TIN-based element analysis
-- [ ] Refined Activity2Vec
+- [x] Refined Activity2Vec
 - [ ] Extended DJ-RN
 - [ ] SymNet in Torch
-- [ ] HAKE only model
 
 ## [HAKE](http://hake-mvig.cn/home/)
 **HAKE**[[website]](http://hake-mvig.cn/home/) is a new large-scale knowledge base and engine for human activity understanding. HAKE provides elaborate and abundant **body part state** labels for active human instances in a large scale of images and videos. With HAKE, we boost the action understanding performance on widely-used human activity benchmarks. Now we are still enlarging and enriching it, and looking forward to working with outstanding researchers around the world on its applications and further improvements. If you have any pieces of advice or interests, please feel free to contact [Yong-Lu Li](https://dirtyharrylyl.github.io/) (yonglu_li@sjtu.edu.cn).
