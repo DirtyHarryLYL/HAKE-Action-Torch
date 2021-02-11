@@ -1,8 +1,11 @@
-#############################################
-#  Author: Hongwei Fan                      #
-#  E-mail: hwnorm@outlook.com               #
-#  Homepage: https://github.com/hwfan       #
-#############################################
+##################################################################################
+#  Author: Hongwei Fan                                                           #
+#  E-mail: hwnorm@outlook.com                                                    #
+#  Homepage: https://github.com/hwfan                                            #
+#  Based on PaStaNet in CVPR'20                                                  #
+#  TF version:                                                                   #
+#  https://github.com/DirtyHarryLYL/HAKE-Action/tree/Instance-level-HAKE-Action  #
+##################################################################################
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -129,9 +132,9 @@ class pasta_res50(nn.Module):
         for p in self.verb_cls_scores.parameters():
             p.requires_grad = 'verb' in self.module_trained
 
-        ###########################################
-        # Building the extractor of pose feature. #
-        ###########################################
+        ###############################################
+        # Building the extractor of pose map feature. #
+        ###############################################
 
         if cfg.MODEL.POSE_MAP:
             self.pool2_flat_pose_maps = nn.ModuleList(
@@ -212,6 +215,7 @@ class pasta_res50(nn.Module):
 
         return crops
 
+    # image/frame --> resnet --> part RoI features + pose map feature --> PaSta (Part States) recognition --> verb (whole body action) recognition
     def forward(self, image, annos):
         # Extract the feature of skeleton image.
         if self.cfg.MODEL.POSE_MAP:
@@ -223,13 +227,25 @@ class pasta_res50(nn.Module):
 
         head = self.image_to_head(image)
 
-        # scene feature
+        # scene/context (whole image) feature
         f_scene = torch.mean(head, [2, 3])
 
         # human roi feature
         f_human_roi = self._crop_pool_layer(head, annos['human_bboxes'])
         f_human = self.resnet_layer4(f_human_roi)
         f_human = torch.mean(f_human, [2, 3])
+        
+        #############################################################################################
+        #  To simplify the model, the interacted object feature is not leveraged here.              #        
+        #  You could also utilize object to further enhance the PaSta and verb recognition for HOI. #
+        #  The object boxes can be obtained from your own detectors based on COCO, LVIS, FSOD, etc. #
+        #  More details about HOI detection please refer to our survey repo:                        #
+        #  https://github.com/DirtyHarryLYL/HOI-Learning-List                                       #
+        #############################################################################################
+        # object roi feature
+#         f_object_roi = self._crop_pool_layer(head, annos['object_bboxes']) # detected boxes from detectors
+#         f_object = self.resnet_layer4(f_object_roi)
+#         f_object = torch.mean(f_object, [2, 3])
 
         # part roi feature
         if self.cfg.MODEL.PART_ROI_ENABLE:
