@@ -71,6 +71,11 @@ Q: How is the used loss weights generated?
 
 A: Please refer to this [issue](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network/issues/36) for detailed explanation.
 
+## TODOS
+- [ ] CVPR'19 version in PyTorch
+- [ ] TPAMI'21 version in PyTorch, PaStaNet-HOI benchmark
+
+
 ## Acknowledgement
 
 Some of the codes are built upon [TIN](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network), [Analogy](https://github.com/jpeyre/analogy) and [VSGNet](https://github.com/ASMIftekhar/VSGNet).
