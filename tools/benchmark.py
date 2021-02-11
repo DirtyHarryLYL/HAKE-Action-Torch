@@ -1,8 +1,11 @@
-#############################################
-#  Author: Hongwei Fan                      #
-#  E-mail: hwnorm@outlook.com               #
-#  Homepage: https://github.com/hwfan       #
-#############################################
+##################################################################################
+#  Author: Hongwei Fan                                                           #
+#  E-mail: hwnorm@outlook.com                                                    #
+#  Homepage: https://github.com/hwfan                                            #
+#  Based on PaStaNet in CVPR'20                                                  #
+#  TF version:                                                                   #
+#  https://github.com/DirtyHarryLYL/HAKE-Action/tree/Instance-level-HAKE-Action  #
+##################################################################################
 import pickle
 from tqdm import tqdm
 import os
