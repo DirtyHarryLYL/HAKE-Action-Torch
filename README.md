@@ -10,7 +10,7 @@ Yong-Lu Li, Liang Xu, Xinpeng Liu, Xijie Huang, Yue Xu, Shiyi Wang, Hao-Shu Fang
 ### Pipeline: 
 Image/Video --> human detection + pose estimation --> body part boxes --> PaSta classification --> Action classification
 
-HAKE-A2V(image/frame, person box) = PaSta detection (93 classes) + Action classification (156 classes) + Action Vector (Visual & Language).
+HAKE-A2V (image/frame, person box) = PaSta detection (93 classes) + Action classification (156 classes) + Action Vector (Visual & Language).
 
 - Visual feature: based on human PaSta (Part States from [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf)) recognition, i.e., features from PaSta classifiers. 
 - Language feature: based on the recognized PaSta scores and the corresponding Bert features. 
