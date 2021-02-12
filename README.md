@@ -1,6 +1,11 @@
 # HAKE-Activity2Vec(A2V)
-General human activity feature extractor and human PaSta (part states) detector based on HAKE data, i.e., HAKE-A2V (Activity2Vec). 
+General human activity feature extractor and human PaSta (part states) detector based on HAKE data, based on PaStaNet (CVPR'20).
 It works like an ImageNet/COCO pre-trained backbone, which aims at extracting multi-modal activity representation for downstream tasks like VQA, captioning, clustering, etc. 
+
+### Paper
+PaStaNet: Toward Human Activity Knowledge Engine, [Project](http://hake-mvig.cn), [Paper](https://arxiv.org/abs/2004.00945), [Code-TF](https://github.com/DirtyHarryLYL/HAKE-Action), [Code-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch)
+
+Yong-Lu Li, Liang Xu, Xinpeng Liu, Xijie Huang, Yue Xu, Shiyi Wang, Hao-Shu Fang, Ze Ma, Mingyang Chen, Cewu Lu.
 
 ### Pipeline: 
 Image/Video --> human detection + pose estimation --> body part boxes --> PaSta classification --> Action classification
@@ -38,7 +43,7 @@ An official video demo is coming soon!
  To start your journey with Activity2Vec, please refer to [GETTING_STARTED.md](./GETTING_STARTED.md).
 
 ## Contributors
- This branch is contributed by Hongwei Fan ([@hwfan](https://github.com/hwfan)), Yong-Lu Li ([@DirtyHarryLYL](https://github.com/DirtyHarryLYL)), and Xinpeng Liu. Please contact them if there are any problems.
+ This branch is contributed by Hongwei Fan ([@hwfan](https://github.com/hwfan)), Xinpeng Liu, Yong-Lu Li ([@DirtyHarryLYL](https://github.com/DirtyHarryLYL)). Please contact them if there are any problems.
  
 ## Citation
  If you find our works useful, please consider citing:
