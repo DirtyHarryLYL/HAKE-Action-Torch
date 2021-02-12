@@ -1,9 +1,9 @@
 # HAKE-Activity2Vec(A2V)
-General human activity feature extractor and human PaSta (part states) detector based on HAKE data, based on PaStaNet (CVPR'20).
+General human activity feature extractor and human PaSta (part states) detector based on HAKE data.
 It works like an ImageNet/COCO pre-trained backbone, which aims at extracting multi-modal activity representation for downstream tasks like VQA, captioning, clustering, etc. 
 
 ### Paper
-PaStaNet: Toward Human Activity Knowledge Engine, [Project](http://hake-mvig.cn), [Paper](https://arxiv.org/abs/2004.00945), [Code-TF](https://github.com/DirtyHarryLYL/HAKE-Action), [Code-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch)
+PaStaNet: Toward Human Activity Knowledge Engine (CVPR'20), [Project](http://hake-mvig.cn), [Paper](https://arxiv.org/abs/2004.00945), [Code-TF](https://github.com/DirtyHarryLYL/HAKE-Action), [Code-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch)
 
 Yong-Lu Li, Liang Xu, Xinpeng Liu, Xijie Huang, Yue Xu, Shiyi Wang, Hao-Shu Fang, Ze Ma, Mingyang Chen, Cewu Lu.
 
