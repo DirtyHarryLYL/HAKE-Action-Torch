@@ -29,11 +29,11 @@ def im_detect(sess, net, image_id, db, image_path):
     holder   = np.zeros((info['boxes'].shape[0], 1))
     boxes    = np.concatenate([holder, info['boxes']], axis=1)
     blobs    = {}
-    H_boxes  = boxes[np.where(object_classes == 1)[0], :]
+    H_boxes  = boxes[np.where(object_classes == 1)[0], :] #选出class为1，为人的idx
     O_boxes  = boxes
     blobs['H_boxes'] = H_boxes
     blobs['O_boxes'] = O_boxes
-    blobs['H_num']   = tot
+    blobs['H_num']   = tot #图片中有多少人
     
     FH_all, FO_all = net.get_HO(sess, im_orig, blobs)
     return FH_all, FO_all
@@ -44,5 +44,5 @@ def test_net(sess, net, db, output_dir, image_path):
     for key in tqdm.tqdm(db.keys()):
         FH, FO = im_detect(sess, net, key, db, image_path)
         with h5py.File(output_dir + '/' + str(key) + '.h5', 'w') as f:
-            f['FH'] = FH
+            f['FH'] = FH 
             f['FO'] = FO
