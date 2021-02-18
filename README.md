@@ -22,8 +22,8 @@ More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) an
     <img src="demo/a2v-demo.gif", height="400">
 </p>
 
-
-#### Contents in demo [[Description]](https://drive.google.com/file/d/1iZ57hKjus2lKbv1MAB-TLFrChSoWGD5e/view?usp=sharing)
+## Full demo: [[YouTube]](https://t.co/hXiAYPXEuL?amp=1)
+#### Contents in demo, [[Description]](https://drive.google.com/file/d/1iZ57hKjus2lKbv1MAB-TLFrChSoWGD5e/view?usp=sharing)
 - human ID & box & skeleton
 - body part box & states
 - human actions
