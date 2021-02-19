@@ -22,7 +22,7 @@ More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) an
     <img src="demo/a2v-demo.gif", height="400">
 </p>
 
-## Full demo: [[YouTube]](https://t.co/hXiAYPXEuL?amp=1)
+## Full demo: [[YouTube]](https://t.co/hXiAYPXEuL?amp=1), [[bilibili]](https://www.bilibili.com/video/BV1s54y1Y76s)
 #### Contents in demo, [[Description]](https://drive.google.com/file/d/1iZ57hKjus2lKbv1MAB-TLFrChSoWGD5e/view?usp=sharing)
 - human ID & box & skeleton
 - body part box & states
