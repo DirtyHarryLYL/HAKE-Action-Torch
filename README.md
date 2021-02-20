@@ -2,7 +2,7 @@
 
 **Seven-in-One**: ECCV'18 (pairwise), CVPR'19 (interactiveness), CVPR'20 (Dj-RN), NeurIPS'20 (IDN), AAAI'21 (DIRV, DecAug), TPAMI(Extended TIN).
 
-AlphaHOI is a project to open the SOTA HOI detection works from our papers. Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/) and Xinpeng Liu.
+AlphaHOI is a project to open the SOTA HOI detection works based on our papers. Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/) and Xinpeng Liu.
 
 ## Papers
 - [Extended TIN](https://arxiv.org/abs/2101.10292) (TPAMI'21)
@@ -122,8 +122,8 @@ If you find our works useful, please consider citing:
 ```
 
 ## TODO
+- [ ] Unifed HOI model
 - [ ] TIN-based element analysis
-- [x] Refined Activity2Vec
 - [ ] Extended DJ-RN
 
 ## [HAKE](http://hake-mvig.cn/home/)
