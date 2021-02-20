@@ -1,44 +1,17 @@
-# HAKE-Action-Torch
+# AlphaHOI
 
-**Seven-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Extended TIN).
+**Seven-in-One**: ECCV'18 (pairwise), CVPR'19 (interactiveness), CVPR'20 (Dj-RN), NeurIPS'20 (IDN), AAAI'21 (DIRV, DecAug), TPAMI(Extended TIN).
 
-<p align='center'>
-    <img src="misc/hake_demo.jpg", height="300">
-</p>
-
-HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our six papers (CVPR'18/19/20, NeurIPS'20). The TensorFlow version of HAKE-Action is [here](https://github.com/DirtyHarryLYL/HAKE-Action).
-
-Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu and Zhanke Zhou, Hongwei Fan.
-
-#### **News**: (2021.2.7) Upgraded [HAKE-Activity2Vec](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec) is released! Images/Videos --> human box + ID + skeleton + part states + action + representation. [[Description]](https://drive.google.com/file/d/1iZ57hKjus2lKbv1MAB-TLFrChSoWGD5e/view?usp=sharing)
-<p align='center'>
-    <img src="https://github.com/DirtyHarryLYL/HAKE-Action-Torch/blob/Activity2Vec/demo/a2v-demo.gif", height="400">
-</p>
-
-## Full demo: [[YouTube]](https://t.co/hXiAYPXEuL?amp=1), [[bilibili]](https://www.bilibili.com/video/BV1s54y1Y76s)
-
-(2021.1.15) Our extended version of [TIN (Transferable Interactiveness Network)](https://arxiv.org/abs/2101.10292) is accepted by TPAMI!
-
-(2020.10.27) The code of [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) ([Paper](https://arxiv.org/abs/2010.16219)) in NeurIPS'20 is released!
-
-## Project
-```Branches
-HAKE-Action-Torch
-  ├──Master Branch                          # Unified pipeline; CVPR'18/20, PaStanet and Part States.
-  ├──IDN-(Integrating-Decomposing-Network)  # NeurIPS'20, HOI Analysis: Integrating and Decomposing Human-Object Interaction.
-  ├──DJ-RN-Torch                            # CVPR'20, Detailed 2D-3D Joint Representation for Human-Object Interaction.
-  ├──TIN-Torch                              # CVPR'19, Transferable Interactiveness Knowledge for Human-Object Interaction Detection.
-  └──SymNet-Torch                           # CVPR'20, Symmetry and Group in Attribute-Object Compositions.
-```
+AlphaHOI is a project to open the SOTA HOI detection works from our papers. Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/) and Xinpeng Liu.
 
 ## Papers
 - [Extended TIN](https://arxiv.org/abs/2101.10292) (TPAMI'21)
+- [DIRV](https://fang-haoshu.github.io/files/DIRV_paper.pdf) (AAAI'21)
+- [DecAug](https://fang-haoshu.github.io/files/DecAug_paper.pdf) (AAAI'21)
 - [IDN](https://arxiv.org/pdf/2010.16219.pdf) (NeurIPS'20)
-- [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) (CVPR'20)
 - [DJ-RN](https://arxiv.org/pdf/2004.08154.pdf) (CVPR'20)
-- [SymNet](https://arxiv.org/pdf/2004.00587.pdf) (CVPR'20)
 - [TIN](https://arxiv.org/pdf/1811.08264.pdf) (CVPR'19)
-- [Part States](http://ai.ucsd.edu/~haosu/papers/cvpr18_partstate.pdf) (CVPR'18)
+- [Pairwise](https://arxiv.org/pdf/1807.10889) (ECCV'18)
 
 ### Results on HICO-DET with different object detections.
 |Method| Detector |HAKE| Full(def) | Rare(def) | None-Rare(def)| Full(ko) | Rare(ko) | None-Rare(ko) |
@@ -48,6 +21,7 @@ HAKE-Action-Torch
 |TIN| COCO | HAKE-Large| 22.66 |21.17|23.09|24.53|23.00|24.99|
 |TIN-PAMI|COCO|-|20.93|18.95|21.32|23.02|20.96|23.42|
 |[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| COCO |-| 21.34|18.53|22.18|23.69|20.64|24.60|
+|DIRV|COCO+HICO-DET|-|21.78 |16.38| 23.39| 25.52| 20.84| 26.92|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO|-|23.36|22.47|23.63|26.43|25.01|26.85|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO+HICO-DET|-|26.29|22.61|27.39|28.24|24.47|29.37|
 |[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| GT Pairs |-|34.26|22.90 |37.65|-|-|-|
@@ -61,6 +35,7 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 |TIN| HAKE-Large | 51.0|
 |TIN-PAMI|-|49.1|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|-|53.3|
+|DIRV|-|56.1|
 
 ### Results on [Ambiguous-HOI](https://github.com/DirtyHarryLYL/DJ-RN).
 |Method| mAP |
@@ -76,46 +51,52 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 
 ## Modules
 
-### Unified Model
-Coming soon.
-
-### Activity2Vec (CVPR'20)
-The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
+### TIN (TPAMI'21)
+Independent Torch version: [TIN](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network)
 
 ### IDN (NeurIPS'20)
-The independent Torch version is in: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)).
+Independent Torch version: [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)).
+
+### DIRV (AAAI'21)
+Independent Torch version: [DIRV](https://github.com/MVIG-SJTU/DIRV)
 
 ### DJ-RN (CVPR'20)
-The independent Torch version is in: [DJ-RN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
+Independent Torch version: [DJ-RN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)
 
 ### TIN (CVPR'19)
-The independent Torch version is in: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
+Independent Torch version: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
-### SymNet (CVPR'20)
-Coming soon.
 
 ## Citation
 If you find our works useful, please consider citing:
 ```
+---TIN-PAMI
+@article{li2019transferable,
+  title={Transferable Interactiveness Knowledge for Human-Object Interaction Detection},
+  author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Huang, Xijie and Xu, Liang and Lu, Cewu},
+  journal={TPAMI},
+  year={2021}
+}
+---DIRV
+@inproceedings{fang2020dirv,
+  title={DIRV: Dense Interaction Region Voting for End-to-End Human-Object Interaction Detection},
+  author={Fang, Hao-Shu and Xie, Yichen and Shao, Dian and Lu, Cewu},
+  booktitle={AAAI},
+  year={2021}
+}
+---DecAug
+@inproceedings{fang2021decaug,
+  title={DecAug: Augmenting HOI Detection via Decomposition},
+  author={Fang, Hao-Shu and Xie, Yichen and Shao, Dian and Li, Yong-Lu and Lu, Cewu},
+  booktitle={AAAI},
+  year={2021}
+}
 ---IDN:
 @inproceedings{li2020hoi,
   title={HOI Analysis: Integrating and Decomposing Human-Object Interaction},
   author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Li, Yizhuo and Lu, Cewu},
   booktitle={NeurIPS},
   year={2020}
-}
----HAKE:
-@inproceedings{li2020pastanet,
-  title={PaStaNet: Toward Human Activity Knowledge Engine},
-  author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-Shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
-  booktitle={CVPR},
-  year={2020}
-}
-@inproceedings{lu2018beyond,
-  title={Beyond holistic object recognition: Enriching image understanding with part states},
-  author={Lu, Cewu and Su, Hao and Li, Yonglu and Lu, Yongyi and Yi, Li and Tang, Chi-Keung and Guibas, Leonidas J},
-  booktitle={CVPR},
-  year={2018}
 }
 ---DJ-RN
 @inproceedings{li2020detailed,
@@ -131,12 +112,12 @@ If you find our works useful, please consider citing:
   booktitle={CVPR},
   year={2019}
 }
----SymNet
-@inproceedings{li2020symmetry,
-  title={Symmetry and Group in Attribute-Object Compositions},
-  author={Li, Yong-Lu and Xu, Yue and Mao, Xiaohan and Lu, Cewu},
-  booktitle={CVPR},
-  year={2020}
+---Pairwise
+@inproceedings{fang2018pairwise,
+  title={Pairwise body-part attention for recognizing human-object interactions},
+  author={Fang, Hao-Shu and Cao, Jinkun and Tai, Yu-Wing and Lu, Cewu},
+  booktitle={ECCV},
+  year={2018}
 }
 ```
 
@@ -144,8 +125,6 @@ If you find our works useful, please consider citing:
 - [ ] TIN-based element analysis
 - [x] Refined Activity2Vec
 - [ ] Extended DJ-RN
-- [ ] SymNet in Torch
-- [ ] Unified model (better A2V, early/late fusion, new representation)
 
 ## [HAKE](http://hake-mvig.cn/home/)
 **HAKE**[[website]](http://hake-mvig.cn/home/) is a new large-scale knowledge base and engine for human activity understanding. HAKE provides elaborate and abundant **body part state** labels for active human instances in a large scale of images and videos. With HAKE, we boost the action understanding performance on widely-used human activity benchmarks. Now we are still enlarging and enriching it, and looking forward to working with outstanding researchers around the world on its applications and further improvements. If you have any pieces of advice or interests, please feel free to contact [Yong-Lu Li](https://dirtyharrylyl.github.io/) (yonglu_li@sjtu.edu.cn).
