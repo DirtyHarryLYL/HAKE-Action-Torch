@@ -53,15 +53,53 @@ Interactiveness Knowledge indicates whether human and object interact with each 
 
 ### Installation
 
-Coming soon.
+1.Clone this repository.
+
+```
+git clone https://github.com/AndrewZhou924/TIN.torch
+```
+
+2.Download dataset and setup evaluation and API. (The detection results (person and object boudning boxes) are collected from: iCAN: Instance-Centric Attention Network for Human-Object Interaction Detection [[website]](http://chengao.vision/iCAN/).)
+
+```
+chmod +x ./script/Dataset_download.sh 
+./script/Dataset_download.sh
+```
+
+3.Install Python dependencies.
+
+```
+pip install -r requirements.txt
+```
+
+If you have trouble installing requirements, try to update your pip or try to use conda/virtualenv.
 
 ### Training
 
-Coming soon.
+1.Train on HICO-DET dataset
+
+Train from scratch
+```
+python3 tools/train_HICO.py 
+```
+Continue training
+```
+python3 tools/train_HICO.py --train_continue 1 --weight {path_to_your_pretrained_model}
+```
 
 ### Testing
 
-Coming soon.
+1.Evaluation on HICO-DET dataset
+
+```
+python3 tools/test_HICO.py --weight {path_to_your_pretrained_model}
+```
+
+### Change Checkpoint from tensorflow to pytorch
+
+```
+python3 tools/changeTfWeightToPytorch.py --ckpt {path_to_your_tf_ckpt} --saveH5 True
+```
 
 ### Notes on training and Q&A
 
