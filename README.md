@@ -71,7 +71,7 @@ Independent Torch version: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Act
 
 ## Getting Started
 
-Current framework is based on enhanced TIN. More advanced mmodels are coming soon.
+Current framework is based on enhanced TIN. More advanced models are coming soon.
 
 ### Installation
 
