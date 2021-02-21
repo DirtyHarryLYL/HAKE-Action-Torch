@@ -4,6 +4,8 @@ AlphaHOI is a project to open the SOTA **HOI detection** works based on our pape
 
 **Seven-in-One**: ECCV'18 (pairwise), CVPR'19 (interactiveness), CVPR'20 (Dj-RN), NeurIPS'20 (IDN), AAAI'21 (DIRV, DecAug), TPAMI(Extended TIN). More advanced models would be merged into AlphaHOI framework.
 
+More code and models of HAKE can be found in this branch: [HAKE-Action-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch).
+
 ## Papers
 - [Extended TIN](https://arxiv.org/abs/2101.10292) (TPAMI'21)
 - [DIRV](https://fang-haoshu.github.io/files/DIRV_paper.pdf) (AAAI'21)
