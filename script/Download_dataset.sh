@@ -27,8 +27,8 @@ python script/Download_data.py 1ZqFi6v-3umwdPrilyZ9JxH5JjyOQvkkN data/feature/te
 python script/Download_data.py 1b8o561vNe0u1LZjRmVAC7XIlu9ttMUwH data/feature/test.7z.002
 
 apt install p7zip-full
-7z x data/Union_feat/test.7z.001 -r -o data/Union_feat/
-7z x data/feature/test.7z.001 -r -o data/feature/
+7z x data/Union_feat/test.7z.001 -r -odata/Union_feat/
+7z x data/feature/test.7z.001 -r -odata/feature/
 rm -rf data/Union_feat/test.7z.*
 rm -rf data/feature/test.7z.*
 
