@@ -1,6 +1,6 @@
 # others
 Data/
-matrix*.py
+matrix_sentence_76.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
