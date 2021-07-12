@@ -71,7 +71,8 @@ V-COCO is coming soon!
 
 ## Pre-trained models
 
-For HICO-DET: https://drive.google.com/file/d/19cRqSeRu3Svuc7TA7Zso_uj9F3DwW-zI/view?usp=sharing
+For HICO-DET: https://drive.google.com/file/d/15Ev-O4dyghxHw_O2jjri1kvyato5Mr8I/view?usp=sharing
+<!-- https://drive.google.com/file/d/19cRqSeRu3Svuc7TA7Zso_uj9F3DwW-zI/view?usp=sharing -->
 
 For V-COCO: Coming soon!
 
