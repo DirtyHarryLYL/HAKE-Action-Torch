@@ -8,7 +8,7 @@ For the downloading of HAKE dataset, please follow these steps:
   ln -s /some/data_dir Data
 ```
 
-2. Download the image [hake-large.tgz](https://1drv.ms/u/s!ArUVoRxpBphYgtVPpYBkJoJ1x6_HiQ?e=pWdrTY) and annotation [Trainval_HAKE.tgz](https://1drv.ms/u/s!ArUVoRxpBphYgtVN5AQc4LHFXEypDA?e=iNwhuW), [Test_pred_rcnn.tgz](https://1drv.ms/u/s!ArUVoRxpBphYgtVM-Sg05B5CgA7IeA?e=a4674G), [metadata.tar.gz](https://1drv.ms/u/s!ArUVoRxpBphYgtYP8dMretXKYIpWRw?e=JkjFpI) packages to Data folder, and extract the data from these packages:
+2. Download the image [hake-large.tgz](https://1drv.ms/u/s!ArUVoRxpBphYgtVPpYBkJoJ1x6_HiQ?e=pWdrTY) and annotation [Trainval_HAKE.tgz](https://1drv.ms/u/s!ArUVoRxpBphYgtVN5AQc4LHFXEypDA?e=iNwhuW), [Test_pred_rcnn.tgz](https://1drv.ms/u/s!ArUVoRxpBphYgtVM-Sg05B5CgA7IeA?e=a4674G), [metadata.tar.gz](https://1drv.ms/u/s!ArUVoRxpBphYgtpRmg6ZfuKQ3IWrTA?e=gzFDBB) packages to Data folder, and extract the data from these packages:
 ```
 ls *.* | xargs -n1 tar xzvf
 rm *.tgz && rm *.tar.gz && cd ..
