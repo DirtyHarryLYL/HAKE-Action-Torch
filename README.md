@@ -28,8 +28,6 @@ More details can be found in [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) an
 - body part box & states
 - human actions
 
-An official video demo is coming soon!
-
 ## Installation
  To install the overall framework of Activity2Vec, please follow [INSTALL.md](./INSTALL.md).
 
