@@ -76,6 +76,10 @@ If you have trouble installing requirements, try to update your pip or try to us
 
 4.Download the currently best [weight](https://sjtueducn-my.sharepoint.com/:u:/g/personal/douyiming_sjtu_edu_cn/Efx-ju3Q6R1MtfcF1Wzmev4BqedjGjXJpyyclr2mNDDCkg?e=5t0eiW).
 
+The weight file is transformed from Tensorflow to PyTorch.
+
+The result is 16.47, which is slightly lower than the original score.
+
 ### Training
 
 1.Train on HICO-DET dataset
