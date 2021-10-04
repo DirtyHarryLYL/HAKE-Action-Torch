@@ -95,6 +95,18 @@ python3 tools/train_HICO.py --train_continue 1 --weight {path_to_your_pretrained
 python3 tools/test_HICO.py --weight {path_to_your_pretrained_model}
 ```
 
+2.Evaluation on HICO-DET dataset using boxes from Peyre
+
+```
+python3 tools/test_HICO_PeyreWithCandidate.py --weight {path_to_your_pretrained_model}
+```
+
+1.Evaluation on HICO-DET dataset using boxes from VCL
+
+```
+python3 tools/test_HICO_VCL.py --weight {path_to_your_pretrained_model}
+```
+
 ### Change Checkpoint from tensorflow to pytorch
 
 ```
