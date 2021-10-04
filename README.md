@@ -74,7 +74,7 @@ pip install -r requirements.txt
 
 If you have trouble installing requirements, try to update your pip or try to use conda/virtualenv.
 
-4.Download the currently best [weight](https://sjtueducn-my.sharepoint.com/:u:/g/personal/douyiming_sjtu_edu_cn/Efx-ju3Q6R1MtfcF1Wzmev4BqedjGjXJpyyclr2mNDDCkg?e=5t0eiW).
+4.Download the currently best [weight](https://sjtueducn-my.sharepoint.com/:u:/g/personal/douyiming_sjtu_edu_cn/Efx-ju3Q6R1MtfcF1Wzmev4BqedjGjXJpyyclr2mNDDCkg?e=5t0eiW) in PyTorch.
 
 The weight file is transformed from Tensorflow to PyTorch.
 
