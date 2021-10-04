@@ -74,6 +74,8 @@ pip install -r requirements.txt
 
 If you have trouble installing requirements, try to update your pip or try to use conda/virtualenv.
 
+4.Download the currently best [weight](https://sjtueducn-my.sharepoint.com/:u:/g/personal/douyiming_sjtu_edu_cn/Efx-ju3Q6R1MtfcF1Wzmev4BqedjGjXJpyyclr2mNDDCkg?e=5t0eiW).
+
 ### Training
 
 1.Train on HICO-DET dataset
@@ -101,7 +103,7 @@ python3 tools/test_HICO.py --weight {path_to_your_pretrained_model}
 python3 tools/test_HICO_PeyreWithCandidate.py --weight {path_to_your_pretrained_model}
 ```
 
-1.Evaluation on HICO-DET dataset using boxes from VCL
+3.Evaluation on HICO-DET dataset using boxes from VCL
 
 ```
 python3 tools/test_HICO_VCL.py --weight {path_to_your_pretrained_model}
