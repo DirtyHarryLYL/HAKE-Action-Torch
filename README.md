@@ -1,6 +1,6 @@
 # HAKE-Action-Torch
 
-**Seven-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Extended TIN).
+**Eight-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Extended TIN, SymNet).
 
 <p align='center'>
     <img src="misc/hake_demo.jpg", height="300">
@@ -10,7 +10,9 @@ HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understandi
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, and Hongwei Fan.
 
-#### **News**: (2021.2.7) Upgraded [HAKE-Activity2Vec](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec) is released! Images/Videos --> human box + ID + skeleton + part states + action + representation. [[Description]](https://drive.google.com/file/d/1iZ57hKjus2lKbv1MAB-TLFrChSoWGD5e/view?usp=sharing)
+#### **News**: (2021.10.06) Our extended version of [SymNet](https://github.com/DirtyHarryLYL/SymNet) is accepted by TPAMI! Paper and code are coming soon.
+
+(2021.2.7) Upgraded [HAKE-Activity2Vec](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec) is released! Images/Videos --> human box + ID + skeleton + part states + action + representation. [[Description]](https://drive.google.com/file/d/1iZ57hKjus2lKbv1MAB-TLFrChSoWGD5e/view?usp=sharing)
 <p align='center'>
     <img src="https://github.com/DirtyHarryLYL/HAKE-Action-Torch/blob/Activity2Vec/demo/a2v-demo.gif", height="400">
 </p>
@@ -32,6 +34,7 @@ HAKE-Action-Torch
 ```
 
 ## Papers
+- [Extended SymNet]()(TPAMI'21)
 - [Extended TIN](https://arxiv.org/abs/2101.10292) (TPAMI'21)
 - [IDN](https://arxiv.org/pdf/2010.16219.pdf) (NeurIPS'20)
 - [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) (CVPR'20)
@@ -97,6 +100,20 @@ Coming soon.
 ## Citation
 If you find our works useful, please consider citing:
 ```
+---SymNet-PAMI
+@article{li2021learning,
+  title={Learning Single/Multi-Attribute of Object with Symmetry and Group},
+  author={Li, Yong-Lu and Xu, Yue and Xu, Xinyu and Mao, Xiaohan and Lu, Cewu},
+  journal={TPAMI},
+  year={2021}
+}
+---TIN-PAMI
+@article{li2021transferable,
+  title={Transferable Interactiveness Knowledge for Human-Object Interaction Detection},
+  author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Huang, Xijie and Xu, Liang and Lu, Cewu},
+  journal={TPAMI},
+  year={2021}
+}
 ---IDN:
 @inproceedings{li2020hoi,
   title={HOI Analysis: Integrating and Decomposing Human-Object Interaction},
