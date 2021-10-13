@@ -34,7 +34,7 @@ HAKE-Action-Torch
 ```
 
 ## Papers
-- [Extended SymNet]()(TPAMI'21)
+- [Extended SymNet](https://arxiv.org/abs/2110.04603)(TPAMI'21)
 - [Extended TIN](https://arxiv.org/abs/2101.10292) (TPAMI'21)
 - [IDN](https://arxiv.org/pdf/2010.16219.pdf) (NeurIPS'20)
 - [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) (CVPR'20)
