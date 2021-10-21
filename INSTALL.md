@@ -17,6 +17,7 @@
  cd HAKE-Action-Torch && git checkout Activity2Vec
  pip install -r requirements.txt
  pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
+ sudo apt install -y libturbojpeg libturbojpeg-dev
  ```
 
  ### 3. Setup AlphaPose and Activity2Vec
