@@ -76,6 +76,11 @@ If you have trouble installing requirements, try to update your pip or try to us
 
 4.Download the currently best [weight](https://sjtueducn-my.sharepoint.com/:u:/g/personal/douyiming_sjtu_edu_cn/Efx-ju3Q6R1MtfcF1Wzmev4BqedjGjXJpyyclr2mNDDCkg?e=5t0eiW) in PyTorch.
 
+Please pay attention that if you are using the Linux operating system, you should execute the download script to download the weight by the following code:
+```
+bash download_weight.sh
+```
+
 The weight file is transformed from Tensorflow to PyTorch.
 
 The result is 16.47, which is slightly lower than the original score.
