@@ -79,8 +79,8 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 
 ## Modules
 
-### Unified Model
-Coming soon.
+<!-- ### Unified Model
+Coming soon. -->
 
 ### Activity2Vec (CVPR'20)
 The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
