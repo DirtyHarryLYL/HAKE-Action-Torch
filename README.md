@@ -1,6 +1,6 @@
 # HAKE-Action-Torch
 
-**Eight-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Extended TIN, SymNet).
+**Eight-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Upgraded TIN, Upgraded SymNet).
 
 <p align='center'>
     <img src="misc/hake_demo.jpg", height="300">
