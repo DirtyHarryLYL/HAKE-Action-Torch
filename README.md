@@ -74,7 +74,7 @@ V-COCO is coming soon!
 For HICO-DET: https://drive.google.com/file/d/15Ev-O4dyghxHw_O2jjri1kvyato5Mr8I/view?usp=sharing
 <!-- https://drive.google.com/file/d/19cRqSeRu3Svuc7TA7Zso_uj9F3DwW-zI/view?usp=sharing -->
 
-For V-COCO: Coming soon!
+For V-COCO: https://drive.google.com/file/d/1rEIKMrFTQOAmk8el_ufVhtRlDrN0FU37/view?usp=sharing
 
 ## Results
 
@@ -109,7 +109,7 @@ Thus, you could also use the Sigmoid cross-entropy loss only. Most of the time, 
 
 ## TODOS
 - [x] Using different object detections (COCO, COCO+HICO-DET, GT H-O pairs) in testing
-- [ ] VCOCO model
+- [x] VCOCO model
 - [ ] Intermediate pre-trained models
 
 ## Contributing
