@@ -1,0 +1,81 @@
+MODE: DECOUPLER # Which model to train
+
+TRAIN:
+  DATA_DIR: data
+  DATASET:
+    NUM_NEG: 8
+    BATCH_SIZE: 15
+    NUM_WORKERS: 8
+    SAMPLER_NAME: "priority_object"
+    JITTERING: True
+  MAX_EPOCH: 200
+  OPTIMIZER:
+    TYPE: SGD
+    lr: 2e-2 # 1e-3 # finetune-decoupler
+    # lr: 1e-3 # 1e-3 # finetune-decoupler
+    momentum: 0.9
+    weight_decay: 1e-7
+    alpha: 0.99
+    eps: 1e-8
+  
+TEST:
+  BATCH_SIZE: 135
+  NUM_WORKERS: 8
+  DATA_DIR: 
+  HUMAN_THRE: 0.6
+  OBJ_THRE: 0.3
+
+MODEL:
+  AE:
+    BIN: True
+    BIN_LOSS_MODE: 2
+    BIN_FAC: 0.2
+    CHECKPOINT: 
+    BN: True
+    DROPOUT:
+    SPATIAL:
+      LAYER_SIZE: [8, 256, 512] # The first number is the input size
+    ENCODER:
+      LAYER_SIZE: [4608, 2048, 512] # The first number is the input size
+    LOSS:
+      RECONSTRUCTION_FAC: 0.4
+      CLASSIFICATION_FAC: 1.0
+    NUM_CLASSES: 29
+  DECOUPLER:
+    CHECKPOINT: # Which checkpoint to finetune. The other configuration under MODEL.DECOUPLER must be the same. Overwrites the parameters loaded from MODEL.AE.CHECKPOINT
+    NAME: 'Transformer'
+    PROJ: False
+    REVERSE: False
+    REVERSE_FAC: 0.5
+    LAYER_SIZE: [512, 512]
+    NUM_CLASSES: 29
+    CLASSIFICATION_FAC: 1.0
+    AUTOENCODER_FAC: 0.1
+    BINARY: True
+    BINARY_FAC: 0.2
+  SAE_H:
+    BN: True
+    DROPOUT:
+    SPATIAL:
+      LAYER_SIZE: [8, 16, 32] # The first number is the input size
+    ENCODER:
+      LAYER_SIZE: [2080, 1024, 768, 512] # The first number is the input size
+    LOSS:
+      RECONSTRUCTION_FAC: 0.1
+      CLASSIFICATION_FAC: 1.0
+    NUM_CLASSES: 29
+    KEY: ['sub_vec', 'labels_s']
+  SAE_O:
+    BN: True
+    DROPOUT: 
+    SPATIAL:
+      LAYER_SIZE: [8, 16, 32] # The first number is the input size
+    ENCODER:
+      LAYER_SIZE: [2080, 1024, 768, 512] # The first number is the input size
+    LOSS:
+      RECONSTRUCTION_FAC: 0.1
+      CLASSIFICATION_FAC: 1.0
+    NUM_CLASSES: 29
+    KEY: ['obj_vec', 'labels_ro']
+
+  
