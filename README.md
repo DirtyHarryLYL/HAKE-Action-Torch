@@ -104,7 +104,7 @@ Our model achieves the following performance on :
 1. Sometimes the hinge loss (semi-hard) is tricky and hard to tune (e.g., exploding pointed in [issue-16](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/issues/16#issue-752809776)), as it is sensitive to the samples in a mini-banch. 
 Thus, you could also use the Sigmoid cross-entropy loss only. Most of the time, this policy also works good and can achieve performance similar to the well-modulated model with the hinge loss.
 
-2. We will provide the pre-trained models of AE and other modules recently. Thus, users can start from different training phrases for convenience.
+2. We provide the pre-trained models of AE and other modules in [this link](https://drive.google.com/file/d/15ZW1Jy7YnCbKqZv4Rh-Wn8qIMdVgXv5C/view?usp=sharing). Thus, users can start from different training phrases for convenience.
 
 3. Sometimes, during training, the GPU utilization maybe very low, this may due to the heavy IO for loading pre-extracted features. So we suggest that you could put these features in SSD to accelate the IO. Then the training would be 10-20 times faster. And the larger batch and multi-gpu training would be possible. Starting from inputting images is also OK, as a result, a batch may be hard to contain multiple humans/obejcts from different images and thus degrade the performance.
 
@@ -113,7 +113,7 @@ Thus, you could also use the Sigmoid cross-entropy loss only. Most of the time, 
 ## TODOS
 - [x] Using different object detections (COCO, COCO+HICO-DET, GT H-O pairs) in testing
 - [x] VCOCO model
-- [ ] Intermediate pre-trained models
+- [x] Intermediate pre-trained models
 
 ## Contributing
 
