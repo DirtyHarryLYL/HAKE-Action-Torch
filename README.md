@@ -67,7 +67,10 @@ python eval.py --config_path configs/eval_hico_drg.yml --exp eval_hico_drg
 python get_map.py --exp eval_hico_drg
 ```
 
-V-COCO is coming soon!
+For V-COCO:
+```
+python eval.py --config_path configs/VCOCO_decouple.yml --exp vcoco
+```
 
 ## Pre-trained models
 
