@@ -10,7 +10,7 @@ HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understandi
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, and Hongwei Fan.
 
-#### **News**: (2022.02.14) We release the human body part state labels based on AVA: [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA).
+#### **News**: (2022.02.14) We release the human body part state labels based on AVA: [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA) and [HAKE 2.0 paper](https://arxiv.org/abs/2202.06851).
 
 (2021.10.06) Our extended version of [SymNet](https://github.com/DirtyHarryLYL/SymNet) is accepted by TPAMI! Paper and code are coming soon.
 
@@ -36,6 +36,7 @@ HAKE-Action-Torch
 ```
 
 ## Papers
+- [HAKE 2.0](https://arxiv.org/abs/2202.06851)
 - [Extended SymNet](https://arxiv.org/abs/2110.04603)(TPAMI'21)
 - [Extended TIN](https://arxiv.org/abs/2101.10292) (TPAMI'21)
 - [IDN](https://arxiv.org/pdf/2010.16219.pdf) (NeurIPS'20)
@@ -102,6 +103,15 @@ Coming soon.
 ## Citation
 If you find our works useful, please consider citing:
 ```
+---HAKE 2.0
+@misc{li2022hake,
+  title={HAKE: A Knowledge Engine Foundation for Human Activity Understanding}, 
+  author={Yong-Lu Li and Xinpeng Liu and Xiaoqian Wu and Yizhuo Li and Zuoyu Qiu and Liang Xu and Yue Xu and Hao-Shu Fang and Cewu Lu},
+  year={2022},
+  eprint={2202.06851},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV}
+}
 ---SymNet-PAMI
 @article{li2021learning,
   title={Learning Single/Multi-Attribute of Object with Symmetry and Group},
@@ -162,8 +172,8 @@ If you find our works useful, please consider citing:
 ## TODO
 <!-- - [ ] TIN-based element analysis -->
 - [x] Refined Activity2Vec
-- [ ] Extended DJ-RN
-- [ ] SymNet in Torch
+<!-- - [ ] Extended DJ-RN
+- [ ] SymNet in Torch -->
 <!-- - [ ] Unified model (better A2V, early/late fusion, new representation) -->
 
 ## [HAKE](http://hake-mvig.cn/home/)
