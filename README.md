@@ -1,16 +1,18 @@
 # HAKE-Action-Torch
 
-**Eight-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Upgraded TIN, Upgraded SymNet).
+**Ten-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Upgraded TIN, Upgraded SymNet), CVPR'22 (Interactiveness Field), AAAI'22 (mPD).
 
 <p align='center'>
     <img src="misc/hake_demo.jpg", height="300">
 </p>
 
-HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our related papers (CVPR'18/19/20, NeurIPS'20, PAMI'21). The TensorFlow version of HAKE-Action is [here](https://github.com/DirtyHarryLYL/HAKE-Action).
+HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our related papers (CVPR'18/19/20/22, NeurIPS'20, PAMI'21, AAAI'22). The TensorFlow version of HAKE-Action is [here](https://github.com/DirtyHarryLYL/HAKE-Action).
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, and Hongwei Fan.
 
-#### **News**: (2022.02.14) We release the human body part state labels based on AVA: [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA) and [HAKE 2.0 paper](https://arxiv.org/abs/2202.06851).
+#### **News**: (2022.04.23) Two new works on HOI learning are releassed! [Interactiveness Field](https://arxiv.org/abs/2204.07718) (CVPR'22) and a new HOI metric [mPD](https://arxiv.org/abs/2202.09492) (AAAI'22).
+
+(2022.02.14) We release the human body part state labels based on AVA: [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA) and [HAKE 2.0 paper](https://arxiv.org/abs/2202.06851).
 
 (2021.10.06) Our extended version of [SymNet](https://github.com/DirtyHarryLYL/SymNet) is accepted by TPAMI! Paper and code are coming soon.
 
@@ -37,7 +39,9 @@ HAKE-Action-Torch
 
 ## Papers
 - [HAKE 2.0](https://arxiv.org/abs/2202.06851)
-- [Extended SymNet](https://arxiv.org/abs/2110.04603)(TPAMI'21)
+- [Interactiveness Field](https://arxiv.org/abs/2204.07718) (CVPR'22)
+- [mPD](https://arxiv.org/abs/2202.09492) (AAAI'22)
+- [Extended SymNet](https://arxiv.org/abs/2110.04603) (TPAMI'21)
 - [Extended TIN](https://arxiv.org/abs/2101.10292) (TPAMI'21)
 - [IDN](https://arxiv.org/pdf/2010.16219.pdf) (NeurIPS'20)
 - [PaStaNet](https://arxiv.org/pdf/2004.00945.pdf) (CVPR'20)
@@ -56,6 +60,7 @@ HAKE-Action-Torch
 |[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| COCO |-| 21.34|18.53|22.18|23.69|20.64|24.60|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO|-|23.36|22.47|23.63|26.43|25.01|26.85|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO+HICO-DET|-|26.29|22.61|27.39|28.24|24.47|29.37|
+|[IF](https://github.com/Foruck/Interactiveness-Field)|COCO+HICO-DET|33.51	|30.30|	34.46|	36.28|	33.16|
 |[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| GT Pairs |-|34.26|22.90 |37.65|-|-|-|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|GT Pairs|-|43.98|40.27|45.09|-|-|-|
 
@@ -67,6 +72,7 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 |TIN| HAKE-Large | 51.0|
 |TIN-PAMI|-|49.1|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|-|53.3|
+|[IF](https://github.com/Foruck/Interactiveness-Field)|-|63.0|
 
 ### Results on [Ambiguous-HOI](https://github.com/DirtyHarryLYL/DJ-RN).
 |Method| mAP |
@@ -84,6 +90,12 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 
 <!-- ### Unified Model
 Coming soon. -->
+
+### IF (CVPR'22)
+The independent Torch version is in: [IF](https://github.com/Foruck/Interactiveness-Field).
+
+### mPD (AAAI'22)
+The independent Torch version is in: [mPD](https://github.com/Foruck/OC-Immunity).
 
 ### Activity2Vec (CVPR'20)
 The independent Torch version is in: [Activity2Vec (A2V)](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec).
@@ -112,6 +124,20 @@ If you find our works useful, please consider citing:
   archivePrefix={arXiv},
   primaryClass={cs.CV}
 }
+---IF
+@inproceedings{liu2022interactiveness,
+  title={Interactiveness Field in Human-Object Interactions},
+  author={Liu, Xinpeng and Li, Yong-Lu and Wu, Xiaoqian and Tai, Yu-Wing and Lu, Cewu and Tang, Chi-Keung},
+  booktitle={CVPR},
+  year={2022}
+}
+---mPD
+@inproceedings{liu2022highlighting,
+  title={Highlighting Object Category Immunity for the Generalization of Human-Object Interaction Detection},
+  author={Liu, Xinpeng and Li, Yong-Lu and Lu, Cewu},
+  booktitle={AAAI},
+  year={2022}
+}
 ---SymNet-PAMI
 @article{li2021learning,
   title={Learning Single/Multi-Attribute of Object with Symmetry and Group},
@@ -126,7 +152,7 @@ If you find our works useful, please consider citing:
   journal={TPAMI},
   year={2021}
 }
----IDN:
+---IDN
 @inproceedings{li2020hoi,
   title={HOI Analysis: Integrating and Decomposing Human-Object Interaction},
   author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Li, Yizhuo and Lu, Cewu},
