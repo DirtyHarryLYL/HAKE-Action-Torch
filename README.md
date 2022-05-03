@@ -89,7 +89,6 @@ Our model achieves the following performance on :
 | :-:    |:-:| :-: |:-:|:-:|:-:|:-:|
 | IDN (COCO Detector)   | 23.36 | 22.47 | 23.63 | 26.43 | 25.01 | 26.85 |
 | IDN (HICO-DET Detector from VCL)   |24.58 | 20.33|25.86|27.89 | 23.64| 29.16|
-| IDN (HICO-DET Detector from DRG)   |26.29 | 22.61|27.39|28.24 | 24.47| 29.37|
 | IDN (GT Detection)    |43.98 | 40.27 | 45.09 | - | - | - |
 
 
