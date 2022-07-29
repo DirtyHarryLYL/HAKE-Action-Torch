@@ -1,16 +1,18 @@
 # HAKE-Action-Torch
 
-**Ten-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Upgraded TIN, Upgraded SymNet), CVPR'22 (Interactiveness Field), AAAI'22 (mPD).
+**Eleven-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Upgraded TIN, Upgraded SymNet), CVPR'22 (Interactiveness Field), AAAI'22 (mPD), ECCV'22 (PartMap).
 
 <p align='center'>
     <img src="misc/hake_demo.jpg", height="300">
 </p>
 
-HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our related papers (CVPR'18/19/20/22, NeurIPS'20, PAMI'21, AAAI'22). The TensorFlow version of HAKE-Action is [here](https://github.com/DirtyHarryLYL/HAKE-Action).
+HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our related papers (CVPR'18/19/20/22, NeurIPS'20, PAMI'21, AAAI'22, ECCV'22). The TensorFlow version of HAKE-Action is [here](https://github.com/DirtyHarryLYL/HAKE-Action).
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, and Hongwei Fan.
 
-#### **News**: (2022.04.23) Two new works on HOI learning are releassed! [Interactiveness Field](https://arxiv.org/abs/2204.07718) (CVPR'22) and a new HOI metric [mPD](https://arxiv.org/abs/2202.09492) (AAAI'22).
+#### **News**: (2022.07.29) Our new work PartMap (ECCV'22) is released! [Paper](https://github.com/enlighten0707/Body-Part-Map-for-Interactiveness/blob/main), [Code](https://github.com/DirtyHarryLYL/HAKE-Action-Torch)
+
+(2022.04.23) Two new works on HOI learning are releassed! [Interactiveness Field](https://arxiv.org/abs/2204.07718) (CVPR'22) and a new HOI metric [mPD](https://arxiv.org/abs/2202.09492) (AAAI'22).
 
 (2022.02.14) We release the human body part state labels based on AVA: [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA) and [HAKE 2.0 paper](https://arxiv.org/abs/2202.06851).
 
@@ -39,6 +41,7 @@ HAKE-Action-Torch
 
 ## Papers
 - [HAKE 2.0](https://arxiv.org/abs/2202.06851)
+- [PartMap](https://arxiv.org/abs/2207.14192) (ECCV'22)
 - [Interactiveness Field](https://arxiv.org/abs/2204.07718) (CVPR'22)
 - [mPD](https://arxiv.org/abs/2202.09492) (AAAI'22)
 - [Extended SymNet](https://arxiv.org/abs/2110.04603) (TPAMI'21)
@@ -60,7 +63,8 @@ HAKE-Action-Torch
 |[DJ-RN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/DJ-RN-Torch)| COCO |-| 21.34|18.53|22.18|23.69|20.64|24.60|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO|-|23.36|22.47|23.63|26.43|25.01|26.85|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|COCO+HICO-DET|-|26.29|22.61|27.39|28.24|24.47|29.37|
-|[IF](https://github.com/Foruck/Interactiveness-Field)|COCO+HICO-DET|33.51	|30.30|	34.46|	36.28|	33.16|
+|[IF](https://github.com/Foruck/Interactiveness-Field)|COCO+HICO-DET|-| 33.51	|30.30|	34.46|	36.28|	33.16|
+|[ParMap](https://github.com/enlighten0707/Body-Part-Map-for-Interactiveness)|COCO+HICO-DET|-| 35.15 |33.71| 35.58| 37.56| 35.87| 38.06|
 |[TIN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)| GT Pairs |-|34.26|22.90 |37.65|-|-|-|
 |[IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network))|GT Pairs|-|43.98|40.27|45.09|-|-|-|
 
@@ -90,6 +94,9 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 
 <!-- ### Unified Model
 Coming soon. -->
+
+### PartMap (ECCV'22)
+The independent Torch version is in: [PartMap](https://github.com/enlighten0707/Body-Part-Map-for-Interactiveness)
 
 ### IF (CVPR'22)
 The independent Torch version is in: [IF](https://github.com/Foruck/Interactiveness-Field).
@@ -123,6 +130,13 @@ If you find our works useful, please consider citing:
   eprint={2202.06851},
   archivePrefix={arXiv},
   primaryClass={cs.CV}
+}
+---PartMap
+@inproceedings{wu2022mining,
+  title={Mining Cross-Person Cues for Body-Part Interactiveness Learning in HOI Detection},
+  author={Xiaoqian Wu, Yong-Lu Li, Xinpeng Liu, Junyi Zhang, Yuzhe Wu, Cewu Lu},
+  booktitle={ECCV},
+  year={2022}
 }
 ---IF
 @inproceedings{liu2022interactiveness,
