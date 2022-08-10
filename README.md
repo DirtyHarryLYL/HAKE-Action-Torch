@@ -160,11 +160,11 @@ If you find our works useful, please consider citing:
   year={2021}
 }
 ---TIN-PAMI
-@article{li2021transferable,
+@article{li2022transferable,
   title={Transferable Interactiveness Knowledge for Human-Object Interaction Detection},
   author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Huang, Xijie and Xu, Liang and Lu, Cewu},
   journal={TPAMI},
-  year={2021}
+  year={2022}
 }
 ---IDN
 @inproceedings{li2020hoi,
