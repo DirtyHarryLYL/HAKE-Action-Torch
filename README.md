@@ -35,6 +35,7 @@ Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), 
 ```Branches
 HAKE-Action-Torch
   ├──Master Branch                          # Unified pipeline; CVPR'18/20, PaStanet and Part States.
+  ├──CLIP-Activity2Vec                      # CLIP-based Part State & Verb Recognizer.
   ├──IDN-(Integrating-Decomposing-Network)  # NeurIPS'20, HOI Analysis: Integrating and Decomposing Human-Object Interaction.
   ├──DJ-RN-Torch                            # CVPR'20, Detailed 2D-3D Joint Representation for Human-Object Interaction.
   ├──TIN-Torch                              # CVPR'19, Transferable Interactiveness Knowledge for Human-Object Interaction Detection.
