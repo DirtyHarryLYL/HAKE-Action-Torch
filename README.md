@@ -42,6 +42,7 @@ HAKE-Action-Torch
 ```
 
 ## Papers
+- [DIO](https://arxiv.org/abs/2211.07501)
 - [HAKE 2.0](https://arxiv.org/abs/2202.06851)
 - [PartMap](https://arxiv.org/abs/2207.14192) (ECCV'22)
 - [Interactiveness Field](https://arxiv.org/abs/2204.07718) (CVPR'22)
@@ -93,9 +94,6 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 
 
 ## Modules
-
-<!-- ### Unified Model
-Coming soon. -->
 
 ### PartMap (ECCV'22)
 The independent Torch version is in: [PartMap](https://github.com/enlighten0707/Body-Part-Map-for-Interactiveness)
