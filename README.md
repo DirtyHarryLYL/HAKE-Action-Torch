@@ -41,7 +41,7 @@ PaStaNetCLIP
 3. Download [annotations](https://pan.baidu.com/s/1pO_Ohf0uNP2_P_WUEt9hYQ?pwd=qnhd) and put them under **$PROJECT/data/hake** folder.
 
 
-4. Download the CLIP pretrained model from [Baidu Pan](https://pan.baidu.com/s/1sfrzvEreatblK_2zcD3oVg?pwd=84ks) or [Google Drive](https://drive.google.com/drive/folders/1UinM-mz38Pn2ym3LGGL0y7aLBhRXXRWN?usp=sharing) and put it in **$PROJECT/pretrained/clip**.
+4. Download the CLIP pretrained model from [Baidu Pan](https://pan.baidu.com/s/1sfrzvEreatblK_2zcD3oVg?pwd=84ks) or [Google Drive](https://drive.google.com/drive/folders/1UinM-mz38Pn2ym3LGGL0y7aLBhRXXRWN?usp=sharing) (ViT-B-16.new.pt: CLIP pre-trianed model, ckpt_4.pth: finetuned model on HAKE data) and put it in **$PROJECT/pretrained/clip**.
 
 
 # Pretrained Model
