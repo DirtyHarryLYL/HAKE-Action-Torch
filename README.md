@@ -1,5 +1,7 @@
-**CLIP-Activity2Vec**: Image-Level PaStaNet with CLIP-pretrain
+**CLIP-Activity2Vec**: Image-Level PaStaNet with CLIP
 ========
+
+We build a CLIP-based Activity2Vec model to use the power of CLIP. Based on the CLIP pre-trained model, we finetune it on our HAKE data with the human body part state (PaSta) labels. Thus, this model would estimate all the existing PaSta within the whole image (like the visualizations below). We believe it would be useful for action understanding as a more powerful image action semantic extractor. If you have any advice, feel free to drop us an email!
 
 <div class="center"><img src="./images/im1.jpg"></div>
 
