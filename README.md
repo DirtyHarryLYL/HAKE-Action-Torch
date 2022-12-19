@@ -123,11 +123,11 @@ The independent Torch version is in: [TIN-Torch](https://github.com/DirtyHarryLY
 If you find our works useful, please consider citing:
 ```
 ---HAKE 2.0
-    @article{li2022hake,
+    @article{li2023hake,
      title={HAKE: A Knowledge Engine Foundation for Human Activity Understanding},
     author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Li, Yizhuo and Qiu, Zuoyu and Xu, Liang and Xu, Yue and Fang, Hao-Shu and Lu, Cewu},
     journal={TPAMI},
-    year={2022}
+    year={2023}
     }
 ---PartMap
 @inproceedings{wu2022mining,
