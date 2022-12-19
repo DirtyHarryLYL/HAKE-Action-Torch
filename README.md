@@ -1,16 +1,18 @@
 # HAKE-Action-Torch
 
-**Eleven-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI(Upgraded TIN, Upgraded SymNet), CVPR'22 (Interactiveness Field), AAAI'22 (mPD), ECCV'22 (PartMap).
+**Twelve-in-One**: CVPR'18 (Part States), CVPR'19 (interactiveness), CVPR'20 (PaStaNet, Dj-RN, SymNet), NeurIPS'20 (IDN), TPAMI (TIN++, SymNet++, HAKE 2.0), CVPR'22 (Interactiveness Field), AAAI'22 (mPD), ECCV'22 (PartMap).
 
 <p align='center'>
     <img src="misc/hake_demo.jpg", height="300">
 </p>
 
-HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our related papers (CVPR'18/19/20/22, NeurIPS'20, PAMI'21, AAAI'22, ECCV'22). The TensorFlow version of HAKE-Action is [here](https://github.com/DirtyHarryLYL/HAKE-Action).
+HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understanding studies based on our project: [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes SOTA models and their corresponding HAKE-enhanced versions based on our related papers (CVPR'18/19/20/22, NeurIPS'20, TPAMI'21/22, AAAI'22, ECCV'22). The TensorFlow version of HAKE-Action is [here](https://github.com/DirtyHarryLYL/HAKE-Action).
 
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, and Hongwei Fan.
 
-#### **News**: (2022.11.19) We release the interactive object bounding boxes & classes in the interactions within AVA dataset (2.1 & 2.2)! [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA), [[Paper]](https://arxiv.org/abs/2211.07501). BTW, we also release a CLIP-based human body part states recognizer in [CLIP-Activity2Vec](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/CLIP-Activity2Vec)!
+#### **News**: (2022.12.19) HAKE 2.0 is accepted by TPAMI!
+
+(2022.11.19) We release the interactive object bounding boxes & classes in the interactions within AVA dataset (2.1 & 2.2)! [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA), [[Paper]](https://arxiv.org/abs/2211.07501). BTW, we also release a CLIP-based human body part states recognizer in [CLIP-Activity2Vec](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/CLIP-Activity2Vec)!
 
 (2022.07.29) Our new work PartMap (ECCV'22) is released! [Paper](https://github.com/enlighten0707/Body-Part-Map-for-Interactiveness/blob/main), [Code](https://github.com/DirtyHarryLYL/HAKE-Action-Torch)
 
@@ -44,7 +46,7 @@ HAKE-Action-Torch
 
 ## Papers
 - [DIO](https://arxiv.org/abs/2211.07501)
-- [HAKE 2.0](https://arxiv.org/abs/2202.06851)
+- [HAKE 2.0](https://arxiv.org/abs/2202.06851) (TPAMI'22)
 - [PartMap](https://arxiv.org/abs/2207.14192) (ECCV'22)
 - [Interactiveness Field](https://arxiv.org/abs/2204.07718) (CVPR'22)
 - [mPD](https://arxiv.org/abs/2202.09492) (AAAI'22)
@@ -117,21 +119,16 @@ The independent Torch version is in: [DJ-RN-Torch](https://github.com/DirtyHarry
 ### TIN (CVPR'19)
 The independent Torch version is in: [TIN-Torch](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/TIN-Torch)
 
-### SymNet (CVPR'20)
-Coming soon.
-
 ## Citation
 If you find our works useful, please consider citing:
 ```
 ---HAKE 2.0
-@misc{li2022hake,
-  title={HAKE: A Knowledge Engine Foundation for Human Activity Understanding}, 
-  author={Yong-Lu Li and Xinpeng Liu and Xiaoqian Wu and Yizhuo Li and Zuoyu Qiu and Liang Xu and Yue Xu and Hao-Shu Fang and Cewu Lu},
-  year={2022},
-  eprint={2202.06851},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV}
-}
+    @article{li2022hake,
+     title={HAKE: A Knowledge Engine Foundation for Human Activity Understanding},
+    author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Li, Yizhuo and Qiu, Zuoyu and Xu, Liang and Xu, Yue and Fang, Hao-Shu and Lu, Cewu},
+    journal={TPAMI},
+    year={2022}
+    }
 ---PartMap
 @inproceedings{wu2022mining,
   title={Mining Cross-Person Cues for Body-Part Interactiveness Learning in HOI Detection},
@@ -153,14 +150,14 @@ If you find our works useful, please consider citing:
   booktitle={AAAI},
   year={2022}
 }
----SymNet-PAMI
+---SymNet++
 @article{li2021learning,
   title={Learning Single/Multi-Attribute of Object with Symmetry and Group},
   author={Li, Yong-Lu and Xu, Yue and Xu, Xinyu and Mao, Xiaohan and Lu, Cewu},
   journal={TPAMI},
   year={2021}
 }
----TIN-PAMI
+---TIN++
 @article{li2022transferable,
   title={Transferable Interactiveness Knowledge for Human-Object Interaction Detection},
   author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Huang, Xijie and Xu, Liang and Lu, Cewu},
@@ -174,7 +171,7 @@ If you find our works useful, please consider citing:
   booktitle={NeurIPS},
   year={2020}
 }
----HAKE:
+---HAKE 1.0
 @inproceedings{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
   author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-Shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
