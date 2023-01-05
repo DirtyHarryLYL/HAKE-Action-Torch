@@ -11,7 +11,7 @@ HAKE-Action-Torch (**PyTorch**) is a project to open the SOTA action understandi
 Currently, it is manintained by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, and Hongwei Fan.
 
 <p align='center'>
-    <img src="https://github.com/DirtyHarryLYL/HAKE-Action-Torch/blob/Activity2Vec/demo/hake_history.jpg", height="400">
+    <img src="https://github.com/DirtyHarryLYL/HAKE-Action-Torch/blob/Activity2Vec/demo/hake_history.jpg", height="300">
 </p>
 
 #### **News**: (2022.12.19) HAKE 2.0 is accepted by TPAMI!
