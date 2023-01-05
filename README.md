@@ -1,4 +1,8 @@
 # HAKE-Activity2Vec (A2V)
+<p align='center'>
+    <img src="https://github.com/DirtyHarryLYL/HAKE-Action-Torch/blob/Activity2Vec/demo/hake_history.jpg", height="300">
+</p>
+
 General human activity feature extractor and human PaSta (part states) detector based on HAKE data.
 It works like an ImageNet/COCO pre-trained backbone, which aims at extracting multi-modal activity representation for downstream tasks like VQA, captioning, clustering, etc. 
 
