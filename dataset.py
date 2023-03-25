@@ -292,8 +292,14 @@ class HICO_train_set(Dataset):
                 obj_ipt = info['pool'][obj_id][np.random.randint(0, info['pool'][obj_id].shape[0])]
                 with h5py.File(osp.join(self.data_dir, 'feature', self.split, str(obj_ipt[0]) + '.h5'), 'r') as f:
                     obj_vec.append(f['FO'][obj_ipt[1], :])
-            with h5py.File(osp.join(self.data_dir, 'Union_feature', self.split, str(im_id) + '.h5'), 'r') as f:
-                uni_vec.append(f['R'][cand_id, :])
+            l = im_id - im_id%400 + 1
+            r = min(38119, l + 400)
+            with h5py.File(osp.join(self.data_dir, 'Union_feature', self.split, str(l) + '_' + str(r) + '.h5'), 'r') as f:
+                data = f['data'][...]
+                mapping = pickle.load(open(self.data_dir+'/Union_feature/'+self.split+'/%d_%d.pkl' % (l, r), 'rb'))
+                start = mapping[im_id]
+                end = mapping[im_id+1] if im_id+1 in mapping else data.shape[0]
+                uni_vec.append(data[start:end][cand_id, :])
 
         labels_s   = np.concatenate(labels_s, axis=0)
         labels_ro  = np.concatenate(labels_ro, axis=0)
