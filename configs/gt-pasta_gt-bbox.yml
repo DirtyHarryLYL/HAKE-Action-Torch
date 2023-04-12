@@ -1,0 +1,67 @@
+RESUME: True
+CHECKPOINT:
+  exp/Wed_Aug_12_09:14:27_2020/bst.pth
+
+MODE: NLR_simplified_no_T
+
+RANDOM_SEED: 66
+
+TRAIN:
+  DATA_DIR:
+    Data/nlr_gt_train_from_pasta_cls.pkl
+  DATASET:
+    BATCH_SIZE:
+      32
+    NUM_WORKERS: 6
+  MAX_EPOCH: 200
+  OPTIMIZER:
+    TYPE: AdamW
+    RESUME: False
+    lr:
+      1e-3
+    momentum: 0.9
+    weight_decay: 1e-4
+  LR_SCHEDULER:
+    T_MAX: 200
+
+TEST:
+  DATA_SET: HICO_gt_test_set
+  DATA_DIR: Data
+  BATCH_SIZE: 256
+  NUM_WORKERS: 6
+  BASELINE:
+
+MODEL:
+  CHECKPOINT:
+  RULE_DIR:
+   Data/rule_seq_correct/rule_cos_dis_10_trans_to_index.pkl
+  NUM_RULE: 10
+  SHUFFLE_PVP:
+    False
+  LOSS:
+    MODE: BCE
+    LOGIC_FAC: 0.2
+    CLS_FAC: 1.0
+  NUM_CLASS: 600
+  NUM_PVP: 76
+  NUM_CLASS_SELECT: 18
+  LOGIC_DIM: 2304
+  BERT_DIM: 2304
+  NOT_LAYERS:
+    [2304,2304]
+  OR_LAYERS:
+    [4608, 2304]
+  LOGIC_REG:
+    [1,2,5,6]
+  VOTE_COMB: att
+  EMBEDDING_DIM: 32
+  OR_ACT:
+    tanh
+  ADD_NON:
+    True
+  COS_PROB:
+    False
+  OR_SHUFFLE: False
+  DYNAMIC_RULE: False
+  OR_LAYER_TYPE: att
+

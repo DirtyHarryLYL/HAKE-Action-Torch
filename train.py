@@ -20,15 +20,15 @@ from prefetch_generator import BackgroundGenerator
 from model import (
     NLR_10v_simplified_no_T, part_classifier, NLR_simplified_no_T
 )
-from utils import Timer, HO_weight, AverageMeter
-from HICO_DET_utils import obj_range, get_map, getSigmoid
-from dataset import (
+from util.utils import Timer, HO_weight, AverageMeter
+from util.HICO_DET_utils import obj_range, get_map, getSigmoid
+from trash.dataset import (
     HICO_train_set,
     HICO_test_set,
     HICO_gt_test_set
 )
-from object_to_hoi import obj_range_padding, obj_range_cnt, obj_range_extra
-from pasta_utils import pvp_weight
+from util.object_to_hoi import obj_range_padding, obj_range_cnt, obj_range_extra
+from util.pasta_utils import pvp_weight
 
 
 class DataLoaderX(DataLoader):
