@@ -1,0 +1,76 @@
+foot: stand on
+foot: tread on
+foot: walk with
+foot: walk to
+foot: run with
+foot: run to
+foot: dribble
+foot: kick
+foot: jump down
+foot: jump with
+foot: walk away
+foot: no_interaction
+leg: walk with
+leg: walk to
+leg: run with
+leg: run to
+leg: jump with
+leg: is close with
+leg: straddle
+leg: jump down
+leg: walk away
+leg: no_interaction
+hip: sit on
+hip: sit in
+hip: sit beside
+hip: be close with
+hip: no_interaction
+hand: hold
+hand: carry
+hand: reach for
+hand: touch
+hand: put on
+hand: twist
+hand: wear
+hand: throw
+hand: throw out
+hand: write on
+hand: point with
+hand: point to
+hand: use something to point to
+hand: press
+hand: squeeze
+hand: scratch
+hand: pinch
+hand: gesture to
+hand: push
+hand: pull
+hand: pull with something
+hand: wash
+hand: wash with something
+hand: hold in both hands
+hand: lift
+hand: raise(over head)
+hand: feed
+hand: cut with something
+hand: catch with something
+hand: pour into
+hand: no_interaction
+arm: shoulder carry
+arm: be close to
+arm: hug
+arm: swing
+arm: no_interaction
+head: eat
+head: inspect
+head: talk with something
+head: talk to
+head: be close with
+head: kiss
+head: put something over head
+head: lick
+head: blow
+head: drink with
+head: smell
+head: wear
+head: no_interaction

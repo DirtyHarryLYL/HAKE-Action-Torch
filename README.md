@@ -6,8 +6,12 @@ Yong-Lu Li, Xinpeng Liu, Xiaoqian Wu, Yizhuo Li, Zuoyu Qiu, Liang Xu, Yue Xu, Ha
 
 [[paper](https://arxiv.org/pdf/2202.06851.pdf)]
 
+## Rules
+The "PaSta->Activity" rules can be found [here](https://drive.google.com/file/d/1q5EFbyTp-Wb-rAcnRm_Fp0UuRt_paVFC/view?usp=share_link). `read_rules.ipynb` shows an example to read the rules.
 
 ## Evaluation
+Download the PaSta features [here](https://drive.google.com/file/d/1mSRkD6GDce6E2fLwW6Qey3rLycw2z1aw/view?usp=share_link) and input it into `util/`.
+
 ```
 export CUDA_VISIBLE_DEVICES=0; \
 python train_gt_pasta.py \
