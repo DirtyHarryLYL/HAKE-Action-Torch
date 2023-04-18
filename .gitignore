@@ -2,6 +2,7 @@
 trash/
 Data/
 exp/
+util/matrix_sentence_76.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
