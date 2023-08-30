@@ -1,6 +1,6 @@
 RESUME: True
 CHECKPOINT:
-  exp/Wed_Aug_12_09:14:27_2020/bst.pth
+  checkpoint/ckpt_gt-pasta_gt-bbox_eval.pth
 
 MODE: NLR_simplified_no_T
 
