@@ -102,6 +102,9 @@ As VCOCO is built on COCO, thus finetuning detector on VCOCO basically contribut
 
 ## Modules
 
+### HAKE 2.0
+Neural-Symbolic reasoning engine: [HAKE-Reasoning](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/HAKE-Reason)
+
 ### PartMap (ECCV'22)
 The independent Torch version is in: [PartMap](https://github.com/enlighten0707/Body-Part-Map-for-Interactiveness)
 
