@@ -21,13 +21,9 @@ from model import NLR_simplified_no_T
 from util.utils import Timer, HO_weight, AverageMeter
 from util.HICO_DET_utils import obj_range, get_map, getSigmoid, get_map_with_ko
 from dataset import (
-    HICO_test_set,
-    HICO_train_set,
     HICO_gt_test_set,
-    qpic_test_set,
 )
 from util.object_to_hoi import obj_range_padding, obj_range_cnt, obj_range_extra
-from util.pasta_utils import pvp_weight
 
 
 class DataLoaderX(DataLoader):
@@ -45,10 +41,10 @@ device = torch.device("cuda:{}".format(gpus[0]))
 
 models = {"NLR_simplified_no_T": NLR_simplified_no_T}
 dataset_mapping={
-    "HICO_train_set": HICO_train_set,
-    "HICO_test_set": HICO_test_set,
+    # "HICO_train_set": HICO_train_set,
+    # "HICO_test_set": HICO_test_set,
     "HICO_gt_test_set": HICO_gt_test_set,
-    "qpic_test_set": qpic_test_set,
+    # "qpic_test_set": qpic_test_set,
 }
 
 def parse_arg():
